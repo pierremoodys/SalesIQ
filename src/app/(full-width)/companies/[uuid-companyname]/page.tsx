@@ -15,7 +15,7 @@ import { useChatStore } from "@/stores/chatStore";
 import { cn } from "@/lib/utils";
 import { useCompany, type Company } from "@/hooks/useCompanies";
 import MarkdownReport from "@/components/MarkdownReport";
-import MarkdownTableOfContents from "@/components/MarkdownTableOfContents";
+import AccordionTableOfContents from "@/components/AccordionTableOfContents";
 
 interface CompanyPageProps {
   params: Promise<{
@@ -241,7 +241,7 @@ export default function CompanyPage({ params }: CompanyPageProps) {
                   {/* Table of Contents - Fixed Left Column */}
                   <div className="w-64 flex-shrink-0 h-full">
                     <div className="h-full p-4">
-                      <MarkdownTableOfContents
+                      <AccordionTableOfContents
                         companyName={company?.name}
                         section={
                           activeTab === "report"

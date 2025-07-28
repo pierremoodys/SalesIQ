@@ -172,7 +172,7 @@ const MarkdownReport: React.FC<MarkdownReportProps> = ({
   }
 
   return (
-    <div className="bg-white px-8 max-w-none" data-toc-container>
+    <div className="bg-white px-8 max-w-none mb-32" data-toc-container>
       <div className="space-y-8">
         <ReactMarkdown
           components={components}
