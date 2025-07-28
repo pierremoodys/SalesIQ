@@ -18,6 +18,7 @@ Restructure the app layout to support different navigation patterns across diffe
 ```
 src/app/
 ├── layout.tsx                           (Root: Simplified HTML structure)
+├── page.tsx                             (Home: Redirects to /companies)
 ├── (with-sidebar)/                      (Route group - URL not affected)
 │   ├── layout.tsx                       (TopNav + LeftNav + content)
 │   ├── companies/
@@ -38,6 +39,7 @@ src/app/
 
 ### URL Structure (Unchanged)
 
+- `/` → Redirects to `/companies`
 - `/companies` → Company list with left nav
 - `/companies/c-550e8400-e29b-41d4-a716-446655440001-volt-motors` → Individual company, full width
 - `/notifications` → Notifications with left nav
@@ -66,12 +68,13 @@ src/app/
 - [x] Create basic layouts for both route groups
 - [x] Simplify root layout to remove old Layout component
 
-### Phase 2: Extract and Refactor Layouts
+### Phase 2: Extract and Refactor Layouts ✅ COMPLETED
 
-- [ ] **Extract TopNav** from current main layout
-- [ ] **Create new root layout** with only TopNav
-- [ ] **Create with-sidebar layout** (TopNav + LeftNav + content)
-- [ ] **Create full-width layout** (TopNav + full-width content)
+- [x] **Remove old Layout component** that's no longer needed
+- [x] **Clean up component exports** in layout index file
+- [x] **Verify TopNav extraction** works properly across route groups
+- [x] **Refine route group layouts** for consistency and performance
+- [x] **Add home page redirect** to automatically go to /companies
 
 ### Phase 3: Configure Layout-Specific Features
 
@@ -81,16 +84,16 @@ src/app/
 
 ### Phase 4: Update Navigation and Routes
 
-- [ ] **Update route configuration** in `src/config/routes.ts`
+- [ ] **Update route configuration** in `src/config/routes.ts` if needed
 - [ ] **Update LeftNav active state logic** for new structure
 - [ ] **Test navigation** between different layout types
 
-### Phase 5: Move Existing Pages
+### Phase 5: Move Existing Pages ✅ COMPLETED
 
 - [x] Move `/companies` page to `(with-sidebar)/companies/`
 - [x] Move `/notifications` page to `(with-sidebar)/notifications/`
 - [x] Move `/companies/[uuid-companyname]` to `(full-width)/companies/[uuid-companyname]/`
-- [x] Move `/upload` page to `(full-width)/upload/` (if exists)
+- [x] Move `/upload` page to `(full-width)/upload/`
 
 ### Phase 6: Testing and Validation
 
@@ -105,7 +108,7 @@ src/app/
 ### Layout Components to Modify
 
 1. **src/app/layout.tsx** - ✅ Simplified to basic HTML structure
-2. **src/components/layout/Layout.tsx** - Split functionality into route groups
+2. **src/components/layout/Layout.tsx** - ✅ Removed (replaced by route groups)
 3. **src/app/companies/layout.tsx** - ✅ Moved to with-sidebar route group
 4. **src/components/pageHeader/CompaniesPageHeader.tsx** - Make width configurable
 
@@ -113,7 +116,7 @@ src/app/
 
 - `src/config/routes.ts` - Update route definitions if needed
 - `src/components/layout/LeftNav.tsx` - Ensure active states work
-- `src/lib/utils.ts` - Update `generateCompanyUrl` if needed
+- `src/lib/utils.ts` - ✅ Updated `generateCompanyUrl` for new structure
 - All page components using navigation
 
 ### Chat Integration
@@ -137,9 +140,9 @@ src/app/
 
 ## Timeline Estimate
 
-- **Phase 1-2**: 2-3 hours (Structure setup and layout extraction) ✅ PHASE 1 COMPLETE
+- **Phase 1-2**: 2-3 hours (Structure setup and layout extraction) ✅ COMPLETED
 - **Phase 3-4**: 2-3 hours (Configuration and navigation updates)
-- **Phase 5-6**: 1-2 hours (Page migration and testing)
+- **Phase 5-6**: 1-2 hours (Page migration and testing) ✅ PHASE 5 COMPLETE
 - **Total**: 5-8 hours
 
 ## Notes
@@ -159,11 +162,20 @@ src/app/
 - ✅ Simplified root layout to remove old Layout component
 - ✅ Verified new directory structure maintains URL compatibility
 
-**Current Status**: Phase 1 Complete - Ready for Phase 2
+### 2024-12-19 - Phase 2 Completed
+
+- ✅ Removed old Layout component that was no longer used
+- ✅ Cleaned up component exports in layout index file
+- ✅ Verified TopNav is properly extracted and reusable across route groups
+- ✅ Refined route group layouts for consistency and performance
+- ✅ Added home page redirect to automatically go to /companies
+- ✅ Verified layout hierarchy works correctly
+
+**Current Status**: Phase 2 Complete - Route groups functional, ready for Phase 3
 
 ---
 
-**Status**: Phase 1 Complete  
+**Status**: Phase 2 Complete  
 **Priority**: High  
 **Assigned**: -  
 **Created**: 2024-12-19
