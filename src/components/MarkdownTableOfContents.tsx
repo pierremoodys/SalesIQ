@@ -198,9 +198,6 @@ const MarkdownTableOfContents: React.FC<MarkdownTableOfContentsProps> = ({
   return (
     <div className={cn("h-full flex flex-col", className)}>
       <div className="flex-1 min-h-0">
-        <h3 className="text-sm font-semibold text-gray-900 mb-4 uppercase tracking-wide">
-          Contents
-        </h3>
         <nav className="space-y-1 overflow-y-auto">
           {headings.map((heading) => (
             <TOCItem
