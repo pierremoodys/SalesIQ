@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 
 export default function UploadPage() {
   return (
@@ -22,17 +22,17 @@ export default function UploadPage() {
               />
             </svg>
           </div>
-          <p className="text-lg font-medium text-gray-900">Drop files here or click to upload</p>
+          <p className="text-lg font-medium text-gray-900">
+            Drop files here or click to upload
+          </p>
           <p className="mt-1 text-sm text-gray-500">
             Support for document files (.pdf, .doc, .docx)
           </p>
-          <button
-            className="mt-4 inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-[#0a1264] hover:bg-[#0a1264]/90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#0a1264]"
-          >
+          <button className="mt-4 inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-[#0a1264] hover:bg-[#0a1264]/90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#0a1264]">
             Select Files
           </button>
         </div>
       </div>
     </div>
   );
-} 
+}

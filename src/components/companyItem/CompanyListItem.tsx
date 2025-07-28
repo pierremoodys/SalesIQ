@@ -1,18 +1,19 @@
 "use client";
 
 import React, { useState } from "react";
-import Image from "next/image";
 import {
+  MinusCircleIcon,
+  RssIcon,
   ArrowRightIcon,
   MapPinIcon,
   BuildingOffice2Icon,
   GlobeAmericasIcon,
   CalendarIcon,
   UsersIcon,
-  CheckCircleIcon,
-  MinusCircleIcon,
 } from "@heroicons/react/24/outline";
+import Image from "next/image";
 import { ConfirmationModal } from "@/components/ui";
+import { HOVER_TRANSITIONS, COMPANY_STYLES } from "@/lib/styles";
 
 interface CompanyTag {
   type: string;
@@ -21,8 +22,9 @@ interface CompanyTag {
   icon: string;
 }
 
-interface CompanyData {
+interface Company {
   id: string;
+  uuid: string;
   name: string;
   description: string;
   logoUrl?: string;
@@ -31,38 +33,39 @@ interface CompanyData {
 }
 
 interface CompanyListItemProps {
-  company: CompanyData;
+  company: Company;
+  className?: string;
   isTracked?: boolean;
   onTrackingChange?: (companyId: string, isTracked: boolean) => void;
   onClick?: (companyId: string) => void;
-  className?: string;
 }
 
 const CompanyListItem: React.FC<CompanyListItemProps> = ({
   company,
+  className = "",
   isTracked = false,
   onTrackingChange,
   onClick,
-  className = "",
 }) => {
   const [isHovered, setIsHovered] = useState(false);
   const [showConfirmationModal, setShowConfirmationModal] = useState(false);
 
-  const handleTrackingToggle = (e: React.MouseEvent) => {
-    e.stopPropagation();
-    onTrackingChange?.(company.id, !isTracked);
-  };
-
-  const handleMinusClick = (e: React.MouseEvent) => {
-    e.stopPropagation();
-    setShowConfirmationModal(true);
+  const handleTrackingToggle = () => {
+    if (isTracked) {
+      // Show confirmation modal for removing
+      setShowConfirmationModal(true);
+    } else {
+      // Add directly without confirmation
+      onTrackingChange?.(company.id, !isTracked);
+    }
   };
 
   const handleConfirmRemoval = () => {
     onTrackingChange?.(company.id, false);
+    setShowConfirmationModal(false);
   };
 
-  const handleItemClick = () => {
+  const handleCompanyClick = () => {
     onClick?.(company.id);
   };
 
@@ -77,119 +80,143 @@ const CompanyListItem: React.FC<CompanyListItemProps> = ({
     };
     const IconComponent = iconMap[iconName as keyof typeof iconMap];
     return IconComponent ? (
-      <IconComponent className="w-3 h-3 text-gray-700" />
+      <IconComponent className="w-4 h-4 text-gray-700" />
     ) : null;
-  };
-
-  // Dynamic styling based on state
-  const getBackgroundClass = () => {
-    return "bg-white";
   };
 
   const getCompanyNameClass = () => {
     if (isTracked && isHovered) {
-      return "text-brand-moody-bright-blue";
+      return "text-blue-600";
     }
     return "text-black";
   };
 
   const getArrowIconClass = () => {
     if (isTracked && isHovered) {
-      return "text-brand-moody-bright-blue";
+      return "text-blue-600";
     }
-    return "text-blue-1000";
+    return "text-gray-600";
+  };
+
+  const getHoverClass = () => {
+    if (isTracked && isHovered) {
+      return "bg-blue-50 border-blue-200";
+    }
+    return "hover:bg-gray-50";
   };
 
   return (
-    <div
-      className={`
-        flex justify-between items-start px-4 py-8 w-full border-b border-gray-200 
-        cursor-pointer transition-all duration-200
-        ${getBackgroundClass()}
-        ${className}
-      `}
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
-      onClick={handleItemClick}
-    >
-      {/* Left Content */}
-      <div className="flex items-start gap-4 flex-1">
-        {/* Company Logo */}
-        <div className="flex justify-center items-center w-12 h-12 rounded-full border border-gray-200 bg-gray-100">
-          {company.logoUrl ? (
-            <Image
-              src={company.logoUrl}
-              alt={`${company.name} logo`}
-              width={32}
-              height={32}
-              className="w-8 h-8 rounded-full object-cover"
-            />
-          ) : (
-            <BuildingOffice2Icon className="w-6 h-6 text-gray-600" />
-          )}
-        </div>
-
-        {/* Company Content */}
-        <div className="flex flex-col justify-center items-start gap-2 flex-1 pr-8">
-          {/* Company Name & Arrow */}
-          <div className="flex items-start gap-2">
-            <h3
-              className={`font-gt-america text-lg font-medium leading-6 ${getCompanyNameClass()}`}
-            >
-              {company.name}
-            </h3>
-            <ArrowRightIcon className={`w-6 h-6 ${getArrowIconClass()}`} />
+    <>
+      <div
+        className={`
+          flex justify-between items-start px-4 py-8 w-full border-b border-gray-200 
+          cursor-pointer ${HOVER_TRANSITIONS.slow}
+          ${getHoverClass()}
+          ${className}
+        `}
+        onMouseEnter={() => setIsHovered(true)}
+        onMouseLeave={() => setIsHovered(false)}
+        onClick={handleCompanyClick}
+      >
+        {/* Left Content */}
+        <div className="flex items-start gap-4 flex-1">
+          {/* Company Logo */}
+          <div
+            className={`flex justify-center items-center w-12 h-12 rounded-full border border-gray-200 bg-gray-100`}
+          >
+            {company.logoUrl ? (
+              <Image
+                src={company.logoUrl}
+                alt={`${company.name} logo`}
+                width={32}
+                height={32}
+                className="w-8 h-8 rounded-full object-cover"
+              />
+            ) : (
+              <BuildingOffice2Icon className="w-6 h-6 text-gray-600" />
+            )}
           </div>
 
-          {/* Description */}
-          <p className="font-gt-america text-gray-900 leading-6">
-            {company.description}
-          </p>
+          {/* Company Content */}
+          <div className="flex flex-col justify-center items-start gap-2 flex-1 pr-8">
+            {/* Company Name & Arrow */}
+            <div className="flex items-start gap-2">
+              <h3
+                className={`text-xl font-[700] leading-6 ${
+                  HOVER_TRANSITIONS.colors
+                } ${getCompanyNameClass()}`}
+              >
+                {company.name}
+              </h3>
+              <ArrowRightIcon
+                className={`w-6 h-6 ${
+                  HOVER_TRANSITIONS.colors
+                } ${getArrowIconClass()}`}
+              />
+            </div>
 
-          {/* Metadata Tags */}
-          <div className="flex flex-wrap items-start gap-2 self-stretch">
-            {company.tags.map((tag, index) => (
-              <div key={index} className="flex items-center gap-1">
-                {getIconComponent(tag.icon)}
-                <span className="font-gt-america text-gray-900 text-[10px] font-medium">
-                  {tag.label} -
-                </span>
-                <span className="font-gt-america text-gray-900 text-xs">
-                  {tag.value}
-                </span>
-              </div>
-            ))}
+            {/* Description */}
+            <p className="text-gray-600 font-[450] text-xl">
+              {company.description}
+            </p>
+
+            {/* Metadata Tags */}
+            <div className="mt-4 flex flex-wrap items-start gap-4 self-stretch">
+              {company.tags.map((tag, index) => (
+                <div key={index} className="flex items-center gap-1">
+                  {getIconComponent(tag.icon)}
+                  <span className="text-gray-600 text-[14px] font-medium">
+                    {tag.label} -
+                  </span>
+                  <span className="text-gray-900 text-[14px]">{tag.value}</span>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
-      </div>
 
-      {/* Right Actions */}
-      <div className="flex items-center gap-2">
-        {/* Show minus icon on hover for tracked companies */}
-        {isTracked && isHovered && (
+        {/* Right Actions */}
+        <div className="flex items-center gap-2">
+          {/* Always reserve space for minus icon to prevent layout shift */}
           <button
-            onClick={handleMinusClick}
-            className="flex items-center justify-center w-5 h-5 hover:scale-110 transition-transform duration-150"
+            onClick={(e) => {
+              e.stopPropagation();
+              if (isTracked) {
+                setShowConfirmationModal(true);
+              }
+            }}
+            className={`flex items-center justify-center w-5 h-5 ${
+              HOVER_TRANSITIONS.fast
+            } ${
+              isTracked && isHovered
+                ? "text-blue-900 hover:text-blue-700 hover:scale-110 opacity-100"
+                : "opacity-0 pointer-events-none"
+            }`}
             aria-label={`Remove ${company.name} from tracked companies`}
           >
-            <MinusCircleIcon className="w-5 h-5 text-gray-600" />
+            <MinusCircleIcon className="w-5 h-5" />
           </button>
-        )}
 
-        {/* Track/Check Button */}
-        <button
-          onClick={handleTrackingToggle}
-          className="flex items-center justify-center w-5 h-5 hover:scale-110 transition-transform duration-150"
-          aria-label={
-            isTracked ? `Untrack ${company.name}` : `Track ${company.name}`
-          }
-        >
-          {isTracked ? (
-            <CheckCircleIcon className="w-5 h-5 text-purple-1000" />
-          ) : (
-            <div className="w-5 h-5 rounded-full border-2 border-gray-300 hover:border-purple-1000 transition-colors duration-150" />
-          )}
-        </button>
+          {/* Tracking Toggle Button */}
+          <button
+            onClick={(e) => {
+              e.stopPropagation();
+              handleTrackingToggle();
+            }}
+            className={`flex items-center justify-center w-5 h-5 ${COMPANY_STYLES.buttonHover}`}
+            aria-label={
+              isTracked ? `Untrack ${company.name}` : `Track ${company.name}`
+            }
+          >
+            {isTracked ? (
+              <RssIcon className="w-5 h-5 text-green-600" />
+            ) : (
+              <div
+                className={`w-5 h-5 rounded-full border-2 border-gray-300 hover:border-green-600 ${HOVER_TRANSITIONS.colors}`}
+              />
+            )}
+          </button>
+        </div>
       </div>
 
       {/* Confirmation Modal */}
@@ -203,7 +230,7 @@ const CompanyListItem: React.FC<CompanyListItemProps> = ({
         cancelButtonText="Cancel"
         type="danger"
       />
-    </div>
+    </>
   );
 };
 

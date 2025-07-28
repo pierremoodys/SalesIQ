@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 
 export default function NotificationsPage() {
   return (
@@ -9,16 +9,20 @@ export default function NotificationsPage() {
           {/* Placeholder notifications */}
           <div className="border-b pb-4">
             <h3 className="font-medium">New Company Update</h3>
-            <p className="text-gray-600">There are new updates for Company XYZ</p>
+            <p className="text-gray-600">
+              There are new updates for Company XYZ
+            </p>
             <span className="text-sm text-gray-400">2 hours ago</span>
           </div>
           <div className="border-b pb-4">
             <h3 className="font-medium">Document Ready</h3>
-            <p className="text-gray-600">Your requested document is ready for review</p>
+            <p className="text-gray-600">
+              Your requested document is ready for review
+            </p>
             <span className="text-sm text-gray-400">5 hours ago</span>
           </div>
         </div>
       </div>
     </div>
   );
-} 
+}

@@ -1,80 +1,39 @@
 "use client";
 
-import React, { useState } from "react";
-import { Button } from "@headlessui/react";
-import { SparklesIcon } from "@heroicons/react/16/solid";
+import React from "react";
+import { SparklesIcon } from "@heroicons/react/24/outline";
+import { Button } from "@/components/ui";
 
 interface MoodysAIButtonProps {
-  isActive?: boolean;
-  onToggle?: (active: boolean) => void;
   className?: string;
+  isActive?: boolean;
+  onToggle?: () => void;
 }
 
 const MoodysAIButton: React.FC<MoodysAIButtonProps> = ({
-  isActive: controlledActive,
-  onToggle,
   className = "",
+  isActive = false,
+  onToggle,
 }) => {
-  const [internalActive, setInternalActive] = useState(false);
+  if (!onToggle) {
+    return null;
+  }
 
-  // Use controlled state if provided, otherwise use internal state
-  const isActive =
-    controlledActive !== undefined ? controlledActive : internalActive;
-
-  const handleClick = () => {
-    const newState = !isActive;
-    if (onToggle) {
-      onToggle(newState);
-    } else {
-      setInternalActive(newState);
-    }
-  };
+  const buttonClasses = isActive
+    ? "bg-white border-2 border-blue-600 text-blue-600 hover:bg-blue-50"
+    : "bg-gradient-to-r from-[#00276A] to-[#66009F] border-2 border-transparent text-white hover:from-[#001f5a] hover:to-[#5a0089]";
 
   return (
     <Button
-      onClick={handleClick}
-      className={`
-        inline-flex 
-        justify-center 
-        items-center 
-        gap-2
-        py-2 
-        px-3 
-        rounded-lg 
-        font-gt-america
-        text-sm 
-        leading-[1.375rem] 
-        font-medium
-        transition-all 
-        duration-200 
-        hover:scale-[1.02]
-        active:scale-[0.98]
-        focus:outline-none 
-        focus:ring-2 
-        focus:ring-offset-2
-        ${
-          isActive
-            ? "bg-white border-2 border-gray-300 text-gray-700 hover:border-gray-400 focus:ring-gray-300"
-            : "border-2 text-white focus:ring-purple-700"
-        }
-        ${!isActive ? "bg-gradient-to-br from-[#66009F] to-[#00276A]" : ""}
-        ${
-          !isActive
-            ? "hover:from-[#5a0089] hover:to-[#001f5a] border-transparent"
-            : ""
-        }
-        ${className}
-      `}
+      onClick={onToggle}
+      size="m"
+      icon={
+        <SparklesIcon className={isActive ? "text-blue-600" : "text-white"} />
+      }
+      iconPosition="left"
+      className={`${buttonClasses} ${className}`}
     >
-      <SparklesIcon
-        className={`
-          w-4 h-4 
-          ${isActive ? "text-gray-600" : "text-white"}
-        `}
-      />
-      <span className="whitespace-nowrap">
-        {isActive ? "Close Moody's AI" : "Open Moody's AI"}
-      </span>
+      {isActive ? "Close Moody's AI" : "Open Moody's AI"}
     </Button>
   );
 };

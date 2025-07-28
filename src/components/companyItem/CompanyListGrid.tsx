@@ -1,17 +1,17 @@
 "use client";
 
 import React, { useState } from "react";
-import Image from "next/image";
 import {
+  MinusCircleIcon,
+  RssIcon,
   ArrowRightIcon,
   MapPinIcon,
   BuildingOffice2Icon,
   GlobeAmericasIcon,
   CalendarIcon,
   UsersIcon,
-  CheckCircleIcon,
-  MinusCircleIcon,
 } from "@heroicons/react/24/outline";
+import Image from "next/image";
 import { ConfirmationModal } from "@/components/ui";
 
 interface CompanyTag {
@@ -21,8 +21,9 @@ interface CompanyTag {
   icon: string;
 }
 
-interface CompanyData {
+interface Company {
   id: string;
+  uuid: string;
   name: string;
   description: string;
   logoUrl?: string;
@@ -31,36 +32,42 @@ interface CompanyData {
 }
 
 interface CompanyListGridProps {
-  companies: CompanyData[];
+  companies: Company[];
   onTrackingChange?: (companyId: string, isTracked: boolean) => void;
   onClick?: (companyId: string) => void;
   className?: string;
 }
 
-const CompanyCardItem: React.FC<{
-  company: CompanyData;
+interface CompanyGridItemProps {
+  company: Company;
   isTracked: boolean;
   onTrackingChange?: (companyId: string, isTracked: boolean) => void;
   onClick?: (companyId: string) => void;
-}> = ({ company, isTracked, onTrackingChange, onClick }) => {
+}
+
+const CompanyGridItem: React.FC<CompanyGridItemProps> = ({
+  company,
+  isTracked,
+  onTrackingChange,
+  onClick,
+}) => {
   const [isHovered, setIsHovered] = useState(false);
   const [showConfirmationModal, setShowConfirmationModal] = useState(false);
 
-  const handleTrackingToggle = (e: React.MouseEvent) => {
-    e.stopPropagation();
-    onTrackingChange?.(company.id, !isTracked);
-  };
-
-  const handleMinusClick = (e: React.MouseEvent) => {
-    e.stopPropagation();
-    setShowConfirmationModal(true);
+  const handleTrackingToggle = () => {
+    if (isTracked) {
+      setShowConfirmationModal(true);
+    } else {
+      onTrackingChange?.(company.id, !isTracked);
+    }
   };
 
   const handleConfirmRemoval = () => {
     onTrackingChange?.(company.id, false);
+    setShowConfirmationModal(false);
   };
 
-  const handleItemClick = () => {
+  const handleClick = () => {
     onClick?.(company.id);
   };
 
@@ -82,13 +89,13 @@ const CompanyCardItem: React.FC<{
   return (
     <>
       <div
-        className="
+        className={`
           flex flex-col p-6 bg-white border border-gray-200 rounded-lg cursor-pointer
           transition-all duration-200 hover:shadow-md hover:border-gray-300
-        "
+        `}
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
-        onClick={handleItemClick}
+        onClick={handleClick}
       >
         {/* Header with Logo and Actions */}
         <div className="flex justify-between items-start mb-4">
@@ -109,29 +116,39 @@ const CompanyCardItem: React.FC<{
 
           {/* Actions */}
           <div className="flex items-center gap-2">
-            {/* Show minus icon on hover for tracked companies */}
-            {isTracked && isHovered && (
-              <button
-                onClick={handleMinusClick}
-                className="flex items-center justify-center w-5 h-5 hover:scale-110 transition-transform duration-150"
-                aria-label={`Remove ${company.name} from tracked companies`}
-              >
-                <MinusCircleIcon className="w-5 h-5 text-gray-600" />
-              </button>
-            )}
-
-            {/* Track/Check Button */}
+            {/* Always reserve space for minus icon to prevent layout shift */}
             <button
-              onClick={handleTrackingToggle}
+              onClick={(e) => {
+                e.stopPropagation();
+                if (isTracked) {
+                  setShowConfirmationModal(true);
+                }
+              }}
+              className={`flex items-center justify-center w-5 h-5 transition-all duration-150 ${
+                isTracked && isHovered
+                  ? "text-blue-900 hover:text-blue-700 hover:scale-110 opacity-100"
+                  : "opacity-0 pointer-events-none"
+              }`}
+              aria-label={`Remove ${company.name} from tracked companies`}
+            >
+              <MinusCircleIcon className="w-5 h-5" />
+            </button>
+
+            {/* Tracking Toggle Button */}
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                handleTrackingToggle();
+              }}
               className="flex items-center justify-center w-5 h-5 hover:scale-110 transition-transform duration-150"
               aria-label={
                 isTracked ? `Untrack ${company.name}` : `Track ${company.name}`
               }
             >
               {isTracked ? (
-                <CheckCircleIcon className="w-5 h-5 text-purple-1000" />
+                <RssIcon className="w-5 h-5 text-green-600" />
               ) : (
-                <div className="w-5 h-5 rounded-full border-2 border-gray-300 hover:border-purple-1000 transition-colors duration-150" />
+                <div className="w-5 h-5 rounded-full border-2 border-gray-300 hover:border-green-600 transition-colors duration-150" />
               )}
             </button>
           </div>
@@ -139,14 +156,14 @@ const CompanyCardItem: React.FC<{
 
         {/* Company Name & Arrow */}
         <div className="flex items-center gap-2 mb-3">
-          <h3 className="font-gt-america text-lg font-medium leading-6 text-black">
+          <h3 className="text-lg font-medium leading-6 text-black">
             {company.name}
           </h3>
-          <ArrowRightIcon className="w-5 h-5 text-blue-1000" />
+          <ArrowRightIcon className="w-5 h-5 text-gray-600" />
         </div>
 
         {/* Description */}
-        <p className="font-gt-america text-gray-900 leading-6 mb-4 flex-1">
+        <p className="text-gray-900 leading-6 mb-4 flex-1">
           {company.description}
         </p>
 
@@ -155,13 +172,13 @@ const CompanyCardItem: React.FC<{
           {company.tags.slice(0, 3).map((tag, index) => (
             <div key={index} className="flex items-center gap-2">
               {getIconComponent(tag.icon)}
-              <span className="font-gt-america text-gray-900 text-xs">
+              <span className="text-gray-900 text-xs">
                 <span className="font-medium">{tag.label}:</span> {tag.value}
               </span>
             </div>
           ))}
           {company.tags.length > 3 && (
-            <div className="text-gray-500 text-xs font-gt-america">
+            <div className="text-gray-500 text-xs">
               +{company.tags.length - 3} more
             </div>
           )}
@@ -194,8 +211,8 @@ const CompanyListGrid: React.FC<CompanyListGridProps> = ({
       className={`grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 p-6 ${className}`}
     >
       {companies.map((company) => (
-        <CompanyCardItem
-          key={company.id}
+        <CompanyGridItem
+          key={company.uuid}
           company={company}
           isTracked={company.tracked}
           onTrackingChange={onTrackingChange}

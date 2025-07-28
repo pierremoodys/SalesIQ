@@ -9,10 +9,14 @@ import { MoodysAIButton } from "@/components/ui";
 
 interface CompaniesPageHeaderProps {
   className?: string;
+  onToggleChat?: () => void;
+  isChatOpen?: boolean;
 }
 
 const CompaniesPageHeader: React.FC<CompaniesPageHeaderProps> = ({
   className = "",
+  onToggleChat,
+  isChatOpen = false,
 }) => {
   return (
     <div
@@ -22,7 +26,7 @@ const CompaniesPageHeader: React.FC<CompaniesPageHeaderProps> = ({
         {/* Page Title Section */}
         <div className="flex items-center gap-2">
           <BuildingOffice2Icon className="w-[18px] h-[18px] text-gray-900" />
-          <h1 className="font-gt-america text-black text-lg font-medium leading-6">
+          <h1 className=" text-black text-lg font-medium leading-6">
             Your companies
           </h1>
         </div>
@@ -30,7 +34,7 @@ const CompaniesPageHeader: React.FC<CompaniesPageHeaderProps> = ({
         {/* Actions Section */}
         <div className="flex items-center gap-4">
           {/* Moody's AI Button */}
-          <MoodysAIButton isActive={false} />
+          <MoodysAIButton isActive={isChatOpen} onToggle={onToggleChat} />
 
           {/* Menu Button */}
           <button

@@ -2,10 +2,11 @@
   "companies": [
     {
       "id": "volt-motors",
+      "uuid": "c-550e8400-e29b-41d4-a716-446655440001",
       "name": "Volt Motors",
       "description": "Manufactures high-efficiency electric motors.",
       "logoUrl": "/logos/volt-motors.png",
-      "tracked": false,
+      "tracked": true,
       "tags": [
         {
           "type": "headquarters",
@@ -41,10 +42,11 @@
     },
     {
       "id": "gamma-solutions",
+      "uuid": "c-550e8400-e29b-41d4-a716-446655440002",
       "name": "Gamma Solutions",
       "description": "Leading provider of AI-driven analytics",
       "logoUrl": "/logos/gamma-solutions.png",
-      "tracked": false,
+      "tracked": true,
       "tags": [
         {
           "type": "headquarters",
@@ -80,6 +82,7 @@
     },
     {
       "id": "delta-innovations",
+      "uuid": "c-550e8400-e29b-41d4-a716-446655440003",
       "name": "Delta Innovations",
       "description": "Pioneering advancements in biotechnology",
       "logoUrl": "/logos/delta-innovations.png",
@@ -119,6 +122,7 @@
     },
     {
       "id": "epsilon-enterprises",
+      "uuid": "c-550e8400-e29b-41d4-a716-446655440004",
       "name": "Epsilon Enterprises",
       "description": "Specialists in electric vehicle infrastructure",
       "logoUrl": "/logos/epsilon-enterprises.png",
@@ -158,6 +162,7 @@
     },
     {
       "id": "zeta-dynamics",
+      "uuid": "c-550e8400-e29b-41d4-a716-446655440005",
       "name": "Zeta Dynamics",
       "description": "Innovators in cloud computing solutions",
       "logoUrl": "/logos/zeta-dynamics.png",
@@ -197,6 +202,7 @@
     },
     {
       "id": "theta-designs",
+      "uuid": "c-550e8400-e29b-41d4-a716-446655440006",
       "name": "Theta Designs",
       "description": "Experts in sustainable fashion technology",
       "logoUrl": "/logos/theta-designs.png",
