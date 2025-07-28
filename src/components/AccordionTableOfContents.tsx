@@ -220,10 +220,8 @@ const AccordionTableOfContents: React.FC<AccordionTableOfContentsProps> = ({
                   <>
                     <DisclosureButton
                       className={cn(
-                        "flex w-full items-center justify-between text-left text-sm font-medium transition-colors duration-200 hover:text-blue-600 py-2 px-2 rounded",
-                        activeId === section.h2.id
-                          ? "text-blue-600 bg-blue-50"
-                          : "text-gray-900 hover:bg-gray-50"
+                        "flex w-full items-center justify-between text-left text-sm font-medium transition-colors duration-200 hover:text-blue-600 py-2 px-2 rounded cursor-pointer",
+                        "text-gray-900 hover:bg-gray-50"
                       )}
                     >
                       <span className="block leading-relaxed">
@@ -247,9 +245,9 @@ const AccordionTableOfContents: React.FC<AccordionTableOfContentsProps> = ({
                             key={h3Item.id}
                             onClick={() => scrollToHeading(h3Item.id)}
                             className={cn(
-                              "block w-full text-left text-xs transition-colors duration-200 hover:text-blue-600 py-1.5 px-2 rounded",
+                              "block w-full text-left text-xs transition-colors duration-200 hover:text-blue-600 py-1.5 px-2 rounded cursor-pointer",
                               activeId === h3Item.id
-                                ? "text-blue-600 font-medium"
+                                ? "text-blue-600 font-medium bg-blue-50"
                                 : "text-gray-600 hover:bg-gray-50"
                             )}
                           >
