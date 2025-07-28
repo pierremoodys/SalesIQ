@@ -14,6 +14,15 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <head>
+        <link
+          rel="preload"
+          href="/Financier%20TTF/FinancierDisplay-Semibold_1422576346.ttf"
+          as="font"
+          type="font/ttf"
+          crossOrigin=""
+        />
+      </head>
       <body className="antialiased">
         <ReactQueryProvider>{children}</ReactQueryProvider>
       </body>

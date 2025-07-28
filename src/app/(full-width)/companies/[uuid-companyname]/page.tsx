@@ -14,6 +14,8 @@ import ChatPanel from "@/components/layout/ChatPanel";
 import { useChatStore } from "@/stores/chatStore";
 import { cn } from "@/lib/utils";
 import { useCompany, type Company } from "@/hooks/useCompanies";
+import MarkdownReport from "@/components/MarkdownReport";
+import MarkdownTableOfContents from "@/components/MarkdownTableOfContents";
 
 interface CompanyPageProps {
   params: Promise<{
@@ -178,17 +180,6 @@ export default function CompanyPage({ params }: CompanyPageProps) {
             </div>
           </div>
         );
-      case "report":
-        return (
-          <div className="space-y-6">
-            <div className="bg-white border border-gray-200 rounded-lg p-6">
-              <h3 className="text-lg font-medium mb-4">Company Profile</h3>
-              <p className="text-gray-600">
-                This is where the company report content will be displayed.
-              </p>
-            </div>
-          </div>
-        );
       case "sales-pitch":
         return (
           <div className="space-y-6">
@@ -212,13 +203,22 @@ export default function CompanyPage({ params }: CompanyPageProps) {
           </div>
         );
       default:
-        return null;
+        return (
+          <div className="space-y-6">
+            <div className="bg-white border border-gray-200 rounded-lg p-6">
+              <h3 className="text-lg font-medium mb-4">Content</h3>
+              <p className="text-gray-600">
+                Tab content will be displayed here.
+              </p>
+            </div>
+          </div>
+        );
     }
   };
 
   return (
     <div className="h-full flex flex-col">
-      {/* Company Header */}
+      {/* Company Header - Fixed */}
       <div className="flex-shrink-0">
         <CompaniesPageHeader
           variant="company-detail"
@@ -229,68 +229,82 @@ export default function CompanyPage({ params }: CompanyPageProps) {
         />
       </div>
 
-      {/* Resizable Content Area - Takes remaining height */}
+      {/* Tab Navigation - Fixed below header */}
+      <div className="flex-shrink-0 px-6 py-4 bg-white border-b border-gray-200">
+        <TabGroup
+          selectedIndex={selectedTabIndex}
+          onChange={handleTabIndexChange}
+        >
+          <TabList className="inline-flex items-start gap-1 p-1 rounded bg-[#f0f0f1]">
+            {companyTabs.map((tab) => (
+              <Tab
+                key={tab.id}
+                className={({ selected }) =>
+                  cn(
+                    "flex justify-center items-center gap-2 py-2 px-4 rounded text-sm font-[420] leading-[1.125rem] transition-all duration-150 focus:outline-none",
+                    selected
+                      ? "bg-white text-[#005eff]"
+                      : "text-[#3c3d3f] hover:bg-white/50"
+                  )
+                }
+              >
+                {({ selected }) => {
+                  const IconComponent = selected ? FolderOpenIcon : FolderIcon;
+                  return (
+                    <>
+                      <IconComponent
+                        className={cn(
+                          "w-[18px] h-[18px]",
+                          selected ? "text-[#005eff]" : "text-[#3c3d3f]"
+                        )}
+                      />
+                      <span>{tab.label}</span>
+                    </>
+                  );
+                }}
+              </Tab>
+            ))}
+          </TabList>
+        </TabGroup>
+      </div>
+
+      {/* Main Content Area - Takes remaining height */}
       <div className="flex-1 min-h-0">
         <PanelGroup
           direction="horizontal"
           onLayout={handlePanelResize}
           className="h-full"
         >
-          {/* Company Content Panel */}
+          {/* Main Content Panel - No longer has overflow-auto */}
           <Panel
             id="company-content"
             defaultSize={shouldRenderChat ? 100 - chatPanelSize : 100}
             className="min-w-0"
           >
-            <div className="h-full overflow-auto">
-              {/* Company Content */}
-              <div className="p-6">
-                {/* Tab Navigation */}
-                <div className="mb-6">
-                  <TabGroup
-                    selectedIndex={selectedTabIndex}
-                    onChange={handleTabIndexChange}
-                  >
-                    <TabList className="inline-flex items-start gap-1 p-1 rounded bg-[#f0f0f1]">
-                      {companyTabs.map((tab) => (
-                        <Tab
-                          key={tab.id}
-                          className={({ selected }) =>
-                            cn(
-                              "flex justify-center items-center gap-2 py-2 px-4 rounded text-sm font-[420] leading-[1.125rem] transition-all duration-150 focus:outline-none",
-                              selected
-                                ? "bg-white text-[#005eff]"
-                                : "text-[#3c3d3f] hover:bg-white/50"
-                            )
-                          }
-                        >
-                          {({ selected }) => {
-                            const IconComponent = selected
-                              ? FolderOpenIcon
-                              : FolderIcon;
-                            return (
-                              <>
-                                <IconComponent
-                                  className={cn(
-                                    "w-[18px] h-[18px]",
-                                    selected
-                                      ? "text-[#005eff]"
-                                      : "text-[#3c3d3f]"
-                                  )}
-                                />
-                                <span>{tab.label}</span>
-                              </>
-                            );
-                          }}
-                        </Tab>
-                      ))}
-                    </TabList>
-                  </TabGroup>
-                </div>
+            <div className="h-full flex">
+              {/* Conditionally render TOC and content based on active tab */}
+              {activeTab === "report" ? (
+                <>
+                  {/* Table of Contents - Fixed Left Column */}
+                  <div className="w-64 flex-shrink-0 h-full">
+                    <div className="h-full p-4">
+                      <MarkdownTableOfContents companyName={company?.name} />
+                    </div>
+                  </div>
 
-                {/* Tab Content */}
-                {renderTabContent()}
-              </div>
+                  {/* Report Content Area - Right Column */}
+                  <div className="flex-1 min-w-0 h-full">
+                    <div className="h-full overflow-y-auto p-4">
+                      <MarkdownReport companyName={company?.name} />
+                    </div>
+                  </div>
+                </>
+              ) : (
+                /* Other tab content - Full width */
+                <div className="flex-1 h-full overflow-y-auto p-6">
+                  {renderTabContent()}
+                </div>
+              )}
             </div>
           </Panel>
 
