@@ -19,7 +19,6 @@ interface TOCItemProps {
 }
 
 const TOCItem: React.FC<TOCItemProps> = ({ heading, isActive, onClick }) => {
-  const isMainHeading = heading.level === 1;
   const isSubheading = heading.level === 3;
 
   return (
@@ -27,15 +26,14 @@ const TOCItem: React.FC<TOCItemProps> = ({ heading, isActive, onClick }) => {
       onClick={onClick}
       className={cn(
         "block w-full text-left transition-colors duration-200 hover:text-blue-600 cursor-pointer py-1.5 px-2 rounded",
-        isMainHeading && "text-base font-semibold",
-        !isMainHeading && !isSubheading && "text-sm",
+        !isSubheading && "text-sm",
         isSubheading && "ml-4 text-xs",
         isActive
           ? "text-blue-600 font-medium"
           : "text-gray-600 hover:bg-gray-50"
       )}
     >
-      <span className="truncate block">{heading.text}</span>
+      <span className="block leading-relaxed">{heading.text}</span>
     </button>
   );
 };
@@ -197,24 +195,30 @@ const MarkdownTableOfContents: React.FC<MarkdownTableOfContentsProps> = ({
     );
   }
 
-  if (headings.length === 0) {
+  // Filter out h1 headings (level 1) - only show h2 and h3
+  const filteredHeadings = headings.filter((heading) => heading.level > 1);
+
+  if (filteredHeadings.length === 0) {
     return null;
   }
 
   return (
-    <div
-      className={cn("h-full flex flex-col border-r border-gray-200", className)}
-    >
-      <div className="flex-1 min-h-0">
-        <nav className="space-y-1 overflow-y-auto">
-          {headings.map((heading) => (
-            <TOCItem
-              key={heading.id}
-              heading={heading}
-              isActive={activeId === heading.id}
-              onClick={() => handleItemClick(heading.id)}
-            />
-          ))}
+    <div className={cn("h-full flex flex-col", className)}>
+      <div className="flex-1 min-h-0 flex flex-col">
+        <h3 className="text-sm font-semibold text-gray-900 mb-4 uppercase tracking-wide flex-shrink-0">
+          Contents
+        </h3>
+        <nav className="flex-1 min-h-0 overflow-y-auto">
+          <div className="space-y-1">
+            {filteredHeadings.map((heading) => (
+              <TOCItem
+                key={heading.id}
+                heading={heading}
+                isActive={activeId === heading.id}
+                onClick={() => handleItemClick(heading.id)}
+              />
+            ))}
+          </div>
         </nav>
       </div>
     </div>
