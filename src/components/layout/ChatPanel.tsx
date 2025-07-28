@@ -6,13 +6,24 @@ import {
   XMarkIcon,
   MicrophoneIcon,
   ArrowRightIcon,
+  DocumentTextIcon,
 } from "@heroicons/react/24/outline";
 
 interface ChatPanelProps {
   onClose: () => void;
+  headerTitle?: string;
+  description?: string;
+  placeholder?: string;
+  headerIcon?: React.ComponentType<{ className?: string }>;
 }
 
-export default function ChatPanel({ onClose }: ChatPanelProps) {
+export default function ChatPanel({
+  onClose,
+  headerTitle = "Add or edit companies",
+  description = "Tell me about the size, industry, location of the companies you want to start tracking.",
+  placeholder = "Search for companies",
+  headerIcon: HeaderIcon = PlusIcon,
+}: ChatPanelProps) {
   const [message, setMessage] = useState("");
 
   const handleSendMessage = () => {
@@ -37,8 +48,8 @@ export default function ChatPanel({ onClose }: ChatPanelProps) {
         {/* Header */}
         <div className="flex flex-shrink-0 justify-between items-center gap-2 py-2 px-4 h-8 border-b border-b-[#d7d8d7] bg-[#deebff]/40">
           <div className="flex items-center gap-2">
-            <PlusIcon className="w-4 h-4 text-[#646669]" />
-            <div className="text-[#3c3d3f]  text-xs">Add or edit companies</div>
+            <HeaderIcon className="w-4 h-4 text-[#646669]" />
+            <div className="text-[#3c3d3f] text-xs">{headerTitle}</div>
           </div>
           <button
             onClick={onClose}
@@ -52,8 +63,7 @@ export default function ChatPanel({ onClose }: ChatPanelProps) {
         <div className="flex flex-col justify-between p-4 flex-1 min-h-0">
           <div className="flex justify-center items-center gap-2.5">
             <div className="font-[420] text-md text-gray-600">
-              Tell me about the size, industry, location of the companies you
-              want to start tracking.
+              {description}
             </div>
           </div>
 
@@ -63,8 +73,8 @@ export default function ChatPanel({ onClose }: ChatPanelProps) {
               type="text"
               value={message}
               onChange={(e) => setMessage(e.target.value)}
-              placeholder="Search for companies"
-              className="flex-1 text-[#585a5c]  leading-6 bg-transparent border-none outline-none placeholder:text-[#585a5c]"
+              placeholder={placeholder}
+              className="flex-1 text-[#585a5c] leading-6 bg-transparent border-none outline-none placeholder:text-[#585a5c]"
               onKeyPress={(e) => e.key === "Enter" && handleSendMessage()}
             />
             <div className="flex items-center gap-4 h-10">

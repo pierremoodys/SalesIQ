@@ -9,7 +9,7 @@ import {
 } from "@/components/ui";
 import { fetchCompanies, updateCompanyTracking } from "@/lib/api";
 import { generateCompanyUrl } from "@/lib/utils";
-import { useCompaniesContext } from "./layout";
+import { useCompaniesContext } from "@/contexts/CompaniesContext";
 
 interface CompanyTag {
   type: string;

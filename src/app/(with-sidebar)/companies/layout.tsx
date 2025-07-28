@@ -1,31 +1,15 @@
 "use client";
 
-import { useState, createContext, useContext, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { Panel, PanelGroup, PanelResizeHandle } from "react-resizable-panels";
 import { CompaniesPageHeader } from "@/components/pageHeader";
 import { CompaniesFilter } from "@/components/ui";
 import ChatPanel from "@/components/layout/ChatPanel";
 import { useChatStore } from "@/stores/chatStore";
-
-// Create context for companies section
-interface CompaniesContextType {
-  searchQuery: string;
-  setSearchQuery: (query: string) => void;
-  viewType: "list" | "grid" | "table";
-  setViewType: (type: "list" | "grid" | "table") => void;
-}
-
-const CompaniesContext = createContext<CompaniesContextType | undefined>(
-  undefined
-);
-
-export const useCompaniesContext = () => {
-  const context = useContext(CompaniesContext);
-  if (!context) {
-    throw new Error("useCompaniesContext must be used within CompaniesLayout");
-  }
-  return context;
-};
+import {
+  CompaniesContext,
+  CompaniesContextType,
+} from "@/contexts/CompaniesContext";
 
 interface CompaniesLayoutProps {
   children: React.ReactNode;
@@ -107,6 +91,7 @@ export default function CompaniesLayout({ children }: CompaniesLayoutProps) {
         {/* Page Header - Static */}
         <div className="flex-shrink-0">
           <CompaniesPageHeader
+            variant="companies-list"
             onToggleChat={toggleChat}
             isChatOpen={isChatOpen}
           />
