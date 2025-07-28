@@ -130,10 +130,6 @@ export default function CompanyPage({ params }: CompanyPageProps) {
     }
   };
 
-  const handleTabChange = (tabId: string) => {
-    setActiveTab(tabId);
-  };
-
   // For Headless UI direct usage
   const selectedTabIndex = companyTabs.findIndex((tab) => tab.id === activeTab);
   const handleTabIndexChange = (index: number) => {
