@@ -1,15 +1,13 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { CompaniesPageHeader } from "@/components/pageHeader";
 import {
   CompanyListItem,
   CompanyListGrid,
   CompanyListTable,
-  CompaniesFilter,
-  type ViewType,
 } from "@/components/ui";
 import { fetchCompanies, updateCompanyTracking } from "@/lib/api";
+import { useCompaniesContext } from "./layout";
 
 interface CompanyTag {
   type: string;
@@ -20,6 +18,7 @@ interface CompanyTag {
 
 interface Company {
   id: string;
+  uuid: string;
   name: string;
   description: string;
   logoUrl?: string;
@@ -30,8 +29,7 @@ interface Company {
 export default function CompaniesPage() {
   const [companies, setCompanies] = useState<Company[]>([]);
   const [loading, setLoading] = useState(true);
-  const [searchQuery, setSearchQuery] = useState("");
-  const [viewType, setViewType] = useState<ViewType>("list");
+  const { searchQuery, viewType } = useCompaniesContext();
 
   useEffect(() => {
     const loadCompanies = async () => {
@@ -88,21 +86,10 @@ export default function CompaniesPage() {
 
   return (
     <div>
-      {/* Page Header */}
-      <CompaniesPageHeader />
-
-      {/* Search & Filter */}
-      <CompaniesFilter
-        searchQuery={searchQuery}
-        onSearchChange={setSearchQuery}
-        viewType={viewType}
-        onViewTypeChange={setViewType}
-      />
-
       {/* Companies Content */}
       {loading ? (
         <div className="text-center py-12">
-          <p className="text-gray-500 font-gt-america">Loading companies...</p>
+          <p className="text-gray-500">Loading companies...</p>
         </div>
       ) : filteredCompanies.length > 0 ? (
         <>
@@ -113,7 +100,7 @@ export default function CompaniesPage() {
                 <div className="divide-y divide-gray-200">
                   {filteredCompanies.map((company) => (
                     <CompanyListItem
-                      key={company.id}
+                      key={company.uuid}
                       company={company}
                       isTracked={company.tracked}
                       onTrackingChange={handleTrackingChange}
@@ -147,20 +134,20 @@ export default function CompaniesPage() {
         </>
       ) : searchQuery ? (
         <div className="text-center py-12">
-          <p className="text-gray-500 font-gt-america">
+          <p className="text-gray-500">
             No companies found matching &ldquo;{searchQuery}&rdquo;.
           </p>
-          <p className="text-gray-400 text-sm mt-2 font-gt-america">
+          <p className="text-gray-400 text-sm mt-2">
             Try adjusting your search or add more companies to your tracking
             list.
           </p>
         </div>
       ) : (
         <div className="text-center py-12">
-          <p className="text-gray-500 font-gt-america">
+          <p className="text-gray-500">
             No companies are currently being tracked.
           </p>
-          <p className="text-gray-400 text-sm mt-2 font-gt-america">
+          <p className="text-gray-400 text-sm mt-2">
             Add companies to your tracking list to see them here.
           </p>
         </div>

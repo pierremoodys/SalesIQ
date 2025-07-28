@@ -1,19 +1,29 @@
 @import "tailwindcss";
 
+/* Default Font Family */
+body {
+  font-family: "GT America", -apple-system, BlinkMacSystemFont, "Segoe UI",
+    Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+
 /* GT America Variable Font Family */
 @font-face {
-  font-family: 'GT America';
-  src: url('/GT America Standard VF/VAR-woff2/GT-America-VF.woff2') format('woff2-variations'),
-       url('/GT America Standard VF/VAR-ttf/GT-America-VF.ttf') format('truetype-variations');
+  font-family: "GT America";
+  src: url("/GT America Standard VF/VAR-woff2/GT-America-VF.woff2")
+      format("woff2-variations"),
+    url("/GT America Standard VF/VAR-ttf/GT-America-VF.ttf")
+      format("truetype-variations");
   font-weight: 100 900;
   font-style: normal;
   font-display: swap;
 }
 
 @font-face {
-  font-family: 'GT America';
-  src: url('/GT America Standard VF/VAR-woff2/GT-America-Italic-VF.woff2') format('woff2-variations'),
-       url('/GT America Standard VF/VAR-ttf/GT-America-Italic-VF.ttf') format('truetype-variations');
+  font-family: "GT America";
+  src: url("/GT America Standard VF/VAR-woff2/GT-America-Italic-VF.woff2")
+      format("woff2-variations"),
+    url("/GT America Standard VF/VAR-ttf/GT-America-Italic-VF.ttf")
+      format("truetype-variations");
   font-weight: 100 900;
   font-style: italic;
   font-display: swap;
@@ -21,339 +31,159 @@
 
 /* Financier Font Family */
 @font-face {
-  font-family: 'Financier';
-  src: url('/Financier TTF/FinancierDisplay-Semibold_1422576346.ttf') format('truetype');
+  font-family: "Financier";
+  src: url("/Financier TTF/FinancierDisplay-Semibold_1422576346.ttf")
+    format("truetype");
   font-weight: 600;
   font-style: normal;
   font-display: swap;
 }
 
 @font-face {
-  font-family: 'Financier';
-  src: url('/Financier TTF/FinancierDisplay-SemiBdItalic_934771513.ttf') format('truetype');
+  font-family: "Financier";
+  src: url("/Financier TTF/FinancierDisplay-SemiBdItalic_934771513.ttf")
+    format("truetype");
   font-weight: 600;
   font-style: italic;
   font-display: swap;
 }
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+/* Brand Colors */
+.text-brand-moody-bright-blue {
+  color: #005eff;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-  
-  /* Custom Font Families */
-  --font-gt-america: 'GT America', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
-  --font-financier: 'Financier', Georgia, 'Times New Roman', Times, serif;
-
-  /* Bright Blue Colors */
-  --color-bright-blue-01: #deebff;
-  --color-bright-blue-02: #bed5ff;
-  --color-bright-blue-03: #9dc1ff;
-  --color-bright-blue-04: #7babff;
-  --color-bright-blue-05: #5895ff;
-  --color-bright-blue-06: #337eff;
-  --color-bright-blue-07: #005eff;
-  --color-bright-blue-08: #0052df;
-  --color-bright-blue-09: #0044b6;
-  --color-bright-blue-10: #00348f;
-  --color-bright-blue-11: #00266a;
-  --color-bright-blue-12: #001a45;
-  --color-bright-blue-100: #deebff;
-  --color-bright-blue-200: #bed5ff;
-  --color-bright-blue-300: #9dc1ff;
-  --color-bright-blue-400: #7babff;
-  --color-bright-blue-500: #5895ff;
-  --color-bright-blue-600: #337eff;
-  --color-bright-blue-700: #005eff;
-  --color-bright-blue-800: #0052df;
-  --color-bright-blue-900: #0044b6;
-  --color-bright-blue-1000: #00348f;
-  --color-bright-blue-1100: #00266a;
-  --color-bright-blue-1200: #001a45;
-
-  /* Blue Colors */
-  --color-blue-01: #e7e7f0;
-  --color-blue-02: #cfd0e1;
-  --color-blue-03: #b8b9d1;
-  --color-blue-04: #a2a2c3;
-  --color-blue-05: #8b8bb4;
-  --color-blue-06: #7577a6;
-  --color-blue-07: #606199;
-  --color-blue-08: #4a4d8b;
-  --color-blue-09: #34387d;
-  --color-blue-10: #0a1264;
-  --color-blue-11: #11174e;
-  --color-blue-12: #040826;
-  --color-blue-100: #e7e7f0;
-  --color-blue-200: #cfd0e1;
-  --color-blue-300: #b8b9d1;
-  --color-blue-400: #a2a2c3;
-  --color-blue-500: #8b8bb4;
-  --color-blue-600: #7577a6;
-  --color-blue-700: #606199;
-  --color-blue-800: #4a4d8b;
-  --color-blue-900: #34387d;
-  --color-blue-1000: #0a1264;
-  --color-blue-1100: #11174e;
-  --color-blue-1200: #040826;
-
-  /* Gray Colors */
-  --color-gray-01: #f0f0f1;
-  --color-gray-02: #d6d8d6;
-  --color-gray-03: #bebfbe;
-  --color-gray-04: #a6a8aa;
-  --color-gray-05: #8f9194;
-  --color-gray-06: #74787b;
-  --color-gray-07: #646669;
-  --color-gray-08: #4e5053;
-  --color-gray-09: #3c3c3f;
-  --color-gray-10: #292a2b;
-  --color-gray-11: #171818;
-  --color-gray-12: #000000;
-  --color-gray-100: #f0f0f1;
-  --color-gray-200: #d6d8d6;
-  --color-gray-300: #bebfbe;
-  --color-gray-400: #a6a8aa;
-  --color-gray-500: #8f9194;
-  --color-gray-600: #74787b;
-  --color-gray-700: #646669;
-  --color-gray-800: #4e5053;
-  --color-gray-900: #3c3c3f;
-  --color-gray-1000: #292a2b;
-  --color-gray-1100: #171818;
-  --color-gray-1200: #000000;
-
-  /* Teal Colors */
-  --color-teal-01: #d6ecef;
-  --color-teal-02: #b0dade;
-  --color-teal-03: #86c8cc;
-  --color-teal-04: #5db5bc;
-  --color-teal-05: #33a2aa;
-  --color-teal-06: #008c95;
-  --color-teal-07: #007881;
-  --color-teal-08: #00656b;
-  --color-teal-09: #005057;
-  --color-teal-10: #003d41;
-  --color-teal-11: #002b2e;
-  --color-teal-12: #001b1c;
-  --color-teal-100: #d6ecef;
-  --color-teal-200: #b0dade;
-  --color-teal-300: #86c8cc;
-  --color-teal-400: #5db5bc;
-  --color-teal-500: #33a2aa;
-  --color-teal-600: #008c95;
-  --color-teal-700: #007881;
-  --color-teal-800: #00656b;
-  --color-teal-900: #005057;
-  --color-teal-1000: #003d41;
-  --color-teal-1100: #002b2e;
-  --color-teal-1200: #001b1c;
-
-  /* Purple Colors */
-  --color-purple-01: #eee7f3;
-  --color-purple-02: #decfe7;
-  --color-purple-03: #cfb6dd;
-  --color-purple-04: #bfa0d3;
-  --color-purple-05: #b089c7;
-  --color-purple-06: #a270bd;
-  --color-purple-07: #9159b1;
-  --color-purple-08: #8241a6;
-  --color-purple-09: #72289c;
-  --color-purple-10: #5c068c;
-  --color-purple-11: #46046b;
-  --color-purple-12: #2b044d;
-  --color-purple-100: #eee7f3;
-  --color-purple-200: #decfe7;
-  --color-purple-300: #cfb6dd;
-  --color-purple-400: #bfa0d3;
-  --color-purple-500: #b089c7;
-  --color-purple-600: #a270bd;
-  --color-purple-700: #9159b1;
-  --color-purple-800: #8241a6;
-  --color-purple-900: #72289c;
-  --color-purple-1000: #5c068c;
-  --color-purple-1100: #46046b;
-  --color-purple-1200: #2b044d;
-
-  /* Orange Colors */
-  --color-orange-01: #fae6d9;
-  --color-orange-02: #f6ccb4;
-  --color-orange-03: #f1b08f;
-  --color-orange-04: #ed9566;
-  --color-orange-05: #e8783c;
-  --color-orange-06: #e35205;
-  --color-orange-07: #c64809;
-  --color-orange-08: #a53d0d;
-  --color-orange-09: #863312;
-  --color-orange-10: #662917;
-  --color-orange-11: #4a1f1b;
-  --color-orange-12: #2b1520;
-  --color-orange-100: #fae6d9;
-  --color-orange-200: #f6ccb4;
-  --color-orange-300: #f1b08f;
-  --color-orange-400: #ed9566;
-  --color-orange-500: #e8783c;
-  --color-orange-600: #e35205;
-  --color-orange-700: #c64809;
-  --color-orange-800: #a53d0d;
-  --color-orange-900: #863312;
-  --color-orange-1000: #662917;
-  --color-orange-1100: #4a1f1b;
-  --color-orange-1200: #2b1520;
-
-  /* Magenta Colors */
-  --color-magenta-01: #fde3f1;
-  --color-magenta-02: #fac4e4;
-  --color-magenta-03: #f5a7d5;
-  --color-magenta-04: #f18ac4;
-  --color-magenta-05: #eb6ab3;
-  --color-magenta-06: #e4449e;
-  --color-magenta-07: #d9017a;
-  --color-magenta-08: #b90067;
-  --color-magenta-09: #990056;
-  --color-magenta-10: #790044;
-  --color-magenta-11: #590138;
-  --color-magenta-12: #380432;
-  --color-magenta-100: #fde3f1;
-  --color-magenta-200: #fac4e4;
-  --color-magenta-300: #f5a7d5;
-  --color-magenta-400: #f18ac4;
-  --color-magenta-500: #eb6ab3;
-  --color-magenta-600: #e4449e;
-  --color-magenta-700: #d9017a;
-  --color-magenta-800: #b90067;
-  --color-magenta-900: #990056;
-  --color-magenta-1000: #790044;
-  --color-magenta-1100: #590138;
-  --color-magenta-1200: #380432;
-
-  /* Yellow Colors */
-  --color-yellow-01: #fdf2bd;
-  --color-yellow-02: #fae474;
-  --color-yellow-03: #fdda25;
-  --color-yellow-04: #e2c221;
-  --color-yellow-05: #c7ab20;
-  --color-yellow-06: #ac9421;
-  --color-yellow-07: #937d21;
-  --color-yellow-08: #796923;
-  --color-yellow-09: #615323;
-  --color-yellow-10: #4a4023;
-  --color-yellow-11: #332e23;
-  --color-yellow-12: #1b1b21;
-  --color-yellow-100: #fdf2bd;
-  --color-yellow-200: #fae474;
-  --color-yellow-300: #fdda25;
-  --color-yellow-400: #e2c221;
-  --color-yellow-500: #c7ab20;
-  --color-yellow-600: #ac9421;
-  --color-yellow-700: #937d21;
-  --color-yellow-800: #796923;
-  --color-yellow-900: #615323;
-  --color-yellow-1000: #4a4023;
-  --color-yellow-1100: #332e23;
-  --color-yellow-1200: #1b1b21;
-
-  /* Red Colors */
-  --color-red-01: #f7e4e8;
-  --color-red-02: #f1cbd3;
-  --color-red-03: #e9b0bd;
-  --color-red-04: #e297a6;
-  --color-red-05: #d97c8f;
-  --color-red-06: #d15e75;
-  --color-red-07: #c83f59;
-  --color-red-08: #ba0c2f;
-  --color-red-09: #9c0928;
-  --color-red-10: #7c0820;
-  --color-red-11: #5d0618;
-  --color-red-12: #3c071c;
-  --color-red-100: #f7e4e8;
-  --color-red-200: #f1cbd3;
-  --color-red-300: #e9b0bd;
-  --color-red-400: #e297a6;
-  --color-red-500: #d97c8f;
-  --color-red-600: #d15e75;
-  --color-red-700: #c83f59;
-  --color-red-800: #ba0c2f;
-  --color-red-900: #9c0928;
-  --color-red-1000: #7c0820;
-  --color-red-1100: #5d0618;
-  --color-red-1200: #3c071c;
-
-  /* Green Colors */
-  --color-green-01: #ddf0cd;
-  --color-green-02: #bcdf97;
-  --color-green-03: #9acf5c;
-  --color-green-04: #78be20;
-  --color-green-05: #6aa71b;
-  --color-green-06: #5c9318;
-  --color-green-07: #4f7d15;
-  --color-green-08: #426a12;
-  --color-green-09: #365612;
-  --color-green-10: #294217;
-  --color-green-11: #1d2f1b;
-  --color-green-12: #121f20;
-  --color-green-100: #ddf0cd;
-  --color-green-200: #bcdf97;
-  --color-green-300: #9acf5c;
-  --color-green-400: #78be20;
-  --color-green-500: #6aa71b;
-  --color-green-600: #5c9318;
-  --color-green-700: #4f7d15;
-  --color-green-800: #426a12;
-  --color-green-900: #365612;
-  --color-green-1000: #294217;
-  --color-green-1100: #1d2f1b;
-  --color-green-1200: #121f20;
-
-  /* Brand Hues */
-  --color-brand-moody-blue: #0a1264;
-  --color-brand-moody-bright-blue: #005eff;
-  --color-brand-moody-teal: #008c95;
-  --color-brand-moody-yellow: #fdda25;
-  --color-brand-moody-orange: #e35205;
-  --color-brand-moody-red: #ba0c2f;
-  --color-brand-moody-light-green: #78be20;
-  --color-brand-moody-purple: #5c068c;
-  --color-brand-moody-magenta: #d9017a;
-  --color-brand-moody-white: #ffffff;
-  --color-brand-moody-black: #000000;
-  --color-brand-moody-gray: #74787b;
-
-  /* Semantic Colors */
-  --color-semantic-yellow: #fad023;
-  --color-semantic-orange: #f09515;
-  --color-neutral-blue: #e1e2e1;
-  --color-neutral-light-grey: #e1e2e1;
-  --color-neutral-light-gray: #e1e2e1;
-  --color-text: #ffffff;
-  --color-selection: #000000;
-  --color-h1: #ffffff;
-  --color-subhead: #ffffff;
-  --color-h2: #ffffff;
-  --color-h3: #ffffff;
-  --color-chart-header: #ffffff;
-  --color-chart-legend: #ffffff;
-  --color-chart-primary-tick: #ffffff;
-  --color-chart-primary-label: #ffffff;
-  --color-chart-annotation: #000000;
-  --color-custom: #005eff;
+.bg-brand-moody-bright-blue {
+  background-color: #005eff;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+.border-brand-moody-bright-blue {
+  border-color: #005eff;
+}
+
+/* Supporting brand colors */
+.text-bright-blue-500 {
+  color: #5996ff;
+}
+
+.border-bright-blue-500 {
+  border-color: #5996ff;
+}
+
+.text-bright-blue-900 {
+  color: #0044b7;
+}
+
+.border-bright-blue-900 {
+  border-color: #0044b7;
+}
+
+.focus\:ring-bright-blue-700:focus {
+  --tw-ring-color: #005eff;
+}
+
+/* Panel Slide Animations */
+.slide-in-right {
+  animation: slideInRight 0.3s ease-out forwards;
+}
+
+.slide-out-right {
+  animation: slideOutRight 0.3s ease-out forwards;
+}
+
+@keyframes slideInRight {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
+@keyframes slideOutRight {
+  from {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  to {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+}
+
+/* Transition Classes for Specific Use Cases */
+
+/* Smooth transitions for UI elements that should animate */
+.ui-transition {
+  transition: all 0.3s ease-out;
+}
+
+/* Fast transitions for interactive elements */
+.interactive-transition {
+  transition: all 0.2s ease-in-out;
+}
+
+/* No transition - for instant changes */
+.no-transition {
+  transition: none !important;
+}
+
+/* Legacy panel transition (kept for backward compatibility) */
+.panel-transition {
+  transition: all 0.3s ease-out;
+}
+
+/* Color Variables */
+:root {
+  --font-gt-america: "GT America", -apple-system, BlinkMacSystemFont, "Segoe UI",
+    "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans",
+    "Helvetica Neue", sans-serif;
+}
+
+/* Font utilities */
+.font-gt-america {
   font-family: var(--font-gt-america);
+}
+
+.font-financier {
+  font-family: var(--font-financier);
+}
+
+/* Component utilities */
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+/* Animation utilities */
+.fade-in {
+  animation: fadeIn 0.2s ease-out;
+}
+
+.fade-out {
+  animation: fadeOut 0.2s ease-in;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
 }

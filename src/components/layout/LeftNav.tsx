@@ -40,7 +40,7 @@ const LeftNav = () => {
               : "text-gray-900"
           }`}
         >
-          Your Companies
+          Companies
         </div>
       </Link>
 
