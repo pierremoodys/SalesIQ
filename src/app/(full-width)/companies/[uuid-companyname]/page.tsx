@@ -167,55 +167,6 @@ export default function CompanyPage({ params }: CompanyPageProps) {
     );
   }
 
-  const renderTabContent = () => {
-    switch (activeTab) {
-      case "notifications":
-        return (
-          <div className="space-y-6">
-            <div className="bg-white border border-gray-200 rounded-lg p-6">
-              <h3 className="text-lg font-medium mb-4">Notifications</h3>
-              <p className="text-gray-600">
-                Company notifications and alerts will be displayed here.
-              </p>
-            </div>
-          </div>
-        );
-      case "sales-pitch":
-        return (
-          <div className="space-y-6">
-            <div className="bg-white border border-gray-200 rounded-lg p-6">
-              <h3 className="text-lg font-medium mb-4">Sales Pitch</h3>
-              <p className="text-gray-600">
-                Sales pitch content and strategies will be shown here.
-              </p>
-            </div>
-          </div>
-        );
-      case "reach-out":
-        return (
-          <div className="space-y-6">
-            <div className="bg-white border border-gray-200 rounded-lg p-6">
-              <h3 className="text-lg font-medium mb-4">Reach out to Client</h3>
-              <p className="text-gray-600">
-                Client outreach templates and guidance will be displayed here.
-              </p>
-            </div>
-          </div>
-        );
-      default:
-        return (
-          <div className="space-y-6">
-            <div className="bg-white border border-gray-200 rounded-lg p-6">
-              <h3 className="text-lg font-medium mb-4">Content</h3>
-              <p className="text-gray-600">
-                Tab content will be displayed here.
-              </p>
-            </div>
-          </div>
-        );
-    }
-  };
-
   return (
     <div className="h-full flex flex-col">
       {/* Company Header - Fixed */}
@@ -283,26 +234,55 @@ export default function CompanyPage({ params }: CompanyPageProps) {
           >
             <div className="h-full flex">
               {/* Conditionally render TOC and content based on active tab */}
-              {activeTab === "report" ? (
+              {activeTab === "report" ||
+              activeTab === "sales-pitch" ||
+              activeTab === "reach-out" ? (
                 <>
                   {/* Table of Contents - Fixed Left Column */}
                   <div className="w-64 flex-shrink-0 h-full">
                     <div className="h-full p-4">
-                      <MarkdownTableOfContents companyName={company?.name} />
+                      <MarkdownTableOfContents
+                        companyName={company?.name}
+                        section={
+                          activeTab === "report"
+                            ? "report"
+                            : activeTab === "sales-pitch"
+                            ? "sales-pitch"
+                            : "reach-out"
+                        }
+                      />
                     </div>
                   </div>
 
                   {/* Report Content Area - Right Column */}
                   <div className="flex-1 min-w-0 h-full">
                     <div className="h-full overflow-y-auto p-4">
-                      <MarkdownReport companyName={company?.name} />
+                      <MarkdownReport
+                        companyName={company?.name}
+                        section={
+                          activeTab === "report"
+                            ? "report"
+                            : activeTab === "sales-pitch"
+                            ? "sales-pitch"
+                            : "reach-out"
+                        }
+                      />
                     </div>
                   </div>
                 </>
               ) : (
-                /* Other tab content - Full width */
+                /* Notifications tab - Full width */
                 <div className="flex-1 h-full overflow-y-auto p-6">
-                  {renderTabContent()}
+                  <div className="space-y-6">
+                    <div className="bg-white border border-gray-200 rounded-lg p-6">
+                      <h3 className="text-lg font-medium mb-4">
+                        Notifications
+                      </h3>
+                      <p className="text-gray-600">
+                        Company notifications and alerts will be displayed here.
+                      </p>
+                    </div>
+                  </div>
                 </div>
               )}
             </div>

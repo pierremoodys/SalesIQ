@@ -8,6 +8,7 @@ import { cn } from "@/lib/utils";
 interface MarkdownTableOfContentsProps {
   companyName?: string;
   markdownPath?: string;
+  section?: "report" | "sales-pitch" | "reach-out";
   className?: string;
 }
 
@@ -18,13 +19,16 @@ interface TOCItemProps {
 }
 
 const TOCItem: React.FC<TOCItemProps> = ({ heading, isActive, onClick }) => {
+  const isMainHeading = heading.level === 1;
   const isSubheading = heading.level === 3;
 
   return (
     <button
       onClick={onClick}
       className={cn(
-        "block w-full text-left text-sm transition-colors duration-200 hover:text-blue-600 cursor-pointer py-1.5 px-2 rounded",
+        "block w-full text-left transition-colors duration-200 hover:text-blue-600 cursor-pointer py-1.5 px-2 rounded",
+        isMainHeading && "text-base font-semibold",
+        !isMainHeading && !isSubheading && "text-sm",
         isSubheading && "ml-4 text-xs",
         isActive
           ? "text-blue-600 font-medium"
@@ -39,11 +43,13 @@ const TOCItem: React.FC<TOCItemProps> = ({ heading, isActive, onClick }) => {
 const MarkdownTableOfContents: React.FC<MarkdownTableOfContentsProps> = ({
   companyName,
   markdownPath,
+  section,
   className,
 }) => {
   const { headings, loading } = useMarkdownReport({
     companyName,
     markdownPath,
+    section,
   });
 
   const [activeId, setActiveId] = useState<string>("");

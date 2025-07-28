@@ -8,6 +8,7 @@ import { useMarkdownReport } from "@/hooks/useMarkdownReport";
 interface MarkdownReportProps {
   companyName?: string;
   markdownPath?: string;
+  section?: "report" | "sales-pitch" | "reach-out";
 }
 
 // Custom component mappings for styled rendering
@@ -136,10 +137,12 @@ const components = {
 const MarkdownReport: React.FC<MarkdownReportProps> = ({
   companyName,
   markdownPath,
+  section,
 }) => {
   const { markdownContent, loading, error } = useMarkdownReport({
     companyName,
     markdownPath,
+    section,
   });
 
   if (loading) {

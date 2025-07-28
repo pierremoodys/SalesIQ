@@ -16,11 +16,13 @@ interface UseMarkdownReportReturn {
 interface UseMarkdownReportOptions {
   companyName?: string;
   markdownPath?: string;
+  section?: "report" | "sales-pitch" | "reach-out";
 }
 
 export const useMarkdownReport = ({
   companyName = "Volt Motors",
   markdownPath = "/data/company-report-template.md",
+  section = "report",
 }: UseMarkdownReportOptions = {}): UseMarkdownReportReturn => {
   const [markdownContent, setMarkdownContent] = useState<string>("");
   const [headings, setHeadings] = useState<MarkdownHeading[]>([]);
@@ -44,10 +46,13 @@ export const useMarkdownReport = ({
           content = content.replace(/Volt Motors/g, companyName);
         }
 
-        // Extract headings from markdown content
-        const extractedHeadings = extractHeadingsFromMarkdown(content);
+        // Filter content by section
+        const filteredContent = filterContentBySection(content, section);
 
-        setMarkdownContent(content);
+        // Extract headings from filtered content
+        const extractedHeadings = extractHeadingsFromMarkdown(filteredContent);
+
+        setMarkdownContent(filteredContent);
         setHeadings(extractedHeadings);
         setError(null);
       } catch (err) {
@@ -61,10 +66,63 @@ export const useMarkdownReport = ({
     };
 
     fetchMarkdown();
-  }, [markdownPath, companyName]);
+  }, [markdownPath, companyName, section]);
 
   return { markdownContent, headings, loading, error };
 };
+
+// Filter markdown content by section
+function filterContentBySection(
+  content: string,
+  section: "report" | "sales-pitch" | "reach-out"
+): string {
+  const lines = content.split("\n");
+
+  // Find section boundaries
+  let reportStart = -1;
+  let salesPitchStart = -1;
+  let reachOutStart = -1;
+
+  lines.forEach((line, index) => {
+    const trimmedLine = line.trim();
+    if (trimmedLine === "# Report") {
+      reportStart = index;
+    } else if (trimmedLine === "## Sales Pitch") {
+      salesPitchStart = index;
+    } else if (trimmedLine === "## Reach Out to Client") {
+      reachOutStart = index;
+    }
+  });
+
+  // Extract the appropriate section
+  let startIndex: number;
+  let endIndex: number;
+
+  switch (section) {
+    case "report":
+      startIndex = reportStart;
+      endIndex = salesPitchStart !== -1 ? salesPitchStart : lines.length;
+      break;
+    case "sales-pitch":
+      startIndex = salesPitchStart;
+      endIndex = reachOutStart !== -1 ? reachOutStart : lines.length;
+      break;
+    case "reach-out":
+      startIndex = reachOutStart;
+      endIndex = lines.length;
+      break;
+    default:
+      startIndex = 0;
+      endIndex = lines.length;
+  }
+
+  // Return the filtered section
+  if (startIndex === -1) {
+    return ""; // Section not found
+  }
+
+  return lines.slice(startIndex, endIndex).join("\n");
+}
 
 // Helper function to extract headings from markdown content
 function extractHeadingsFromMarkdown(content: string): MarkdownHeading[] {
@@ -74,11 +132,20 @@ function extractHeadingsFromMarkdown(content: string): MarkdownHeading[] {
   lines.forEach((line, index) => {
     const trimmedLine = line.trim();
 
-    // Match h2 (## ) and h3 (### ) headings
+    // Match h1 (#), h2 (##), and h3 (###) headings
+    const h1Match = trimmedLine.match(/^#\s+(.+)$/);
     const h2Match = trimmedLine.match(/^##\s+(.+)$/);
     const h3Match = trimmedLine.match(/^###\s+(.+)$/);
 
-    if (h2Match) {
+    if (h1Match) {
+      const text = h1Match[1].trim();
+      const id = generateSlug(text);
+      headings.push({
+        id,
+        text,
+        level: 1,
+      });
+    } else if (h2Match) {
       const text = h2Match[1].trim();
       const id = generateSlug(text);
       headings.push({
