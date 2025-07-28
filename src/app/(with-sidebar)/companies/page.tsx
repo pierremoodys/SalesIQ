@@ -1,53 +1,32 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useRouter } from "next/navigation";
 import {
   CompanyListItem,
   CompanyListGrid,
   CompanyListTable,
 } from "@/components/ui";
-import { fetchCompanies, updateCompanyTracking } from "@/lib/api";
+import { updateCompanyTracking } from "@/lib/api";
 import { generateCompanyUrl } from "@/lib/utils";
 import { useCompaniesContext } from "@/contexts/CompaniesContext";
-
-interface CompanyTag {
-  type: string;
-  label: string;
-  value: string;
-  icon: string;
-}
-
-interface Company {
-  id: string;
-  uuid: string;
-  name: string;
-  description: string;
-  logoUrl?: string;
-  tracked: boolean;
-  tags: CompanyTag[];
-}
+import { useCompanies, type Company } from "@/hooks/useCompanies";
 
 export default function CompaniesPage() {
-  const [companies, setCompanies] = useState<Company[]>([]);
-  const [loading, setLoading] = useState(true);
   const { searchQuery, viewType } = useCompaniesContext();
   const router = useRouter();
 
-  useEffect(() => {
-    const loadCompanies = async () => {
-      try {
-        const companiesData = await fetchCompanies();
-        setCompanies(companiesData);
-      } catch (error) {
-        console.error("Failed to load companies:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
+  // Use React Query to fetch companies with filtering
+  const {
+    data: companiesData,
+    isLoading,
+    error,
+  } = useCompanies({
+    search: searchQuery,
+    tracked: true, // Only show tracked companies
+  });
 
-    loadCompanies();
-  }, []);
+  const companies = companiesData?.companies || [];
 
   const handleTrackingChange = async (
     companyId: string,
@@ -56,15 +35,7 @@ export default function CompaniesPage() {
     try {
       // Update the JSON file via API
       await updateCompanyTracking(companyId, isTracked);
-
-      // Update local state
-      setCompanies((prevCompanies) =>
-        prevCompanies.map((company) =>
-          company.id === companyId
-            ? { ...company, tracked: isTracked }
-            : company
-        )
-      );
+      // React Query will handle refetching automatically
     } catch (error) {
       console.error("Failed to update company tracking:", error);
       // You might want to show a toast or error message here
@@ -83,25 +54,30 @@ export default function CompaniesPage() {
     }
   };
 
-  // Filter companies based on search query
-  const filteredCompanies = companies.filter((company) => {
-    const matchesSearch =
-      searchQuery === "" ||
-      company.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      company.description.toLowerCase().includes(searchQuery.toLowerCase());
-    const isTracked = company.tracked;
+  // Since we're already filtering in the useCompanies hook, we can use companies directly
+  // But keep the search filtering for additional client-side filtering if needed
+  const filteredCompanies = companies;
 
-    return matchesSearch && isTracked;
-  });
+  if (isLoading) {
+    return (
+      <div className="text-center py-12">
+        <p className="text-gray-500">Loading companies...</p>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="text-center py-12">
+        <p className="text-red-500">Error loading companies</p>
+      </div>
+    );
+  }
 
   return (
     <div>
       {/* Companies Content */}
-      {loading ? (
-        <div className="text-center py-12">
-          <p className="text-gray-500">Loading companies...</p>
-        </div>
-      ) : filteredCompanies.length > 0 ? (
+      {filteredCompanies.length > 0 ? (
         <>
           {/* List View */}
           {viewType === "list" && (
