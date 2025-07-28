@@ -13,17 +13,13 @@ interface LayoutProps {
 export default function Layout({ children }: LayoutProps) {
   const [isChatOpen, setIsChatOpen] = useState(false);
 
-  const toggleChat = () => {
-    setIsChatOpen(!isChatOpen);
-  };
-
   const closeChat = () => {
     setIsChatOpen(false);
   };
 
   return (
     <div className="h-screen w-screen overflow-hidden bg-slate-50">
-      <TopNav onToggleChat={toggleChat} isChatOpen={isChatOpen} />
+      <TopNav />
       <PanelGroup direction="horizontal" autoSaveId="main-layout">
         {/* Left Navigation Sidebar */}
         <Panel

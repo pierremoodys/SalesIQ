@@ -1,8 +1,8 @@
-'use client';
+"use client";
 
-import React, { useState } from 'react';
-import { Button } from '@headlessui/react';
-import { SparklesIcon } from '@heroicons/react/16/solid';
+import React, { useState } from "react";
+import { Button } from "@headlessui/react";
+import { SparklesIcon } from "@heroicons/react/16/solid";
 
 interface MoodysAIButtonProps {
   isActive?: boolean;
@@ -10,16 +10,17 @@ interface MoodysAIButtonProps {
   className?: string;
 }
 
-const MoodysAIButton: React.FC<MoodysAIButtonProps> = ({ 
-  isActive: controlledActive, 
+const MoodysAIButton: React.FC<MoodysAIButtonProps> = ({
+  isActive: controlledActive,
   onToggle,
-  className = '' 
+  className = "",
 }) => {
   const [internalActive, setInternalActive] = useState(false);
-  
+
   // Use controlled state if provided, otherwise use internal state
-  const isActive = controlledActive !== undefined ? controlledActive : internalActive;
-  
+  const isActive =
+    controlledActive !== undefined ? controlledActive : internalActive;
+
   const handleClick = () => {
     const newState = !isActive;
     if (onToggle) {
@@ -51,18 +52,25 @@ const MoodysAIButton: React.FC<MoodysAIButtonProps> = ({
         focus:outline-none 
         focus:ring-2 
         focus:ring-offset-2
-        ${isActive 
-          ? 'bg-white border-2 border-gray-300 text-gray-700 hover:border-gray-400 focus:ring-gray-300' 
-          : 'bg-purple-1000 border-2 border-purple-1000 text-white hover:bg-purple-900 focus:ring-purple-700'
+        ${
+          isActive
+            ? "bg-white border-2 border-gray-300 text-gray-700 hover:border-gray-400 focus:ring-gray-300"
+            : "border-2 text-white focus:ring-purple-700"
+        }
+        ${!isActive ? "bg-gradient-to-br from-[#66009F] to-[#00276A]" : ""}
+        ${
+          !isActive
+            ? "hover:from-[#5a0089] hover:to-[#001f5a] border-transparent"
+            : ""
         }
         ${className}
       `}
     >
-      <SparklesIcon 
+      <SparklesIcon
         className={`
           w-4 h-4 
-          ${isActive ? 'text-gray-600' : 'text-white'}
-        `} 
+          ${isActive ? "text-gray-600" : "text-white"}
+        `}
       />
       <span className="whitespace-nowrap">
         {isActive ? "Close Moody's AI" : "Open Moody's AI"}
@@ -71,4 +79,4 @@ const MoodysAIButton: React.FC<MoodysAIButtonProps> = ({
   );
 };
 
-export default MoodysAIButton; 
+export default MoodysAIButton;

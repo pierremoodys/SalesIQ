@@ -1,0 +1,238 @@
+{
+  "companies": [
+    {
+      "id": "volt-motors",
+      "name": "Volt Motors",
+      "description": "Manufactures high-efficiency electric motors.",
+      "logoUrl": "/logos/volt-motors.png",
+      "tracked": false,
+      "tags": [
+        {
+          "type": "headquarters",
+          "label": "HQ",
+          "value": "Austin, Texas, USA",
+          "icon": "MapPinIcon"
+        },
+        {
+          "type": "industry",
+          "label": "Industry",
+          "value": "Renewable Energy (Solar Technology)",
+          "icon": "BuildingOffice2Icon"
+        },
+        {
+          "type": "markets",
+          "label": "Markets",
+          "value": "North America, Europe, Asia",
+          "icon": "GlobeAmericasIcon"
+        },
+        {
+          "type": "founded",
+          "label": "Founded",
+          "value": "2015",
+          "icon": "CalendarIcon"
+        },
+        {
+          "type": "employees",
+          "label": "Employees",
+          "value": "2,500+",
+          "icon": "UsersIcon"
+        }
+      ]
+    },
+    {
+      "id": "gamma-solutions",
+      "name": "Gamma Solutions",
+      "description": "Leading provider of AI-driven analytics",
+      "logoUrl": "/logos/gamma-solutions.png",
+      "tracked": false,
+      "tags": [
+        {
+          "type": "headquarters",
+          "label": "HQ",
+          "value": "San Francisco, California, USA",
+          "icon": "MapPinIcon"
+        },
+        {
+          "type": "industry",
+          "label": "Industry",
+          "value": "Technology (Artificial Intelligence)",
+          "icon": "BuildingOffice2Icon"
+        },
+        {
+          "type": "markets",
+          "label": "Markets",
+          "value": "Global",
+          "icon": "GlobeAmericasIcon"
+        },
+        {
+          "type": "founded",
+          "label": "Founded",
+          "value": "2018",
+          "icon": "CalendarIcon"
+        },
+        {
+          "type": "employees",
+          "label": "Employees",
+          "value": "1,200+",
+          "icon": "UsersIcon"
+        }
+      ]
+    },
+    {
+      "id": "delta-innovations",
+      "name": "Delta Innovations",
+      "description": "Pioneering advancements in biotechnology",
+      "logoUrl": "/logos/delta-innovations.png",
+      "tracked": true,
+      "tags": [
+        {
+          "type": "headquarters",
+          "label": "HQ",
+          "value": "Boston, Massachusetts, USA",
+          "icon": "MapPinIcon"
+        },
+        {
+          "type": "industry",
+          "label": "Industry",
+          "value": "Biotechnology",
+          "icon": "BuildingOffice2Icon"
+        },
+        {
+          "type": "markets",
+          "label": "Markets",
+          "value": "North America, Europe",
+          "icon": "GlobeAmericasIcon"
+        },
+        {
+          "type": "founded",
+          "label": "Founded",
+          "value": "2020",
+          "icon": "CalendarIcon"
+        },
+        {
+          "type": "employees",
+          "label": "Employees",
+          "value": "850+",
+          "icon": "UsersIcon"
+        }
+      ]
+    },
+    {
+      "id": "epsilon-enterprises",
+      "name": "Epsilon Enterprises",
+      "description": "Specialists in electric vehicle infrastructure",
+      "logoUrl": "/logos/epsilon-enterprises.png",
+      "tracked": true,
+      "tags": [
+        {
+          "type": "headquarters",
+          "label": "HQ",
+          "value": "Los Angeles, California, USA",
+          "icon": "MapPinIcon"
+        },
+        {
+          "type": "industry",
+          "label": "Industry",
+          "value": "Automotive (Electric Vehicles)",
+          "icon": "BuildingOffice2Icon"
+        },
+        {
+          "type": "markets",
+          "label": "Markets",
+          "value": "North America, Asia",
+          "icon": "GlobeAmericasIcon"
+        },
+        {
+          "type": "founded",
+          "label": "Founded",
+          "value": "2021",
+          "icon": "CalendarIcon"
+        },
+        {
+          "type": "employees",
+          "label": "Employees",
+          "value": "1,500+",
+          "icon": "UsersIcon"
+        }
+      ]
+    },
+    {
+      "id": "zeta-dynamics",
+      "name": "Zeta Dynamics",
+      "description": "Innovators in cloud computing solutions",
+      "logoUrl": "/logos/zeta-dynamics.png",
+      "tracked": true,
+      "tags": [
+        {
+          "type": "headquarters",
+          "label": "HQ",
+          "value": "Seattle, Washington, USA",
+          "icon": "MapPinIcon"
+        },
+        {
+          "type": "industry",
+          "label": "Industry",
+          "value": "Information Technology",
+          "icon": "BuildingOffice2Icon"
+        },
+        {
+          "type": "markets",
+          "label": "Markets",
+          "value": "Global",
+          "icon": "GlobeAmericasIcon"
+        },
+        {
+          "type": "founded",
+          "label": "Founded",
+          "value": "2019",
+          "icon": "CalendarIcon"
+        },
+        {
+          "type": "employees",
+          "label": "Employees",
+          "value": "3,000+",
+          "icon": "UsersIcon"
+        }
+      ]
+    },
+    {
+      "id": "theta-designs",
+      "name": "Theta Designs",
+      "description": "Experts in sustainable fashion technology",
+      "logoUrl": "/logos/theta-designs.png",
+      "tracked": true,
+      "tags": [
+        {
+          "type": "headquarters",
+          "label": "HQ",
+          "value": "New York City, New York, USA",
+          "icon": "MapPinIcon"
+        },
+        {
+          "type": "industry",
+          "label": "Industry",
+          "value": "Fashion (Sustainable Practices)",
+          "icon": "BuildingOffice2Icon"
+        },
+        {
+          "type": "markets",
+          "label": "Markets",
+          "value": "North America, Europe",
+          "icon": "GlobeAmericasIcon"
+        },
+        {
+          "type": "founded",
+          "label": "Founded",
+          "value": "2022",
+          "icon": "CalendarIcon"
+        },
+        {
+          "type": "employees",
+          "label": "Employees",
+          "value": "400+",
+          "icon": "UsersIcon"
+        }
+      ]
+    }
+  ]
+}

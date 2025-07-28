@@ -30,7 +30,7 @@ const CompaniesPageHeader: React.FC<CompaniesPageHeaderProps> = ({
         {/* Actions Section */}
         <div className="flex items-center gap-4">
           {/* Moody's AI Button */}
-          <MoodysAIButton isActive={true} />
+          <MoodysAIButton isActive={false} />
 
           {/* Menu Button */}
           <button
