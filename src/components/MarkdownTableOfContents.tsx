@@ -196,7 +196,9 @@ const MarkdownTableOfContents: React.FC<MarkdownTableOfContentsProps> = ({
   }
 
   return (
-    <div className={cn("h-full flex flex-col", className)}>
+    <div
+      className={cn("h-full flex flex-col border-r border-gray-200", className)}
+    >
       <div className="flex-1 min-h-0">
         <nav className="space-y-1 overflow-y-auto">
           {headings.map((heading) => (
