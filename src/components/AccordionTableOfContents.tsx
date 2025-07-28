@@ -184,9 +184,6 @@ const AccordionTableOfContents: React.FC<AccordionTableOfContentsProps> = ({
     return (
       <div className={cn("h-full flex flex-col", className)}>
         <div className="flex-1 min-h-0">
-          <h3 className="text-sm font-semibold text-gray-900 mb-4 uppercase tracking-wide">
-            Contents
-          </h3>
           <div className="text-sm text-gray-500">Loading...</div>
         </div>
       </div>
@@ -208,24 +205,20 @@ const AccordionTableOfContents: React.FC<AccordionTableOfContentsProps> = ({
   return (
     <div className={cn("h-full flex flex-col", className)}>
       <div className="flex-1 min-h-0 flex flex-col">
-        <h3 className="text-sm font-semibold text-gray-900 mb-4 uppercase tracking-wide flex-shrink-0">
-          Contents
-        </h3>
         <div className="flex-1 min-h-0 overflow-y-auto space-y-1">
-          {accordionSections.map((section) => {
+          {accordionSections.map((section, index) => {
             const isActiveSection = getActiveSection(section);
 
             return (
               <Disclosure
                 key={section.h2.id}
-                defaultOpen={isActiveSection}
+                defaultOpen={index === 0}
                 as="div"
                 className="group"
               >
                 {({ open }) => (
                   <>
                     <DisclosureButton
-                      onClick={() => scrollToHeading(section.h2.id)}
                       className={cn(
                         "flex w-full items-center justify-between text-left text-sm font-medium transition-colors duration-200 hover:text-blue-600 py-2 px-2 rounded",
                         activeId === section.h2.id
@@ -256,7 +249,7 @@ const AccordionTableOfContents: React.FC<AccordionTableOfContentsProps> = ({
                             className={cn(
                               "block w-full text-left text-xs transition-colors duration-200 hover:text-blue-600 py-1.5 px-2 rounded",
                               activeId === h3Item.id
-                                ? "text-blue-600 font-medium bg-blue-50"
+                                ? "text-blue-600 font-medium"
                                 : "text-gray-600 hover:bg-gray-50"
                             )}
                           >
