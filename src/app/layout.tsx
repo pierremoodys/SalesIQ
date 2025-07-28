@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import { Layout } from "@/components/layout";
 
 export const metadata: Metadata = {
   title: "SalesIQ - Moody's Analytics",
@@ -14,9 +13,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className="antialiased">
-        <Layout>{children}</Layout>
-      </body>
+      <body className="antialiased">{children}</body>
     </html>
   );
 }

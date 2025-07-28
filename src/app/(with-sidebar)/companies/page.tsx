@@ -1,12 +1,14 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
 import {
   CompanyListItem,
   CompanyListGrid,
   CompanyListTable,
 } from "@/components/ui";
 import { fetchCompanies, updateCompanyTracking } from "@/lib/api";
+import { generateCompanyUrl } from "@/lib/utils";
 import { useCompaniesContext } from "./layout";
 
 interface CompanyTag {
@@ -30,6 +32,7 @@ export default function CompaniesPage() {
   const [companies, setCompanies] = useState<Company[]>([]);
   const [loading, setLoading] = useState(true);
   const { searchQuery, viewType } = useCompaniesContext();
+  const router = useRouter();
 
   useEffect(() => {
     const loadCompanies = async () => {
@@ -69,8 +72,15 @@ export default function CompaniesPage() {
   };
 
   const handleCompanyClick = (companyId: string) => {
-    console.log("Company clicked:", companyId);
-    // Navigate to company detail page or handle click as needed
+    // Find the company by ID to get both UUID and name for URL generation
+    const company = companies.find((c) => c.id === companyId);
+
+    if (company) {
+      const companyUrl = generateCompanyUrl(company.uuid, company.name);
+      router.push(companyUrl);
+    } else {
+      console.error("Company not found:", companyId);
+    }
   };
 
   // Filter companies based on search query

@@ -5,14 +5,10 @@ import {
   MinusCircleIcon,
   RssIcon,
   ArrowRightIcon,
-  MapPinIcon,
   BuildingOffice2Icon,
-  GlobeAmericasIcon,
-  CalendarIcon,
-  UsersIcon,
 } from "@heroicons/react/24/outline";
 import Image from "next/image";
-import { ConfirmationModal } from "@/components/ui";
+import { ConfirmationModal, CompanyTags } from "@/components/ui";
 
 interface CompanyTag {
   type: string;
@@ -69,21 +65,6 @@ const CompanyGridItem: React.FC<CompanyGridItemProps> = ({
 
   const handleClick = () => {
     onClick?.(company.id);
-  };
-
-  // Icon mapping
-  const getIconComponent = (iconName: string) => {
-    const iconMap = {
-      MapPinIcon: MapPinIcon,
-      BuildingOffice2Icon: BuildingOffice2Icon,
-      GlobeAmericasIcon: GlobeAmericasIcon,
-      CalendarIcon: CalendarIcon,
-      UsersIcon: UsersIcon,
-    };
-    const IconComponent = iconMap[iconName as keyof typeof iconMap];
-    return IconComponent ? (
-      <IconComponent className="w-3 h-3 text-gray-700" />
-    ) : null;
   };
 
   return (
@@ -167,22 +148,13 @@ const CompanyGridItem: React.FC<CompanyGridItemProps> = ({
           {company.description}
         </p>
 
-        {/* Metadata Tags */}
-        <div className="space-y-2">
-          {company.tags.slice(0, 3).map((tag, index) => (
-            <div key={index} className="flex items-center gap-2">
-              {getIconComponent(tag.icon)}
-              <span className="text-gray-900 text-xs">
-                <span className="font-medium">{tag.label}:</span> {tag.value}
-              </span>
-            </div>
-          ))}
-          {company.tags.length > 3 && (
-            <div className="text-gray-500 text-xs">
-              +{company.tags.length - 3} more
-            </div>
-          )}
-        </div>
+        {/* Metadata Tags - Using the new CompanyTags component */}
+        <CompanyTags
+          tags={company.tags}
+          maxTags={3}
+          showMore={true}
+          iconSize="sm"
+        />
       </div>
 
       {/* Confirmation Modal */}
