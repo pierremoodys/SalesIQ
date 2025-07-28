@@ -13,23 +13,7 @@ import { CompaniesPageHeader } from "@/components/pageHeader";
 import ChatPanel from "@/components/layout/ChatPanel";
 import { useChatStore } from "@/stores/chatStore";
 import { cn } from "@/lib/utils";
-
-interface CompanyTag {
-  type: string;
-  label: string;
-  value: string;
-  icon: string;
-}
-
-interface Company {
-  id: string;
-  uuid: string;
-  name: string;
-  description: string;
-  logoUrl?: string;
-  tracked: boolean;
-  tags: CompanyTag[];
-}
+import { useCompany, type Company } from "@/hooks/useCompanies";
 
 interface CompanyPageProps {
   params: Promise<{
@@ -70,11 +54,15 @@ const parseCompanyParam = (param: string) => {
 };
 
 export default function CompanyPage({ params }: CompanyPageProps) {
-  const [company, setCompany] = useState<Company | null>(null);
-  const [loading, setLoading] = useState(true);
   const [activeTab, setActiveTab] = useState("report");
   const { isChatOpen, chatPanelSize, toggleChat, closeChat, setChatPanelSize } =
     useChatStore();
+
+  // Get UUID from params
+  const [companyUuid, setCompanyUuid] = useState<string | null>(null);
+
+  // Use React Query to fetch company data
+  const { data: company, isLoading, error } = useCompany(companyUuid || "");
 
   // Animation state management
   const [isAnimating, setIsAnimating] = useState(false);
@@ -140,39 +128,21 @@ export default function CompanyPage({ params }: CompanyPageProps) {
   };
 
   useEffect(() => {
-    async function loadCompany() {
+    async function extractUuid() {
       try {
         const resolvedParams = await params;
         const { uuid } = parseCompanyParam(resolvedParams["uuid-companyname"]);
-
-        // Fetch from API since this is now a client component
-        const response = await fetch("/api/companies");
-        if (!response.ok) {
-          throw new Error("Failed to fetch companies");
-        }
-
-        const data = await response.json();
-        const foundCompany = data.companies.find(
-          (c: Company) => c.uuid === uuid
-        );
-
-        if (!foundCompany) {
-          notFound();
-        }
-
-        setCompany(foundCompany);
+        setCompanyUuid(uuid);
       } catch (error) {
-        console.error("Error loading company:", error);
+        console.error("Error parsing company params:", error);
         notFound();
-      } finally {
-        setLoading(false);
       }
     }
 
-    loadCompany();
+    extractUuid();
   }, [params]);
 
-  if (loading) {
+  if (isLoading || !companyUuid) {
     return (
       <div className="h-full flex flex-col">
         <div className="flex-1 flex items-center justify-center">
@@ -182,8 +152,17 @@ export default function CompanyPage({ params }: CompanyPageProps) {
     );
   }
 
-  if (!company) {
-    notFound();
+  if (error || !company) {
+    if (error?.message?.includes("not found")) {
+      notFound();
+    }
+    return (
+      <div className="h-full flex flex-col">
+        <div className="flex-1 flex items-center justify-center">
+          <p className="text-red-500">Error loading company data</p>
+        </div>
+      </div>
+    );
   }
 
   const renderTabContent = () => {
