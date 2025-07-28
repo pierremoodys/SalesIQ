@@ -1,11 +1,10 @@
-export { default as MoodysAIButton } from "./MoodysAIButton";
-export { default as ConfirmationModal } from "./ConfirmationModal";
-export { default as CompaniesFilter, type ViewType } from "./CompaniesFilter";
 export { Button } from "./Button";
+export { default as CompaniesFilter } from "./CompaniesFilter";
+export { default as CompanyTags } from "./CompanyTags";
+export { default as ConfirmationModal } from "./ConfirmationModal";
+export { default as MoodysAIButton } from "./MoodysAIButton";
 
-// Company item components
-export {
-  CompanyListItem,
-  CompanyListGrid,
-  CompanyListTable,
-} from "../companyItem";
+// Company Item Components
+export { default as CompanyListItem } from "../companyItem/CompanyListItem";
+export { default as CompanyListGrid } from "../companyItem/CompanyListGrid";
+export { default as CompanyListTable } from "../companyItem/CompanyListTable";

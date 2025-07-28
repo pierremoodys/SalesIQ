@@ -24,11 +24,12 @@ interface CompaniesData {
 
 export async function PATCH(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     const { tracked } = await request.json();
-    const companyId = params.id;
+    const resolvedParams = await params;
+    const companyId = resolvedParams.id;
 
     // Path to the companies.json file
     const filePath = path.join(process.cwd(), "data", "companies.json");

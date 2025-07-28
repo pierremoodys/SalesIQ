@@ -2,21 +2,23 @@
 
 import { ReactNode } from "react";
 import { Panel, PanelGroup, PanelResizeHandle } from "react-resizable-panels";
-import LeftNav from "./LeftNav";
-import TopNav from "./TopNav";
+import LeftNav from "@/components/layout/LeftNav";
+import TopNav from "@/components/layout/TopNav";
 
-interface LayoutProps {
+interface WithSidebarLayoutProps {
   children: ReactNode;
 }
 
-export default function Layout({ children }: LayoutProps) {
+export default function WithSidebarLayout({
+  children,
+}: WithSidebarLayoutProps) {
   return (
     <div className="h-screen w-screen flex flex-col overflow-hidden bg-slate-50">
       <TopNav />
       <div className="flex-1 min-h-0">
         <PanelGroup
           direction="horizontal"
-          autoSaveId="main-layout"
+          autoSaveId="with-sidebar-layout"
           className="h-full"
         >
           {/* Left Navigation Sidebar */}

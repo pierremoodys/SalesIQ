@@ -5,14 +5,10 @@ import {
   MinusCircleIcon,
   RssIcon,
   ArrowRightIcon,
-  MapPinIcon,
   BuildingOffice2Icon,
-  GlobeAmericasIcon,
-  CalendarIcon,
-  UsersIcon,
 } from "@heroicons/react/24/outline";
 import Image from "next/image";
-import { ConfirmationModal } from "@/components/ui";
+import { ConfirmationModal, CompanyTags } from "@/components/ui";
 import { HOVER_TRANSITIONS, COMPANY_STYLES } from "@/lib/styles";
 
 interface CompanyTag {
@@ -69,21 +65,6 @@ const CompanyListItem: React.FC<CompanyListItemProps> = ({
     onClick?.(company.id);
   };
 
-  // Icon mapping
-  const getIconComponent = (iconName: string) => {
-    const iconMap = {
-      MapPinIcon: MapPinIcon,
-      BuildingOffice2Icon: BuildingOffice2Icon,
-      GlobeAmericasIcon: GlobeAmericasIcon,
-      CalendarIcon: CalendarIcon,
-      UsersIcon: UsersIcon,
-    };
-    const IconComponent = iconMap[iconName as keyof typeof iconMap];
-    return IconComponent ? (
-      <IconComponent className="w-4 h-4 text-gray-700" />
-    ) : null;
-  };
-
   const getCompanyNameClass = () => {
     if (isTracked && isHovered) {
       return "text-blue-600";
@@ -121,9 +102,7 @@ const CompanyListItem: React.FC<CompanyListItemProps> = ({
         {/* Left Content */}
         <div className="flex items-start gap-4 flex-1">
           {/* Company Logo */}
-          <div
-            className={`flex justify-center items-center w-12 h-12 rounded-full border border-gray-200 bg-gray-100`}
-          >
+          <div className="flex justify-center items-center w-12 h-12 rounded-full border border-gray-200 bg-gray-100">
             {company.logoUrl ? (
               <Image
                 src={company.logoUrl}
@@ -160,18 +139,8 @@ const CompanyListItem: React.FC<CompanyListItemProps> = ({
               {company.description}
             </p>
 
-            {/* Metadata Tags */}
-            <div className="mt-4 flex flex-wrap items-start gap-4 self-stretch">
-              {company.tags.map((tag, index) => (
-                <div key={index} className="flex items-center gap-1">
-                  {getIconComponent(tag.icon)}
-                  <span className="text-gray-600 text-[14px] font-medium">
-                    {tag.label} -
-                  </span>
-                  <span className="text-gray-900 text-[14px]">{tag.value}</span>
-                </div>
-              ))}
-            </div>
+            {/* Metadata Tags - Using the new CompanyTags component */}
+            <CompanyTags tags={company.tags} className="mt-4 self-stretch" />
           </div>
         </div>
 
