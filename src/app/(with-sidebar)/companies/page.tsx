@@ -1,6 +1,5 @@
 "use client";
 
-import { useState } from "react";
 import { useRouter } from "next/navigation";
 import {
   CompanyListItem,
@@ -10,7 +9,7 @@ import {
 import { updateCompanyTracking } from "@/lib/api";
 import { generateCompanyUrl } from "@/lib/utils";
 import { useCompaniesContext } from "@/contexts/CompaniesContext";
-import { useCompanies, type Company } from "@/hooks/useCompanies";
+import { useCompanies } from "@/hooks/useCompanies";
 
 export default function CompaniesPage() {
   const { searchQuery, viewType } = useCompaniesContext();

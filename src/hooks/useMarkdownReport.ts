@@ -1,104 +1,75 @@
-import fs from "fs";
-import path from "path";
-
-interface CompanyTag {
-  type: string;
-  label: string;
-  value: string;
-  icon: string;
-}
-
-export interface Company {
-  id: string;
-  uuid: string;
-  name: string;
-  description: string;
-  logoUrl?: string;
-  tracked: boolean;
-  tags: CompanyTag[];
-}
-
-interface CompaniesData {
-  companies: Company[];
-}
+import { useEffect, useState } from "react";
 
 export interface MarkdownHeading {
   id: string;
   text: string;
-  level: number;
+  level: number; // 2 for h2, 3 for h3
 }
 
-export interface ProcessedMarkdownContent {
-  content: string;
+interface UseMarkdownReportReturn {
+  markdownContent: string;
   headings: MarkdownHeading[];
+  loading: boolean;
+  error: string | null;
 }
 
-export async function getCompaniesFromFile(): Promise<Company[]> {
-  try {
-    const filePath = path.join(process.cwd(), "data", "companies.json");
-    const fileContent = fs.readFileSync(filePath, "utf8");
-    const data: CompaniesData = JSON.parse(fileContent);
-    return data.companies;
-  } catch (error) {
-    console.error("Error reading companies from file:", error);
-    throw error;
-  }
+interface UseMarkdownReportOptions {
+  companyName?: string;
+  markdownPath?: string;
+  section?: "report" | "sales-pitch" | "reach-out";
 }
 
-export async function getCompanyByUuid(uuid: string): Promise<Company | null> {
-  try {
-    const companies = await getCompaniesFromFile();
-    return companies.find((company) => company.uuid === uuid) || null;
-  } catch (error) {
-    console.error("Error finding company by UUID:", error);
-    return null;
-  }
-}
+export const useMarkdownReport = ({
+  companyName = "Volt Motors",
+  markdownPath = "/data/company-report-template.md",
+  section = "report",
+}: UseMarkdownReportOptions = {}): UseMarkdownReportReturn => {
+  const [markdownContent, setMarkdownContent] = useState<string>("");
+  const [headings, setHeadings] = useState<MarkdownHeading[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
-export async function getMarkdownContent(
-  companyName: string = "Volt Motors",
-  section: "report" | "sales-pitch" | "reach-out" = "report",
-  markdownPath: string = "/data/company-report-template.md"
-): Promise<ProcessedMarkdownContent> {
-  try {
-    const filePath = path.join(process.cwd(), "public", markdownPath);
-    let content = fs.readFileSync(filePath, "utf8");
+  useEffect(() => {
+    const fetchMarkdown = async () => {
+      try {
+        setLoading(true);
+        const response = await fetch(markdownPath);
 
-    // Replace company name placeholder
-    if (companyName !== "Volt Motors") {
-      content = content.replace(/Volt Motors/g, companyName);
-    }
+        if (!response.ok) {
+          throw new Error(`Failed to fetch markdown: ${response.status}`);
+        }
 
-    // Filter content by section
-    const filteredContent = filterContentBySection(content, section);
+        let content = await response.text();
 
-    // Extract headings
-    const headings = extractHeadingsFromMarkdown(filteredContent);
+        // Replace company name placeholder if needed
+        if (companyName && companyName !== "Volt Motors") {
+          content = content.replace(/Volt Motors/g, companyName);
+        }
 
-    return {
-      content: filteredContent,
-      headings,
+        // Filter content by section
+        const filteredContent = filterContentBySection(content, section);
+
+        // Extract headings from filtered content
+        const extractedHeadings = extractHeadingsFromMarkdown(filteredContent);
+
+        setMarkdownContent(filteredContent);
+        setHeadings(extractedHeadings);
+        setError(null);
+      } catch (err) {
+        console.error("Error fetching markdown:", err);
+        setError(err instanceof Error ? err.message : "Failed to load content");
+        setMarkdownContent("");
+        setHeadings([]);
+      } finally {
+        setLoading(false);
+      }
     };
-  } catch (error) {
-    console.error("Error reading markdown content:", error);
-    throw error;
-  }
-}
 
-// Helper function to generate static params for all companies
-export async function getAllCompanyParams() {
-  try {
-    const companies = await getCompaniesFromFile();
-    return companies.map((company) => ({
-      "uuid-companyname": `${company.uuid}-${company.name
-        .toLowerCase()
-        .replace(/\s+/g, "-")}`,
-    }));
-  } catch (error) {
-    console.error("Error generating company params:", error);
-    return [];
-  }
-}
+    fetchMarkdown();
+  }, [markdownPath, companyName, section]);
+
+  return { markdownContent, headings, loading, error };
+};
 
 // Filter markdown content by section
 function filterContentBySection(

@@ -18,6 +18,22 @@ body {
   font-display: swap;
 }
 
+/* Financier Font Family - Simplified */
+@font-face {
+  font-family: "Financier";
+  src: url("/Financier%20TTF/FinancierDisplay-Semibold_1422576346.ttf")
+    format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Financier font utilities */
+.font-financier {
+  font-family: "Financier", Georgia, "Times New Roman", serif !important;
+  font-weight: 600 !important;
+}
+
 @font-face {
   font-family: "GT America";
   src: url("/GT America Standard VF/VAR-woff2/GT-America-Italic-VF.woff2")
