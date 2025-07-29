@@ -5,16 +5,14 @@ import {
   DisclosurePanel,
 } from "@headlessui/react";
 import { ChevronDownIcon } from "@heroicons/react/24/outline";
-import {
-  useMarkdownReport,
-  type MarkdownHeading,
-} from "@/hooks/useMarkdownReport";
+import type {
+  ProcessedMarkdownContent,
+  MarkdownHeading,
+} from "@/lib/serverData";
 import { cn } from "@/lib/utils";
 
-interface AccordionTableOfContentsProps {
-  companyName?: string;
-  markdownPath?: string;
-  section?: "report" | "sales-pitch" | "reach-out";
+interface StaticAccordionTableOfContentsProps {
+  content: ProcessedMarkdownContent;
   className?: string;
 }
 
@@ -23,25 +21,18 @@ interface AccordionSection {
   h3Items: MarkdownHeading[];
 }
 
-const AccordionTableOfContents: React.FC<AccordionTableOfContentsProps> = ({
-  companyName,
-  markdownPath,
-  section,
-  className,
-}) => {
-  const { headings, loading } = useMarkdownReport({
-    companyName,
-    markdownPath,
-    section,
-  });
-
+const StaticAccordionTableOfContents: React.FC<
+  StaticAccordionTableOfContentsProps
+> = ({ content, className }) => {
   const [activeId, setActiveId] = useState<string>("");
   const observerRef = useRef<IntersectionObserver | null>(null);
   const [openSections, setOpenSections] = useState<Set<string>>(new Set());
 
   // Group headings into sections (h2 with their h3 children)
   const accordionSections: AccordionSection[] = React.useMemo(() => {
-    const filteredHeadings = headings.filter((heading) => heading.level > 1);
+    const filteredHeadings = content.headings.filter(
+      (heading) => heading.level > 1
+    );
     const sections: AccordionSection[] = [];
     let currentSection: AccordionSection | null = null;
 
@@ -60,7 +51,7 @@ const AccordionTableOfContents: React.FC<AccordionTableOfContentsProps> = ({
     });
 
     return sections;
-  }, [headings]);
+  }, [content.headings]);
 
   // Initialize first section as open and manage auto-expansion
   useEffect(() => {
@@ -235,16 +226,6 @@ const AccordionTableOfContents: React.FC<AccordionTableOfContentsProps> = ({
     }
   };
 
-  if (loading) {
-    return (
-      <div className={cn("h-full flex flex-col", className)}>
-        <div className="flex-1 min-h-0">
-          <div className="text-sm text-gray-500">Loading...</div>
-        </div>
-      </div>
-    );
-  }
-
   if (accordionSections.length === 0) {
     return null;
   }
@@ -330,4 +311,4 @@ const AccordionTableOfContents: React.FC<AccordionTableOfContentsProps> = ({
   );
 };
 
-export default AccordionTableOfContents;
+export default StaticAccordionTableOfContents;

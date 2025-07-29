@@ -3,12 +3,10 @@ import ReactMarkdown from "react-markdown";
 import rehypeSlug from "rehype-slug";
 import rehypeRaw from "rehype-raw";
 import remarkGfm from "remark-gfm";
-import { useMarkdownReport } from "@/hooks/useMarkdownReport";
+import type { ProcessedMarkdownContent } from "@/lib/serverData";
 
-interface MarkdownReportProps {
-  companyName?: string;
-  markdownPath?: string;
-  section?: "report" | "sales-pitch" | "reach-out";
+interface StaticMarkdownReportProps {
+  content: ProcessedMarkdownContent;
 }
 
 // Custom component mappings for styled rendering
@@ -134,43 +132,9 @@ const components = {
   ),
 };
 
-const MarkdownReport: React.FC<MarkdownReportProps> = ({
-  companyName,
-  markdownPath,
-  section,
+const StaticMarkdownReport: React.FC<StaticMarkdownReportProps> = ({
+  content,
 }) => {
-  const { markdownContent, loading, error } = useMarkdownReport({
-    companyName,
-    markdownPath,
-    section,
-  });
-
-  if (loading) {
-    return (
-      <div
-        className="bg-white border border-gray-200 rounded-lg p-8 max-w-none"
-        data-toc-container
-      >
-        <div className="flex items-center justify-center h-64">
-          <p className="text-gray-500">Loading report...</p>
-        </div>
-      </div>
-    );
-  }
-
-  if (error) {
-    return (
-      <div
-        className="bg-white border border-gray-200 rounded-lg p-8 max-w-none"
-        data-toc-container
-      >
-        <div className="flex items-center justify-center h-64">
-          <p className="text-red-500">Error loading report: {error}</p>
-        </div>
-      </div>
-    );
-  }
-
   return (
     <div className="bg-white px-8 max-w-none mb-32" data-toc-container>
       <div className="space-y-8">
@@ -179,11 +143,11 @@ const MarkdownReport: React.FC<MarkdownReportProps> = ({
           rehypePlugins={[rehypeSlug, rehypeRaw]}
           remarkPlugins={[remarkGfm]}
         >
-          {markdownContent}
+          {content.content}
         </ReactMarkdown>
       </div>
     </div>
   );
 };
 
-export default MarkdownReport;
+export default StaticMarkdownReport;

@@ -129,7 +129,7 @@ function extractHeadingsFromMarkdown(content: string): MarkdownHeading[] {
   const headings: MarkdownHeading[] = [];
   const lines = content.split("\n");
 
-  lines.forEach((line, index) => {
+  lines.forEach((line) => {
     const trimmedLine = line.trim();
 
     // Match h1 (#), h2 (##), and h3 (###) headings
