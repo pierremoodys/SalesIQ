@@ -2,13 +2,6 @@ import React from "react";
 import { ChevronRightIcon } from "@heroicons/react/24/outline";
 import { cn } from "@/lib/utils";
 
-interface NotificationTag {
-  type: string;
-  label: string;
-  value: string;
-  icon: string;
-}
-
 interface AffectedCompany {
   uuid: string;
   name: string;
