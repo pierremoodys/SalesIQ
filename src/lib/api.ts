@@ -14,27 +14,38 @@ export async function fetchCompanies() {
   }
 }
 
+// Company API functions
 export async function updateCompanyTracking(
   companyId: string,
-  tracked: boolean
-) {
-  try {
-    const response = await fetch(`/api/companies/${companyId}/tracking`, {
-      method: "PATCH",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ tracked }),
-    });
+  isTracked: boolean
+): Promise<void> {
+  const response = await fetch(`/api/companies/${companyId}/tracking`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ tracked: isTracked }),
+  });
 
-    if (!response.ok) {
-      throw new Error("Failed to update company tracking");
-    }
+  if (!response.ok) {
+    throw new Error("Failed to update company tracking");
+  }
+}
 
-    const data = await response.json();
-    return data;
-  } catch (error) {
-    console.error("Error updating company tracking:", error);
-    throw error;
+// Notification API functions
+export async function updateNotificationReadStatus(
+  notificationId: string,
+  isRead: boolean
+): Promise<void> {
+  const response = await fetch("/api/notifications", {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ notificationId, isRead }),
+  });
+
+  if (!response.ok) {
+    throw new Error("Failed to update notification read status");
   }
 }

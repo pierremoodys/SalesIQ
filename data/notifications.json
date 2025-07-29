@@ -1,0 +1,233 @@
+{
+  "notifications": [
+    {
+      "id": "renewable-energy-policy-2024",
+      "type": "high-impact",
+      "category": "Market News",
+      "title": "Renewable Energy Sector Boosted by Favorable Policy Changes",
+      "description": "New government policies provide significant incentives for renewable energy companies, including tax credits and subsidies for EV production and renewable energy integration. These changes are expected to accelerate growth and innovation in the sector, benefiting industry leaders like Volt Motors, SunPath Ventures, and GreenFuture Energy Solutions.",
+      "source": "Bloomberg",
+      "sourceType": "external",
+      "date": "2024-01-15T09:30:00Z",
+      "isNew": true,
+      "isRead": false,
+      "affectedCompanies": [
+        {
+          "uuid": "c-550e8400-e29b-41d4-a716-446655440001",
+          "name": "Volt Motors"
+        },
+        {
+          "uuid": "c-550e8400-e29b-41d4-a716-446655440002",
+          "name": "SunPath Ventures"
+        },
+        {
+          "uuid": "c-550e8400-e29b-41d4-a716-446655440003",
+          "name": "GreenFuture Energy Solutions"
+        }
+      ],
+      "tags": ["Regulatory Changes", "Renewable Energy", "Market Growth"],
+      "impact": "positive"
+    },
+    {
+      "id": "logistics-cyberattacks-2024",
+      "type": "high-impact",
+      "category": "Security Alert",
+      "title": "Hackers Target Logistics Platforms",
+      "description": "Cyberattacks on logistics platforms disrupt operations at three major companies, raising concerns about supply chain vulnerabilities.",
+      "source": "Reuters",
+      "sourceType": "external",
+      "date": "2024-01-14T14:20:00Z",
+      "isNew": true,
+      "isRead": false,
+      "affectedCompanies": [
+        {
+          "uuid": "c-550e8400-e29b-41d4-a716-446655440004",
+          "name": "Belmart"
+        },
+        {
+          "uuid": "c-550e8400-e29b-41d4-a716-446655440005",
+          "name": "ShipFast Corp"
+        },
+        {
+          "uuid": "c-550e8400-e29b-41d4-a716-446655440006",
+          "name": "GlobalExpress Logistics"
+        }
+      ],
+      "tags": [
+        "Cybersecurity Threats",
+        "Operational Disruption",
+        "Supply Chain Vulnerabilities"
+      ],
+      "impact": "negative"
+    },
+    {
+      "id": "contract-renewal-reminder-volt",
+      "type": "reminder",
+      "category": "Contract Management",
+      "title": "Contract Renewal Reminder",
+      "description": "The Market Insights Dashboard contract is set to expire in 60 days.",
+      "source": "Internal System",
+      "sourceType": "internal",
+      "date": "2024-01-13T10:00:00Z",
+      "isNew": true,
+      "isRead": false,
+      "affectedCompanies": [
+        {
+          "uuid": "c-550e8400-e29b-41d4-a716-446655440001",
+          "name": "Volt Motors"
+        }
+      ],
+      "tags": ["Contract Renewal", "Action Required"],
+      "impact": "neutral",
+      "actionRequired": true,
+      "dueDate": "2024-03-15T00:00:00Z"
+    },
+    {
+      "id": "manufacturing-partnership-volt-sunpath",
+      "type": "medium-impact",
+      "category": "Business Development",
+      "title": "Manufacturing Partnership Announced",
+      "description": "Volt Motors and SunPath Ventures announce a strategic partnership to integrate renewable energy solutions into manufacturing operations.",
+      "source": "Reuters",
+      "sourceType": "external",
+      "date": "2024-01-12T16:45:00Z",
+      "isNew": true,
+      "isRead": false,
+      "affectedCompanies": [
+        {
+          "uuid": "c-550e8400-e29b-41d4-a716-446655440001",
+          "name": "Volt Motors"
+        },
+        {
+          "uuid": "c-550e8400-e29b-41d4-a716-446655440002",
+          "name": "SunPath Ventures"
+        }
+      ],
+      "tags": [
+        "Strategic Partnership",
+        "Renewable Energy",
+        "Retail Operations"
+      ],
+      "impact": "positive"
+    },
+    {
+      "id": "usage-decline-alert-volt",
+      "type": "alert",
+      "category": "Platform Analytics",
+      "title": "Usage Decline Alert",
+      "description": "Advanced Targeting Platform usage has declined by 5% this month.",
+      "source": "Analytics System",
+      "sourceType": "internal",
+      "date": "2024-01-11T08:30:00Z",
+      "isNew": true,
+      "isRead": false,
+      "affectedCompanies": [
+        {
+          "uuid": "c-550e8400-e29b-41d4-a716-446655440001",
+          "name": "Volt Motors"
+        }
+      ],
+      "tags": ["Usage Analytics", "Performance Monitoring"],
+      "impact": "negative",
+      "metrics": {
+        "previousValue": "100%",
+        "currentValue": "95%",
+        "change": "-5%"
+      }
+    },
+    {
+      "id": "customer-health-update-volt",
+      "type": "update",
+      "category": "Customer Success",
+      "title": "Customer Health Update",
+      "description": "Customer Health Score for June is 86, reflecting strong account health.",
+      "source": "Customer Success Platform",
+      "sourceType": "internal",
+      "date": "2024-01-10T12:15:00Z",
+      "isNew": true,
+      "isRead": false,
+      "affectedCompanies": [
+        {
+          "uuid": "c-550e8400-e29b-41d4-a716-446655440001",
+          "name": "Volt Motors"
+        }
+      ],
+      "tags": ["Customer Health", "Account Management"],
+      "impact": "positive",
+      "metrics": {
+        "score": 86,
+        "period": "June 2024",
+        "status": "Strong"
+      }
+    },
+    {
+      "id": "leadership-change-pear-inc",
+      "type": "high-impact",
+      "category": "Corporate Changes",
+      "title": "Leadership Change: CEO Resignation Sparks Uncertainty",
+      "description": "The sudden resignation of Pear Inc.'s CEO has led to uncertainty among investors, resulting in a sharp drop in stock prices.",
+      "source": "Bloomberg",
+      "sourceType": "external",
+      "date": "2024-01-09T11:30:00Z",
+      "isNew": false,
+      "isRead": true,
+      "affectedCompanies": [
+        {
+          "uuid": "c-550e8400-e29b-41d4-a716-446655440007",
+          "name": "Pear Inc"
+        }
+      ],
+      "tags": ["Leadership Change", "Stock Price Volatility"],
+      "impact": "negative"
+    },
+    {
+      "id": "nps-score-improvement-volt",
+      "type": "highlight",
+      "category": "Customer Satisfaction",
+      "title": "NPS Score Improvement",
+      "description": "Q3 Net Promoter Score (NPS) is 78, marking three consecutive quarters of improvement.",
+      "source": "Customer Feedback System",
+      "sourceType": "internal",
+      "date": "2024-01-08T14:00:00Z",
+      "isNew": false,
+      "isRead": true,
+      "affectedCompanies": [
+        {
+          "uuid": "c-550e8400-e29b-41d4-a716-446655440001",
+          "name": "Volt Motors"
+        }
+      ],
+      "tags": ["Customer Satisfaction", "NPS Improvement"],
+      "impact": "positive",
+      "metrics": {
+        "score": 78,
+        "period": "Q3 2024",
+        "trend": "increasing",
+        "consecutiveImprovements": 3
+      }
+    }
+  ],
+  "metadata": {
+    "totalCount": 8,
+    "unreadCount": 6,
+    "categories": [
+      "Market News",
+      "Security Alert",
+      "Contract Management",
+      "Business Development",
+      "Platform Analytics",
+      "Customer Success",
+      "Corporate Changes",
+      "Customer Satisfaction"
+    ],
+    "impactLevels": [
+      "high-impact",
+      "medium-impact",
+      "alert",
+      "reminder",
+      "update",
+      "highlight"
+    ],
+    "lastUpdated": "2024-01-15T09:30:00Z"
+  }
+}
