@@ -12,7 +12,19 @@ interface CompanyPageProps {
   params: Promise<{
     "uuid-companyname": string;
   }>;
+  searchParams: Promise<{
+    tab?: string;
+  }>;
 }
+
+// Valid tab options
+const VALID_TABS = [
+  "notifications",
+  "report",
+  "sales-pitch",
+  "reach-out",
+] as const;
+type ValidTab = (typeof VALID_TABS)[number];
 
 // Parse UUID and company name from the combined parameter
 const parseCompanyParam = (param: string) => {
@@ -38,6 +50,14 @@ const parseCompanyParam = (param: string) => {
   };
 };
 
+// Validate and normalize tab parameter
+const getValidTab = (tab?: string): ValidTab => {
+  if (tab && VALID_TABS.includes(tab as ValidTab)) {
+    return tab as ValidTab;
+  }
+  return "report"; // Default tab
+};
+
 // Generate static params for all companies
 export async function generateStaticParams() {
   try {
@@ -50,11 +70,16 @@ export async function generateStaticParams() {
 }
 
 // Server component that fetches data
-export default async function CompanyPage({ params }: CompanyPageProps) {
+export default async function CompanyPage({
+  params,
+  searchParams,
+}: CompanyPageProps) {
   try {
-    // Get UUID from params
+    // Get UUID from params and tab from searchParams
     const resolvedParams = await params;
+    const resolvedSearchParams = await searchParams;
     const { uuid } = parseCompanyParam(resolvedParams["uuid-companyname"]);
+    const initialTab = getValidTab(resolvedSearchParams.tab);
 
     if (!uuid) {
       notFound();
@@ -87,6 +112,7 @@ export default async function CompanyPage({ params }: CompanyPageProps) {
           reportContent={reportContent}
           salesPitchContent={salesPitchContent}
           reachOutContent={reachOutContent}
+          initialTab={initialTab}
         />
       </div>
     );

@@ -14,11 +14,13 @@ import { cn } from "@/lib/utils";
 import type { ProcessedMarkdownContent } from "@/lib/serverData";
 import StaticMarkdownReport from "@/components/StaticMarkdownReport";
 import StaticAccordionTableOfContents from "@/components/StaticAccordionTableOfContents";
+import { useRouter, useSearchParams } from "next/navigation";
 
 interface CompanyContentClientProps {
   reportContent: ProcessedMarkdownContent;
   salesPitchContent: ProcessedMarkdownContent;
   reachOutContent: ProcessedMarkdownContent;
+  initialTab?: string;
 }
 
 // Tab configuration
@@ -33,10 +35,13 @@ export default function CompanyContentClient({
   reportContent,
   salesPitchContent,
   reachOutContent,
+  initialTab = "report",
 }: CompanyContentClientProps) {
-  const [activeTab, setActiveTab] = useState("report");
+  const [activeTab, setActiveTab] = useState(initialTab);
   const { isChatOpen, chatPanelSize, closeChat, setChatPanelSize } =
     useChatStore();
+  const router = useRouter();
+  const searchParams = useSearchParams();
 
   // Animation state management
   const [isAnimating, setIsAnimating] = useState(false);
@@ -85,6 +90,24 @@ export default function CompanyContentClient({
     }
   }, [isChatOpen, shouldRenderChat, isInitialized]);
 
+  // Update URL when tab changes
+  const updateTabInUrl = (tabId: string) => {
+    const current = new URLSearchParams(Array.from(searchParams.entries()));
+
+    if (tabId === "report") {
+      // Remove tab param for default tab to keep URL clean
+      current.delete("tab");
+    } else {
+      current.set("tab", tabId);
+    }
+
+    const search = current.toString();
+    const query = search ? `?${search}` : "";
+
+    // Use replace to avoid adding to browser history for tab changes
+    router.replace(`${window.location.pathname}${query}`, { scroll: false });
+  };
+
   const handlePanelResize = (sizes: number[]) => {
     // Only update size if not animating and chat is actually open
     if (!isAnimating && isChatOpen && sizes[1]) {
@@ -98,6 +121,7 @@ export default function CompanyContentClient({
     const selectedTab = companyTabs[index];
     if (selectedTab) {
       setActiveTab(selectedTab.id);
+      updateTabInUrl(selectedTab.id);
     }
   };
 
