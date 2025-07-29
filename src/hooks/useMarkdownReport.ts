@@ -87,9 +87,9 @@ function filterContentBySection(
     const trimmedLine = line.trim();
     if (trimmedLine === "# Report") {
       reportStart = index;
-    } else if (trimmedLine === "## Sales Pitch") {
+    } else if (trimmedLine === "# Sales Pitch") {
       salesPitchStart = index;
-    } else if (trimmedLine === "## Reach Out to Client") {
+    } else if (trimmedLine === "# Reach Out to Client") {
       reachOutStart = index;
     }
   });

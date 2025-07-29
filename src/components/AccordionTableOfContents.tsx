@@ -37,6 +37,7 @@ const AccordionTableOfContents: React.FC<AccordionTableOfContentsProps> = ({
 
   const [activeId, setActiveId] = useState<string>("");
   const observerRef = useRef<IntersectionObserver | null>(null);
+  const [openSections, setOpenSections] = useState<Set<string>>(new Set());
 
   // Group headings into sections (h2 with their h3 children)
   const accordionSections: AccordionSection[] = React.useMemo(() => {
@@ -60,6 +61,30 @@ const AccordionTableOfContents: React.FC<AccordionTableOfContentsProps> = ({
 
     return sections;
   }, [headings]);
+
+  // Initialize first section as open and manage auto-expansion
+  useEffect(() => {
+    if (accordionSections.length > 0) {
+      const newOpenSections = new Set(openSections);
+
+      // Always keep first section open
+      newOpenSections.add(accordionSections[0].h2.id);
+
+      // Auto-expand section containing active item (but never close once opened)
+      if (activeId) {
+        const activeSection = accordionSections.find(
+          (section) =>
+            section.h2.id === activeId ||
+            section.h3Items.some((h3) => h3.id === activeId)
+        );
+        if (activeSection) {
+          newOpenSections.add(activeSection.h2.id);
+        }
+      }
+
+      setOpenSections(newOpenSections);
+    }
+  }, [accordionSections, activeId]);
 
   // Set up intersection observer for scroll spy
   useEffect(() => {
@@ -236,17 +261,32 @@ const AccordionTableOfContents: React.FC<AccordionTableOfContentsProps> = ({
         <div className="flex-1 min-h-0 overflow-y-auto space-y-1">
           {accordionSections.map((section, index) => {
             const isActiveSection = getActiveSection(section);
+            const isOpen = openSections.has(section.h2.id);
 
             return (
               <Disclosure
-                key={section.h2.id}
-                defaultOpen={index === 0 || isActiveSection}
+                key={`${section.h2.id}-${isOpen}`}
+                defaultOpen={isOpen}
                 as="div"
                 className="group"
               >
                 {({ open }) => (
                   <>
                     <DisclosureButton
+                      onClick={(e) => {
+                        // Prevent closing if section is already marked as open
+                        if (isOpen) {
+                          e.preventDefault();
+                          e.stopPropagation();
+                        } else {
+                          // Mark this section as opened when clicked
+                          setTimeout(() => {
+                            const newOpenSections = new Set(openSections);
+                            newOpenSections.add(section.h2.id);
+                            setOpenSections(newOpenSections);
+                          }, 0);
+                        }
+                      }}
                       className={cn(
                         "flex w-full items-center justify-between text-left text-sm font-medium transition-colors duration-200 hover:text-blue-600 py-2 px-2 rounded cursor-pointer",
                         "text-gray-900 hover:bg-gray-50"
@@ -258,7 +298,7 @@ const AccordionTableOfContents: React.FC<AccordionTableOfContentsProps> = ({
                       <ChevronDownIcon
                         className={cn(
                           "h-4 w-4 flex-shrink-0 transition-transform duration-200",
-                          open ? "rotate-180" : "rotate-0"
+                          open || isOpen ? "rotate-180" : "rotate-0"
                         )}
                       />
                     </DisclosureButton>
@@ -266,7 +306,7 @@ const AccordionTableOfContents: React.FC<AccordionTableOfContentsProps> = ({
                     {section.h3Items.length > 0 && (
                       <DisclosurePanel
                         className="ml-4 space-y-1 pb-2"
-                        transition
+                        static={isOpen}
                       >
                         {section.h3Items.map((h3Item) => (
                           <button
