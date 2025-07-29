@@ -76,14 +76,15 @@ const AccordionTableOfContents: React.FC<AccordionTableOfContentsProps> = ({
 
     const observerOptions: IntersectionObserverInit = {
       root: reportScrollContainer,
-      rootMargin: "-10% 0px -60% 0px",
-      threshold: [0, 0.1, 0.3, 0.5, 0.7, 1.0],
+      rootMargin: "-20% 0px -70% 0px", // More sensitive detection
+      threshold: [0, 0.1, 0.25, 0.5, 0.75, 1.0],
     };
 
     observerRef.current = new IntersectionObserver((entries) => {
       let bestCandidate = "";
       let bestScore = -1;
 
+      // Priority to entries that are intersecting
       entries.forEach((entry) => {
         if (entry.isIntersecting && entry.intersectionRatio > 0) {
           const rect = entry.boundingClientRect;
@@ -92,7 +93,7 @@ const AccordionTableOfContents: React.FC<AccordionTableOfContentsProps> = ({
           const distanceFromTop = Math.abs(rect.top);
           const visibilityScore = entry.intersectionRatio;
           const positionScore = 1 - distanceFromTop / containerHeight;
-          const totalScore = visibilityScore * 0.7 + positionScore * 0.3;
+          const totalScore = visibilityScore * 0.8 + positionScore * 0.2;
 
           if (totalScore > bestScore) {
             bestScore = totalScore;
@@ -101,42 +102,69 @@ const AccordionTableOfContents: React.FC<AccordionTableOfContentsProps> = ({
         }
       });
 
+      // Fallback: find closest heading if no intersection
       if (!bestCandidate || bestScore < 0.1) {
         if (reportScrollContainer) {
           const containerRect = reportScrollContainer.getBoundingClientRect();
           let closestId = "";
           let closestDistance = Infinity;
 
-          // Check all headings from all sections
+          // Check all headings from all sections (prioritize h3 over h2)
           accordionSections.forEach((section) => {
-            [section.h2, ...section.h3Items].forEach((heading) => {
+            // Check h3 items first (more specific)
+            section.h3Items.forEach((heading) => {
               const element = document.getElementById(heading.id);
               if (element) {
                 const rect = element.getBoundingClientRect();
-                const distance = Math.abs(rect.top - containerRect.top);
+                const distance = Math.abs(rect.top - (containerRect.top + 50)); // 50px offset from top
                 if (
                   distance < closestDistance &&
-                  rect.top >= containerRect.top - 100
+                  rect.top >= containerRect.top - 200
                 ) {
                   closestDistance = distance;
                   closestId = heading.id;
                 }
               }
             });
+
+            // Then check h2 if no h3 found
+            if (!closestId) {
+              const element = document.getElementById(section.h2.id);
+              if (element) {
+                const rect = element.getBoundingClientRect();
+                const distance = Math.abs(rect.top - (containerRect.top + 50));
+                if (
+                  distance < closestDistance &&
+                  rect.top >= containerRect.top - 200
+                ) {
+                  closestDistance = distance;
+                  closestId = section.h2.id;
+                }
+              }
+            }
           });
+
           if (closestId) {
             bestCandidate = closestId;
           }
         }
       }
+
       if (bestCandidate && bestCandidate !== activeId) {
         setActiveId(bestCandidate);
       }
     }, observerOptions);
 
-    // Observe all heading elements
+    // Observe all heading elements with more specific targeting
     accordionSections.forEach((section) => {
-      [section.h2, ...section.h3Items].forEach((heading) => {
+      // Observe h2 sections
+      const h2Element = document.getElementById(section.h2.id);
+      if (h2Element && observerRef.current) {
+        observerRef.current.observe(h2Element);
+      }
+
+      // Observe h3 subsections (these are more important for navigation)
+      section.h3Items.forEach((heading) => {
         const element = document.getElementById(heading.id);
         if (element && observerRef.current) {
           observerRef.current.observe(element);
@@ -212,7 +240,7 @@ const AccordionTableOfContents: React.FC<AccordionTableOfContentsProps> = ({
             return (
               <Disclosure
                 key={section.h2.id}
-                defaultOpen={index === 0}
+                defaultOpen={index === 0 || isActiveSection}
                 as="div"
                 className="group"
               >
