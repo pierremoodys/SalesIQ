@@ -29,14 +29,14 @@ const LeftNav = () => {
         <BuildingOffice2Icon
           className={`w-[18px] h-[18px] ${
             isActiveRoute(pathname, ROUTES.COMPANIES.LIST)
-              ? "text-brand-moody-bright-blue"
+              ? "text-moodys-bright-blue"
               : "text-black"
           }`}
         />
         <div
           className={`font-medium leading-6 truncate ${
             isActiveRoute(pathname, ROUTES.COMPANIES.LIST)
-              ? "text-brand-moody-bright-blue"
+              ? "text-moodys-bright-blue"
               : "text-gray-900"
           }`}
         >
@@ -52,7 +52,7 @@ const LeftNav = () => {
         <BellIcon
           className={`w-[18px] h-[18px] ${
             isActiveRoute(pathname, ROUTES.NOTIFICATIONS)
-              ? "text-brand-moody-bright-blue"
+              ? "text-moodys-bright-blue"
               : "text-black"
           }`}
         />
@@ -62,7 +62,7 @@ const LeftNav = () => {
         <div
           className={`font-medium leading-6 truncate ${
             isActiveRoute(pathname, ROUTES.NOTIFICATIONS)
-              ? "text-brand-moody-bright-blue"
+              ? "text-moodys-bright-blue"
               : "text-gray-900"
           }`}
         >
