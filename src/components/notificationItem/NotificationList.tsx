@@ -25,7 +25,7 @@ const NotificationList: React.FC<NotificationListProps> = ({
   }
 
   return (
-    <div className={`divide-y divide-gray-200 ${className}`}>
+    <div className={`${className}`}>
       {notifications.map((notification) => (
         <NotificationListItem
           key={notification.id}

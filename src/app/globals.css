@@ -1,5 +1,77 @@
 @import "tailwindcss";
 
+@theme {
+  /* Moody's Brand Colors */
+  --color-moodys-blue: #0a1264;
+  --color-moodys-bright-blue: #005eff;
+  --color-moodys-teal: #008c95;
+  --color-moodys-yellow: #fdda25;
+  --color-moodys-orange: #e35205;
+  --color-moodys-red: #ba0c2f;
+  --color-moodys-light-green: #78be20;
+  --color-moodys-purple: #5c068c;
+  --color-moodys-magenta: #d9017a;
+  --color-moodys-white: #ffffff;
+  --color-moodys-black: #000000;
+  --color-moodys-gray: #74787b;
+
+  /* Bright Blue Scale */
+  --color-bright-blue-100: #deebff;
+  --color-bright-blue-200: #bed5ff;
+  --color-bright-blue-300: #9dc1ff;
+  --color-bright-blue-400: #7babff;
+  --color-bright-blue-500: #5895ff;
+  --color-bright-blue-600: #337eff;
+  --color-bright-blue-700: #005eff;
+  --color-bright-blue-800: #0052df;
+  --color-bright-blue-900: #0044b6;
+  --color-bright-blue-1000: #003c9e;
+  --color-bright-blue-1100: #003488;
+  --color-bright-blue-1200: #002b71;
+
+  /* Red Scale */
+  --color-red-100: #fbdede;
+  --color-red-200: #f7bdbd;
+  --color-red-300: #f39c9c;
+  --color-red-400: #ef7b7b;
+  --color-red-500: #eb5a5a;
+  --color-red-600: #e73939;
+  --color-red-700: #d41818;
+  --color-red-800: #ba0c2f;
+  --color-red-900: #a10b29;
+  --color-red-1000: #890a23;
+  --color-red-1100: #70081d;
+  --color-red-1200: #580717;
+
+  /* Blue Scale */
+  --color-blue-100: #dce6ff;
+  --color-blue-200: #b9ccff;
+  --color-blue-300: #96b3ff;
+  --color-blue-400: #7399ff;
+  --color-blue-500: #5080ff;
+  --color-blue-600: #2d66ff;
+  --color-blue-700: #0a4dff;
+  --color-blue-800: #0a1264;
+  --color-blue-900: #090f56;
+  --color-blue-1000: #070c47;
+  --color-blue-1100: #060a39;
+  --color-blue-1200: #04072a;
+
+  /* Gray Scale */
+  --color-gray-100: #f8f9fa;
+  --color-gray-200: #e9ecef;
+  --color-gray-300: #dee2e6;
+  --color-gray-400: #ced4da;
+  --color-gray-500: #adb5bd;
+  --color-gray-600: #6c757d;
+  --color-gray-700: #495057;
+  --color-gray-800: #343a40;
+  --color-gray-900: #212529;
+  --color-gray-1000: #1a1d20;
+  --color-gray-1100: #131517;
+  --color-gray-1200: #0c0e0f;
+}
+
 /* Default Font Family */
 body {
   font-family: "GT America", -apple-system, BlinkMacSystemFont, "Segoe UI",
@@ -23,82 +95,12 @@ body {
   font-family: "Financier";
   src: url("/Financier%20TTF/FinancierDisplay-Semibold_1422576346.ttf")
     format("truetype");
-  font-weight: normal;
-  font-style: normal;
-  font-display: swap;
-}
-
-/* Financier font utilities */
-.font-financier {
-  font-family: "Financier", Georgia, "Times New Roman", serif !important;
-  font-weight: 600 !important;
-}
-
-@font-face {
-  font-family: "GT America";
-  src: url("/GT America Standard VF/VAR-woff2/GT-America-Italic-VF.woff2")
-      format("woff2-variations"),
-    url("/GT America Standard VF/VAR-ttf/GT-America-Italic-VF.ttf")
-      format("truetype-variations");
-  font-weight: 100 900;
-  font-style: italic;
-  font-display: swap;
-}
-
-/* Financier Font Family */
-@font-face {
-  font-family: "Financier";
-  src: url("/Financier TTF/FinancierDisplay-Semibold_1422576346.ttf")
-    format("truetype");
   font-weight: 600;
   font-style: normal;
   font-display: swap;
 }
 
-@font-face {
-  font-family: "Financier";
-  src: url("/Financier TTF/FinancierDisplay-SemiBdItalic_934771513.ttf")
-    format("truetype");
-  font-weight: 600;
-  font-style: italic;
-  font-display: swap;
-}
-
-/* Brand Colors */
-.text-brand-moody-bright-blue {
-  color: #005eff;
-}
-
-.bg-brand-moody-bright-blue {
-  background-color: #005eff;
-}
-
-.border-brand-moody-bright-blue {
-  border-color: #005eff;
-}
-
-/* Supporting brand colors */
-.text-bright-blue-500 {
-  color: #5996ff;
-}
-
-.border-bright-blue-500 {
-  border-color: #5996ff;
-}
-
-.text-bright-blue-900 {
-  color: #0044b7;
-}
-
-.border-bright-blue-900 {
-  border-color: #0044b7;
-}
-
-.focus\:ring-bright-blue-700:focus {
-  --tw-ring-color: #005eff;
-}
-
-/* Panel Slide Animations */
+/* Panel Slide Animations - Chat Panel */
 .slide-in-right {
   animation: slideInRight 0.3s ease-out forwards;
 }
@@ -129,45 +131,40 @@ body {
   }
 }
 
-/* Transition Classes for Specific Use Cases */
-
-/* Smooth transitions for UI elements that should animate */
+/* Transition Classes for UI Components */
 .ui-transition {
   transition: all 0.3s ease-out;
 }
 
-/* Fast transitions for interactive elements */
 .interactive-transition {
   transition: all 0.2s ease-in-out;
 }
 
-/* No transition - for instant changes */
-.no-transition {
-  transition: none !important;
-}
-
-/* Legacy panel transition (kept for backward compatibility) */
 .panel-transition {
   transition: all 0.3s ease-out;
 }
 
-/* Color Variables */
-:root {
-  --font-gt-america: "GT America", -apple-system, BlinkMacSystemFont, "Segoe UI",
-    "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans",
-    "Helvetica Neue", sans-serif;
+.no-transition {
+  transition: none !important;
 }
 
-/* Font utilities */
-.font-gt-america {
-  font-family: var(--font-gt-america);
+/* Custom animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
-.font-financier {
-  font-family: var(--font-financier);
+.animate-fade-in {
+  animation: fadeIn 0.3s ease-out;
 }
 
-/* Component utilities */
+/* Utility Classes */
 .no-scrollbar {
   -ms-overflow-style: none;
   scrollbar-width: none;
@@ -175,31 +172,4 @@ body {
 
 .no-scrollbar::-webkit-scrollbar {
   display: none;
-}
-
-/* Animation utilities */
-.fade-in {
-  animation: fadeIn 0.2s ease-out;
-}
-
-.fade-out {
-  animation: fadeOut 0.2s ease-in;
-}
-
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-}
-
-@keyframes fadeOut {
-  from {
-    opacity: 1;
-  }
-  to {
-    opacity: 0;
-  }
 }
