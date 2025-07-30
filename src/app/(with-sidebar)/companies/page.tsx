@@ -1,6 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
+import { useQueryClient } from "@tanstack/react-query";
 import {
   CompanyListItem,
   CompanyListGrid,
@@ -14,6 +15,7 @@ import { useCompanies } from "@/hooks/useCompanies";
 export default function CompaniesPage() {
   const { searchQuery, viewType } = useCompaniesContext();
   const router = useRouter();
+  const queryClient = useQueryClient();
 
   // Use React Query to fetch companies with filtering
   const {
@@ -34,7 +36,8 @@ export default function CompaniesPage() {
     try {
       // Update the JSON file via API
       await updateCompanyTracking(companyId, isTracked);
-      // React Query will handle refetching automatically
+      // Invalidate and refetch companies data
+      queryClient.invalidateQueries({ queryKey: ["companies"] });
     } catch (error) {
       console.error("Failed to update company tracking:", error);
       // You might want to show a toast or error message here
