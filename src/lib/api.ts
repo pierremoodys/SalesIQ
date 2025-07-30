@@ -20,7 +20,7 @@ export async function updateCompanyTracking(
   isTracked: boolean
 ): Promise<void> {
   const response = await fetch(`/api/companies/${companyId}/tracking`, {
-    method: "PUT",
+    method: "PATCH",
     headers: {
       "Content-Type": "application/json",
     },
