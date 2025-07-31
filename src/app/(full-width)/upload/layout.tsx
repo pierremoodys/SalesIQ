@@ -5,7 +5,7 @@ import {
   ChatConfig,
 } from "@/components/pageHeader";
 import { ROUTES } from "@/config/routes";
-import UploadContentClient from "@/components/UploadContentClient";
+import UploadContentClient from "@/components/layout/UploadContentClient";
 
 interface UploadLayoutProps {
   children: React.ReactNode;
