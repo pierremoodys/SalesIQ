@@ -1,12 +1,7 @@
 "use client";
 
 import React, { useEffect } from "react";
-import {
-  CloudArrowUpIcon,
-  DocumentArrowUpIcon,
-  QuestionMarkCircleIcon,
-  TrashIcon,
-} from "@heroicons/react/24/outline";
+import { CloudArrowUpIcon } from "@heroicons/react/24/outline";
 import {
   PageHeader,
   DropdownMenuItem,
@@ -47,20 +42,18 @@ export default function UploadPage() {
             description:
               "I can help you with file uploads, processing, or troubleshooting upload issues.",
             placeholder: "Ask about uploading files",
-            icon: DocumentArrowUpIcon,
+            icon: "document-arrow-up",
           }}
           menuItems={[
             {
               id: "upload-help",
               label: "Upload Help",
-              icon: QuestionMarkCircleIcon,
-              onClick: () => console.log("Show help"),
+              icon: "question-mark-circle",
             },
             {
               id: "clear-all",
               label: "Clear All Files",
-              icon: TrashIcon,
-              onClick: () => console.log("Clear files"),
+              icon: "trash",
             },
           ]}
         />

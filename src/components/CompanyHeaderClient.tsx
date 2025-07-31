@@ -44,26 +44,22 @@ export default function CompanyHeaderClient({
     {
       id: "edit-company",
       label: "Edit Company",
-      icon: PencilIcon,
-      onClick: () => console.log("Edit company:", company.name),
+      icon: "pencil",
     },
     {
       id: "share-company",
       label: "Share Company",
-      icon: ShareIcon,
-      onClick: () => console.log("Share company:", company.name),
+      icon: "share",
     },
     {
       id: "view-reports",
       label: "View Reports",
-      icon: EyeIcon,
-      onClick: () => console.log("View reports for:", company.name),
+      icon: "eye",
     },
     {
       id: "delete-company",
       label: "Delete Company",
-      icon: TrashIcon,
-      onClick: () => console.log("Delete company:", company.name),
+      icon: "trash",
     },
   ];
 
@@ -71,7 +67,7 @@ export default function CompanyHeaderClient({
     title: "Company analysis",
     description: `Ask me anything about ${company.name}'s performance, financials, or market position.`,
     placeholder: `Ask about ${company.name}`,
-    icon: BuildingOffice2Icon,
+    icon: "building-office-2",
   };
 
   return (

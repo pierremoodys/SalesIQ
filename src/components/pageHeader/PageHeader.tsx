@@ -7,24 +7,55 @@ import {
   EllipsisVerticalIcon,
   ArrowLeftIcon,
   BuildingOffice2Icon,
+  BellIcon,
+  PlusIcon,
+  DocumentArrowDownIcon,
+  CogIcon,
+  PencilIcon,
+  TrashIcon,
+  ShareIcon,
+  EyeIcon,
+  QuestionMarkCircleIcon,
+  DocumentArrowUpIcon,
+  CheckIcon,
+  DocumentTextIcon,
+  SparklesIcon,
 } from "@heroicons/react/24/outline";
-import { MoodysAIButton, CompanyTags } from "@/components/ui";
+import { MoodysAIButton, CompanyTags, Button } from "@/components/ui";
 
-// Types for dropdown menu items
+// Icon mapping for server-client serialization
+const ICON_MAP = {
+  "building-office-2": BuildingOffice2Icon,
+  bell: BellIcon,
+  plus: PlusIcon,
+  "document-arrow-down": DocumentArrowDownIcon,
+  cog: CogIcon,
+  pencil: PencilIcon,
+  trash: TrashIcon,
+  share: ShareIcon,
+  eye: EyeIcon,
+  "question-mark-circle": QuestionMarkCircleIcon,
+  "document-arrow-up": DocumentArrowUpIcon,
+  check: CheckIcon,
+  "document-text": DocumentTextIcon,
+} as const;
+
+export type IconName = keyof typeof ICON_MAP;
+
+// Types for dropdown menu items (serializable)
 export interface DropdownMenuItem {
   id: string;
   label: string;
-  icon?: React.ComponentType<{ className?: string }>;
-  onClick: () => void;
+  icon?: IconName;
   disabled?: boolean;
 }
 
-// Types for chat configuration
+// Types for chat configuration (serializable)
 export interface ChatConfig {
   title: string;
   description: string;
   placeholder: string;
-  icon: React.ComponentType<{ className?: string }>;
+  icon: IconName;
 }
 
 // Types for back button configuration
@@ -54,7 +85,8 @@ export interface CompanyInfo {
 // Base props
 interface BasePageHeaderProps {
   className?: string;
-  onToggleChat?: () => void;
+  onToggleChat?: () => void; // Client-side chat toggle (for client components)
+  toggleChatAction?: () => void; // Server action for chat toggle (for server components)
   isChatOpen?: boolean;
   chatConfig?: ChatConfig;
   menuItems?: DropdownMenuItem[];
@@ -63,7 +95,7 @@ interface BasePageHeaderProps {
 // Simple header variant (notifications, companies list)
 interface SimpleHeaderProps extends BasePageHeaderProps {
   variant: "simple";
-  icon: React.ComponentType<{ className?: string }>;
+  icon: IconName;
   title: string;
   backButton?: never;
   companyInfo?: never;
@@ -96,6 +128,7 @@ const PageHeader: React.FC<PageHeaderProps> = (props) => {
   const {
     className = "",
     onToggleChat,
+    toggleChatAction,
     isChatOpen = false,
     chatConfig,
     menuItems,
@@ -103,13 +136,37 @@ const PageHeader: React.FC<PageHeaderProps> = (props) => {
 
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-  // Enhanced MoodysAIButton that can accept chat config
+  // MoodysAIButton - maintains original styling for both client and server
   const renderMoodysAIButton = () => {
-    if (!onToggleChat) return null;
+    if (onToggleChat) {
+      // Client-side toggle (for client components like notifications/upload)
+      return <MoodysAIButton isActive={isChatOpen} onToggle={onToggleChat} />;
+    } else if (toggleChatAction) {
+      // Server action toggle - wrap only the button in a form
+      const buttonClasses = isChatOpen
+        ? "bg-white border-2 border-blue-600 text-blue-600 hover:bg-blue-50"
+        : "bg-gradient-to-r from-[#00276A] to-[#66009F] border-2 border-transparent text-white hover:from-[#001f5a] hover:to-[#5a0089]";
 
-    // For now, we'll pass the existing MoodysAIButton
-    // In the future, we could enhance it to accept chat config
-    return <MoodysAIButton isActive={isChatOpen} onToggle={onToggleChat} />;
+      return (
+        <form action={toggleChatAction} style={{ display: "inline" }}>
+          <Button
+            type="submit"
+            size="m"
+            icon={
+              <SparklesIcon
+                className={isChatOpen ? "text-blue-600" : "text-white"}
+              />
+            }
+            iconPosition="left"
+            className={buttonClasses}
+          >
+            {isChatOpen ? "Close Moody's AI" : "Open Moody's AI"}
+          </Button>
+        </form>
+      );
+    }
+
+    return null;
   };
 
   // Render dropdown menu
@@ -140,7 +197,7 @@ const PageHeader: React.FC<PageHeaderProps> = (props) => {
                 <button
                   key={item.id}
                   onClick={() => {
-                    item.onClick();
+                    console.log("Menu item clicked:", item.id);
                     setIsMenuOpen(false);
                   }}
                   disabled={item.disabled}
@@ -150,7 +207,10 @@ const PageHeader: React.FC<PageHeaderProps> = (props) => {
                       : "text-gray-900"
                   }`}
                 >
-                  {item.icon && <item.icon className="w-4 h-4" />}
+                  {item.icon &&
+                    React.createElement(ICON_MAP[item.icon], {
+                      className: "w-4 h-4",
+                    })}
                   {item.label}
                 </button>
               ))}
@@ -188,7 +248,8 @@ const PageHeader: React.FC<PageHeaderProps> = (props) => {
 
   // Simple variant (notifications, companies list)
   if (props.variant === "simple") {
-    const { icon: Icon, title } = props;
+    const { icon: iconName, title } = props;
+    const Icon = ICON_MAP[iconName];
 
     return (
       <div
