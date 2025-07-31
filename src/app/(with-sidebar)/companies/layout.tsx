@@ -32,19 +32,16 @@ export default async function CompaniesLayout({
 
   const menuItems: DropdownMenuItem[] = [
     {
-      id: "add-company",
-      label: "Add Company",
-      icon: "plus",
+      id: "upload",
+      label: "Upload",
+      icon: "document-arrow-up",
+      url: ROUTES.UPLOAD,
     },
     {
-      id: "export-data",
-      label: "Export Data",
-      icon: "document-arrow-down",
-    },
-    {
-      id: "company-settings",
-      label: "Company Settings",
-      icon: "cog",
+      id: "connect",
+      label: "Connect",
+      icon: "link",
+      url: ROUTES.CONNECT,
     },
   ];
 

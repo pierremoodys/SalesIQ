@@ -3,6 +3,8 @@
 import React, { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
+import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react";
 import {
   EllipsisVerticalIcon,
   ArrowLeftIcon,
@@ -20,6 +22,7 @@ import {
   CheckIcon,
   DocumentTextIcon,
   SparklesIcon,
+  LinkIcon,
 } from "@heroicons/react/24/outline";
 import { MoodysAIButton, CompanyTags, Button } from "@/components/ui";
 
@@ -38,6 +41,7 @@ const ICON_MAP = {
   "document-arrow-up": DocumentArrowUpIcon,
   check: CheckIcon,
   "document-text": DocumentTextIcon,
+  link: LinkIcon,
 } as const;
 
 export type IconName = keyof typeof ICON_MAP;
@@ -48,6 +52,7 @@ export interface DropdownMenuItem {
   label: string;
   icon?: IconName;
   disabled?: boolean;
+  url?: string; // Optional URL for navigation
 }
 
 // Types for chat configuration (serializable)
@@ -134,7 +139,7 @@ const PageHeader: React.FC<PageHeaderProps> = (props) => {
     menuItems,
   } = props;
 
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const router = useRouter();
 
   // MoodysAIButton - maintains original styling for both client and server
   const renderMoodysAIButton = () => {
@@ -169,41 +174,32 @@ const PageHeader: React.FC<PageHeaderProps> = (props) => {
     return null;
   };
 
-  // Render dropdown menu
+  // Render dropdown menu using Headless UI
   const renderDropdownMenu = () => {
     if (!menuItems || menuItems.length === 0) return null;
 
     return (
-      <div className="relative">
-        <button
-          className="flex justify-center items-center w-6 h-6 hover:bg-gray-100 rounded transition-colors duration-150"
-          aria-label="More options"
-          onClick={() => setIsMenuOpen(!isMenuOpen)}
-        >
+      <Menu as="div" className="relative">
+        <MenuButton className="flex justify-center items-center p-2 hover:bg-gray-200 rounded transition-colors duration-300 ease-in-out cursor-pointer">
           <EllipsisVerticalIcon className="w-6 h-6 text-black" />
-        </button>
+        </MenuButton>
 
-        {isMenuOpen && (
-          <>
-            {/* Backdrop */}
-            <div
-              className="fixed inset-0 z-10"
-              onClick={() => setIsMenuOpen(false)}
-            />
-
-            {/* Dropdown */}
-            <div className="absolute right-0 top-8 z-20 w-48 bg-white border border-gray-200 rounded-md shadow-lg py-1">
-              {menuItems.map((item) => (
+        <MenuItems className="absolute right-0 top-8 z-20 w-48 bg-white border border-gray-200 rounded-md shadow-lg py-1 focus:outline-none">
+          {menuItems.map((item) => (
+            <MenuItem key={item.id} disabled={item.disabled}>
+              {({ focus, disabled }) => (
                 <button
-                  key={item.id}
                   onClick={() => {
                     console.log("Menu item clicked:", item.id);
-                    setIsMenuOpen(false);
+                    if (item.url) {
+                      router.push(item.url);
+                    }
                   }}
-                  disabled={item.disabled}
-                  className={`w-full px-4 py-2 text-left text-sm flex items-center gap-2 hover:bg-gray-50 transition-colors ${
-                    item.disabled
+                  className={`w-full px-4 py-2 text-left text-sm flex items-center gap-2 transition-colors ${
+                    disabled
                       ? "text-gray-400 cursor-not-allowed"
+                      : focus
+                      ? "bg-gray-50 text-gray-900"
                       : "text-gray-900"
                   }`}
                 >
@@ -213,11 +209,11 @@ const PageHeader: React.FC<PageHeaderProps> = (props) => {
                     })}
                   {item.label}
                 </button>
-              ))}
-            </div>
-          </>
-        )}
-      </div>
+              )}
+            </MenuItem>
+          ))}
+        </MenuItems>
+      </Menu>
     );
   };
 
