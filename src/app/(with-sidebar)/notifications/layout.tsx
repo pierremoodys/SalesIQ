@@ -1,43 +1,51 @@
-"use client";
-
-import React, { useEffect } from "react";
+import { getChatState, toggleChatAction } from "@/lib/chat-server-actions";
 import {
   PageHeader,
   DropdownMenuItem,
   ChatConfig,
 } from "@/components/pageHeader";
-// Icons are now handled via string identifiers
-import { useChatStore } from "@/stores/chatStore";
+import { ROUTES } from "@/config/routes";
+import NotificationsContentClient from "@/components/layout/NotificationsContentClient";
 
 interface NotificationsLayoutProps {
   children: React.ReactNode;
 }
 
-export default function NotificationsLayout({
+export default async function NotificationsLayout({
   children,
 }: NotificationsLayoutProps) {
-  const { isChatOpen, toggleChat, setChatAvailable } = useChatStore();
+  // Get chat state from server
+  const { isChatOpen, chatPanelSize } = await getChatState();
 
-  // Set chat availability for notifications page
-  useEffect(() => {
-    setChatAvailable(true, {
-      page: "notifications",
-    });
+  // Create bound server action
+  const boundToggleChatAction = toggleChatAction.bind(
+    null,
+    ROUTES.NOTIFICATIONS
+  );
 
-    // Cleanup: disable chat when leaving this layout
-    return () => setChatAvailable(false);
-  }, [setChatAvailable]);
+  const menuItems: DropdownMenuItem[] = [
+    {
+      id: "mark-all-read",
+      label: "Mark All as Read",
+      icon: "check",
+    },
+    {
+      id: "notification-settings",
+      label: "Notification Settings",
+      icon: "cog",
+    },
+  ];
 
   return (
     <div className="h-full flex flex-col">
-      {/* Page Header - Static */}
+      {/* Server-rendered header */}
       <div className="flex-shrink-0">
         <PageHeader
           variant="simple"
           icon="bell"
           title="Notifications"
-          onToggleChat={toggleChat}
           isChatOpen={isChatOpen}
+          toggleChatAction={boundToggleChatAction}
           chatConfig={{
             title: "Research notifications",
             description:
@@ -45,23 +53,17 @@ export default function NotificationsLayout({
             placeholder: "Ask about notifications",
             icon: "document-text",
           }}
-          menuItems={[
-            {
-              id: "mark-all-read",
-              label: "Mark All as Read",
-              icon: "check",
-            },
-            {
-              id: "notification-settings",
-              label: "Notification Settings",
-              icon: "cog",
-            },
-          ]}
+          menuItems={menuItems}
         />
       </div>
 
-      {/* Content Area - Takes remaining space */}
-      <div className="flex-1 min-h-0">{children}</div>
+      {/* Client-side interactive content */}
+      <NotificationsContentClient
+        initialChatOpen={isChatOpen}
+        initialChatSize={chatPanelSize}
+      >
+        {children}
+      </NotificationsContentClient>
     </div>
   );
 }
