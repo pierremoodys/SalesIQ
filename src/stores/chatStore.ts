@@ -57,10 +57,8 @@ export const useChatStore = create<ChatState>()(
             isChatAvailable: available,
           };
 
-          // Close chat if becoming unavailable
-          if (!available) {
-            newState.isChatOpen = false;
-          }
+          // Don't auto-close chat when availability changes
+          // Let users manually close if they want to
 
           // Update context if provided and different
           const newContext = context || null;
