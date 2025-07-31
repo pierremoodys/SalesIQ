@@ -61,10 +61,10 @@ const CompaniesFilter: React.FC<CompaniesFilterProps> = ({
           placeholder="Search companies..."
           className="
             block w-full pl-10 pr-3 py-2 
-            border border-gray-300 rounded-lg 
+            border-b border-gray-300 
              text-sm
             placeholder-gray-500 
-            focus:outline-none focus:ring-2 focus:ring-bright-blue-700 focus:border-bright-blue-700
+            focus:outline-none focus:ring-2-b focus:ring-bright-blue-700 focus:border-bright-blue-700
             transition-colors duration-200
           "
         />

@@ -6,6 +6,7 @@ import {
   CompanyListItem,
   CompanyListGrid,
   CompanyListTable,
+  CompaniesFilter,
 } from "@/components/ui";
 import { updateCompanyTracking } from "@/lib/api";
 import { generateCompanyUrl } from "@/lib/utils";
@@ -13,7 +14,8 @@ import { useCompaniesContext } from "@/contexts/CompaniesContext";
 import { useCompanies } from "@/hooks/useCompanies";
 
 export default function CompaniesPage() {
-  const { searchQuery, viewType } = useCompaniesContext();
+  const { searchQuery, setSearchQuery, viewType, setViewType } =
+    useCompaniesContext();
   const router = useRouter();
   const queryClient = useQueryClient();
 
@@ -78,6 +80,16 @@ export default function CompaniesPage() {
 
   return (
     <div>
+      {/* Filter Controls */}
+      <div className="">
+        <CompaniesFilter
+          searchQuery={searchQuery}
+          onSearchChange={setSearchQuery}
+          viewType={viewType}
+          onViewTypeChange={setViewType}
+        />
+      </div>
+
       {/* Companies Content */}
       {filteredCompanies.length > 0 ? (
         <>

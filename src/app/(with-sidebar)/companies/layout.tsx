@@ -3,7 +3,6 @@
 import { useState, useEffect } from "react";
 import { Panel, PanelGroup, PanelResizeHandle } from "react-resizable-panels";
 import { CompaniesPageHeader } from "@/components/pageHeader";
-import { CompaniesFilter } from "@/components/ui";
 import ChatPanel from "@/components/layout/ChatPanel";
 import { useChatStore } from "@/stores/chatStore";
 import {
@@ -111,16 +110,6 @@ export default function CompaniesLayout({ children }: CompaniesLayoutProps) {
             variant="companies-list"
             onToggleChat={toggleChat}
             isChatOpen={isChatOpen}
-          />
-        </div>
-
-        {/* Filters - Static */}
-        <div className="flex-shrink-0 border-b border-gray-200">
-          <CompaniesFilter
-            searchQuery={searchQuery}
-            onSearchChange={setSearchQuery}
-            viewType={viewType}
-            onViewTypeChange={setViewType}
           />
         </div>
 
