@@ -1,64 +1,12 @@
 "use client";
 
-import React, { useEffect } from "react";
+import React from "react";
 import { CloudArrowUpIcon } from "@heroicons/react/24/outline";
-import {
-  PageHeader,
-  DropdownMenuItem,
-  ChatConfig,
-} from "@/components/pageHeader";
 import { UploadTable } from "@/components/ui";
-import { useChatStore } from "@/stores/chatStore";
-import { ROUTES } from "@/config/routes";
 
 export default function UploadPage() {
-  const { isChatOpen, toggleChat, setChatAvailable } = useChatStore();
-
-  // Set chat availability for upload page
-  useEffect(() => {
-    setChatAvailable(true, {
-      page: "upload",
-    });
-
-    // Cleanup: disable chat when leaving this page
-    return () => setChatAvailable(false);
-  }, [setChatAvailable]);
-
   return (
     <div className="h-full flex flex-col">
-      {/* Header with back button */}
-      <div className="flex-shrink-0">
-        <PageHeader
-          variant="upload"
-          title="Upload file"
-          backButton={{
-            url: ROUTES.HOME,
-            label: "Back to dashboard",
-          }}
-          onToggleChat={toggleChat}
-          isChatOpen={isChatOpen}
-          chatConfig={{
-            title: "Upload assistant",
-            description:
-              "I can help you with file uploads, processing, or troubleshooting upload issues.",
-            placeholder: "Ask about uploading files",
-            icon: "document-arrow-up",
-          }}
-          menuItems={[
-            {
-              id: "upload-help",
-              label: "Upload Help",
-              icon: "question-mark-circle",
-            },
-            {
-              id: "clear-all",
-              label: "Clear All Files",
-              icon: "trash",
-            },
-          ]}
-        />
-      </div>
-
       {/* Main content */}
       <div className="flex-1 min-h-0 p-8">
         <div className="mx-auto space-y-8">
