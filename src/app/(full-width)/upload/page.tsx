@@ -1,16 +1,69 @@
 "use client";
 
-import React from "react";
-import { CloudArrowUpIcon } from "@heroicons/react/24/outline";
-import { UploadPageHeader } from "@/components/pageHeader";
+import React, { useEffect } from "react";
+import {
+  CloudArrowUpIcon,
+  DocumentArrowUpIcon,
+  QuestionMarkCircleIcon,
+  TrashIcon,
+} from "@heroicons/react/24/outline";
+import {
+  PageHeader,
+  DropdownMenuItem,
+  ChatConfig,
+} from "@/components/pageHeader";
 import { UploadTable } from "@/components/ui";
+import { useChatStore } from "@/stores/chatStore";
+import { ROUTES } from "@/config/routes";
 
 export default function UploadPage() {
+  const { isChatOpen, toggleChat, setChatAvailable } = useChatStore();
+
+  // Set chat availability for upload page
+  useEffect(() => {
+    setChatAvailable(true, {
+      page: "upload",
+    });
+
+    // Cleanup: disable chat when leaving this page
+    return () => setChatAvailable(false);
+  }, [setChatAvailable]);
+
   return (
     <div className="h-full flex flex-col">
       {/* Header with back button */}
       <div className="flex-shrink-0">
-        <UploadPageHeader title="Upload file" backUrl="/" />
+        <PageHeader
+          variant="upload"
+          title="Upload file"
+          backButton={{
+            url: ROUTES.HOME,
+            label: "Back to dashboard",
+          }}
+          onToggleChat={toggleChat}
+          isChatOpen={isChatOpen}
+          chatConfig={{
+            title: "Upload assistant",
+            description:
+              "I can help you with file uploads, processing, or troubleshooting upload issues.",
+            placeholder: "Ask about uploading files",
+            icon: DocumentArrowUpIcon,
+          }}
+          menuItems={[
+            {
+              id: "upload-help",
+              label: "Upload Help",
+              icon: QuestionMarkCircleIcon,
+              onClick: () => console.log("Show help"),
+            },
+            {
+              id: "clear-all",
+              label: "Clear All Files",
+              icon: TrashIcon,
+              onClick: () => console.log("Clear files"),
+            },
+          ]}
+        />
       </div>
 
       {/* Main content */}

@@ -1,3 +1,9 @@
-export { default as CompaniesPageHeader } from "./CompaniesPageHeader";
-export { default as NotificationsPageHeader } from "./NotificationsPageHeader";
-export { default as UploadPageHeader } from "./UploadPageHeader";
+export { default as PageHeader } from "./PageHeader";
+export type {
+  PageHeaderProps,
+  DropdownMenuItem,
+  ChatConfig,
+  BackButtonConfig,
+  CompanyInfo,
+  CompanyTag,
+} from "./PageHeader";

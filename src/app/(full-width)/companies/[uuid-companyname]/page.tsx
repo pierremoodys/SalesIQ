@@ -7,6 +7,7 @@ import {
 } from "@/lib/serverData";
 import CompanyContentClient from "@/components/CompanyContentClient";
 import CompanyHeaderClient from "@/components/CompanyHeaderClient";
+import { ROUTES } from "@/config/routes";
 
 interface CompanyPageProps {
   params: Promise<{
@@ -104,7 +105,10 @@ export default async function CompanyPage({
       <div className="h-full flex flex-col">
         {/* Company Header - Client-rendered for chat integration */}
         <div className="flex-shrink-0">
-          <CompanyHeaderClient company={company} backUrl="/companies" />
+          <CompanyHeaderClient
+            company={company}
+            backUrl={ROUTES.COMPANIES.LIST}
+          />
         </div>
 
         {/* Interactive Content - Client-rendered */}

@@ -1,7 +1,17 @@
 "use client";
 
 import React, { useEffect } from "react";
-import { NotificationsPageHeader } from "@/components/pageHeader";
+import {
+  PageHeader,
+  DropdownMenuItem,
+  ChatConfig,
+} from "@/components/pageHeader";
+import {
+  BellIcon,
+  DocumentTextIcon,
+  CogIcon,
+  CheckIcon,
+} from "@heroicons/react/24/outline";
 import { useChatStore } from "@/stores/chatStore";
 
 interface NotificationsLayoutProps {
@@ -27,10 +37,33 @@ export default function NotificationsLayout({
     <div className="h-full flex flex-col">
       {/* Page Header - Static */}
       <div className="flex-shrink-0">
-        <NotificationsPageHeader
-          variant="notifications-list"
+        <PageHeader
+          variant="simple"
+          icon={BellIcon}
+          title="Notifications"
           onToggleChat={toggleChat}
           isChatOpen={isChatOpen}
+          chatConfig={{
+            title: "Research notifications",
+            description:
+              "You can research notifications, trends, and get insights about company activities.",
+            placeholder: "Ask about notifications",
+            icon: DocumentTextIcon,
+          }}
+          menuItems={[
+            {
+              id: "mark-all-read",
+              label: "Mark All as Read",
+              icon: CheckIcon,
+              onClick: () => console.log("Mark all as read"),
+            },
+            {
+              id: "notification-settings",
+              label: "Notification Settings",
+              icon: CogIcon,
+              onClick: () => console.log("Open settings"),
+            },
+          ]}
         />
       </div>
 

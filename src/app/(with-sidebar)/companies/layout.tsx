@@ -2,7 +2,17 @@
 
 import { useState, useEffect } from "react";
 import { Panel, PanelGroup, PanelResizeHandle } from "react-resizable-panels";
-import { CompaniesPageHeader } from "@/components/pageHeader";
+import {
+  PageHeader,
+  DropdownMenuItem,
+  ChatConfig,
+} from "@/components/pageHeader";
+import {
+  BuildingOffice2Icon,
+  PlusIcon,
+  DocumentArrowDownIcon,
+  CogIcon,
+} from "@heroicons/react/24/outline";
 import ChatPanel from "@/components/layout/ChatPanel";
 import { useChatStore } from "@/stores/chatStore";
 import {
@@ -106,10 +116,39 @@ export default function CompaniesLayout({ children }: CompaniesLayoutProps) {
       <div className="h-full flex flex-col">
         {/* Page Header - Static */}
         <div className="flex-shrink-0">
-          <CompaniesPageHeader
-            variant="companies-list"
+          <PageHeader
+            variant="simple"
+            icon={BuildingOffice2Icon}
+            title="Your companies"
             onToggleChat={toggleChat}
             isChatOpen={isChatOpen}
+            chatConfig={{
+              title: "Add or edit companies",
+              description:
+                "Tell me about the size, industry, location of the companies you want to start tracking.",
+              placeholder: "Search for companies",
+              icon: PlusIcon,
+            }}
+            menuItems={[
+              {
+                id: "add-company",
+                label: "Add Company",
+                icon: PlusIcon,
+                onClick: () => console.log("Add company"),
+              },
+              {
+                id: "export-data",
+                label: "Export Data",
+                icon: DocumentArrowDownIcon,
+                onClick: () => console.log("Export data"),
+              },
+              {
+                id: "company-settings",
+                label: "Company Settings",
+                icon: CogIcon,
+                onClick: () => console.log("Open settings"),
+              },
+            ]}
           />
         </div>
 
