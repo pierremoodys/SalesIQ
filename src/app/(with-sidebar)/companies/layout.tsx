@@ -17,8 +17,14 @@ interface CompaniesLayoutProps {
 
 export default function CompaniesLayout({ children }: CompaniesLayoutProps) {
   // Use Zustand store for persistent chat state
-  const { isChatOpen, chatPanelSize, toggleChat, closeChat, setChatPanelSize } =
-    useChatStore();
+  const {
+    isChatOpen,
+    chatPanelSize,
+    toggleChat,
+    closeChat,
+    setChatPanelSize,
+    setChatAvailable,
+  } = useChatStore();
 
   // Local state for companies-specific functionality
   const [searchQuery, setSearchQuery] = useState("");
@@ -36,6 +42,17 @@ export default function CompaniesLayout({ children }: CompaniesLayoutProps) {
     viewType,
     setViewType,
   };
+
+  // Set chat availability for companies page
+  useEffect(() => {
+    setChatAvailable(true, {
+      page: "companies",
+      // companiesCount could be added here when companies data is available
+    });
+
+    // Cleanup: disable chat when leaving this layout
+    return () => setChatAvailable(false);
+  }, [setChatAvailable]);
 
   // Initialize shouldRenderChat based on persisted state
   useEffect(() => {

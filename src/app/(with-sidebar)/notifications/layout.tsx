@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useEffect } from "react";
 import { NotificationsPageHeader } from "@/components/pageHeader";
 import { useChatStore } from "@/stores/chatStore";
 
@@ -11,7 +11,17 @@ interface NotificationsLayoutProps {
 export default function NotificationsLayout({
   children,
 }: NotificationsLayoutProps) {
-  const { isChatOpen, toggleChat } = useChatStore();
+  const { isChatOpen, toggleChat, setChatAvailable } = useChatStore();
+
+  // Set chat availability for notifications page
+  useEffect(() => {
+    setChatAvailable(true, {
+      page: "notifications",
+    });
+
+    // Cleanup: disable chat when leaving this layout
+    return () => setChatAvailable(false);
+  }, [setChatAvailable]);
 
   return (
     <div className="h-full flex flex-col">
