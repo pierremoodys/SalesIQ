@@ -10,7 +10,10 @@ export default function WithSidebarLayout({
   children,
 }: WithSidebarLayoutProps) {
   return (
-    <div className="h-screen w-screen flex flex-col overflow-hidden bg-slate-50">
+    <div
+      className="h-screen w-screen flex flex-col overflow-hidden"
+      style={{ backgroundColor: "var(--color-background)" }}
+    >
       <TopNav />
       <WithSidebarClient>{children}</WithSidebarClient>
     </div>

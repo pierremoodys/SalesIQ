@@ -15,6 +15,36 @@
   --color-moodys-black: #000000;
   --color-moodys-gray: #74787b;
 
+  /* Semantic Color Tokens - Light Theme (Default) */
+  --color-primary: var(--color-moodys-blue);
+  --color-primary-hover: var(--color-blue-700);
+  --color-secondary: var(--color-moodys-bright-blue);
+  --color-accent: var(--color-moodys-teal);
+
+  --color-background: var(--color-moodys-white);
+  --color-background-secondary: var(--color-gray-100);
+  --color-background-tertiary: var(--color-gray-200);
+
+  --color-surface: var(--color-white);
+  --color-surface-hover: var(--color-gray-50);
+  --color-surface-active: var(--color-gray-100);
+  --color-button-background: var(--color-moodys-white);
+
+  --color-text: var(--color-gray-1200);
+  --color-text-secondary: var(--color-gray-1000);
+  --color-text-muted: var(--color-gray-500);
+  --color-text-inverse: var(--color-moodys-white);
+  --color-text-description: var(--color-gray-1000);
+
+  --color-border: var(--color-gray-300);
+  --color-border-light: var(--color-gray-200);
+  --color-border-strong: var(--color-gray-400);
+
+  --color-success: var(--color-moodys-light-green);
+  --color-warning: var(--color-moodys-yellow);
+  --color-error: var(--color-moodys-red);
+  --color-info: var(--color-moodys-bright-blue);
+
   /* Bright Blue Scale */
   --color-bright-blue-100: #deebff;
   --color-bright-blue-200: #bed5ff;
@@ -28,6 +58,8 @@
   --color-bright-blue-1000: #003c9e;
   --color-bright-blue-1100: #003488;
   --color-bright-blue-1200: #002b71;
+  --color-bright-blue-1300: #001a45;
+  --color-bright-blue-1400: #0b0d1a;
 
   /* Red Scale */
   --color-red-100: #fbdede;
@@ -56,6 +88,8 @@
   --color-blue-1000: #070c47;
   --color-blue-1100: #060a39;
   --color-blue-1200: #04072a;
+  --color-blue-1300: #02041c;
+  --color-blue-1400: #070918;
 
   /* Gray Scale */
   --color-gray-100: #f8f9fa;
@@ -72,10 +106,214 @@
   --color-gray-1200: #0c0e0f;
 }
 
+/* Dark Theme Variables */
+[data-theme="dark"] {
+  /* Semantic Color Tokens - Dark Theme */
+  --color-primary: var(--color-blue-1400);
+  --color-primary-hover: var(--color-bright-blue-500);
+  --color-secondary: var(--color-moodys-white);
+  --color-accent: var(--color-moodys-teal);
+
+  --color-background: var(--color-blue-1400);
+  --color-background-secondary: var(--color-blue-1300);
+  --color-background-tertiary: var(--color-blue-1200);
+
+  --color-surface: var(--color-blue-1400);
+  --color-surface-hover: rgba(255, 255, 255, 0.02);
+  --color-surface-active: var(--color-blue-600);
+  --color-button-background: transparent;
+
+  --color-text: var(--color-gray-500);
+  --color-text-secondary: var(--color-gray-300);
+  --color-text-muted: var(--color-gray-400);
+  --color-text-inverse: var(--color-gray-1000);
+  --color-text-description: var(--color-gray-500);
+
+  --color-border: rgba(255, 255, 255, 0.1);
+  --color-border-light: var(--color-gray-900);
+  --color-border-strong: var(--color-gray-700);
+
+  --color-success: var(--color-moodys-light-green);
+  --color-warning: var(--color-moodys-yellow);
+  --color-error: var(--color-moodys-red);
+  --color-info: var(--color-moodys-bright-blue);
+}
+
 /* Default Font Family */
 body {
   font-family: "GT America", -apple-system, BlinkMacSystemFont, "Segoe UI",
     Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+
+/* Theme Transition Animations */
+* {
+  transition: background-color 0.3s ease, color 0.3s ease,
+    border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Disable transitions for specific elements that shouldn't animate */
+.no-theme-transition,
+.no-theme-transition * {
+  transition: none !important;
+}
+
+/* Smooth theme switching for common elements */
+html {
+  transition: background-color 0.3s ease;
+}
+
+body {
+  background-color: var(--color-background);
+  color: var(--color-text);
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Fix placeholder colors for theme switching */
+input::placeholder {
+  color: var(--color-text-muted);
+  opacity: 0.8;
+}
+
+/* Chat input placeholder */
+.chat-input::placeholder {
+  color: var(--color-text-muted);
+}
+
+/* Theme-aware text color utilities */
+.text-muted {
+  color: var(--color-text-muted);
+}
+
+input::placeholder {
+  color: var(--color-text-muted) !important;
+}
+
+.text-primary {
+  color: var(--color-text);
+}
+
+.text-secondary {
+  color: var(--color-text-secondary);
+}
+
+.text-description {
+  color: var(--color-text-description);
+}
+
+/* Theme-aware background utilities */
+.bg-surface {
+  background-color: var(--color-surface);
+}
+
+.bg-background-secondary {
+  background-color: var(--color-background-secondary);
+}
+
+.hover\:bg-surface-hover:hover {
+  background-color: var(--color-surface-hover);
+}
+
+/* Button theme-aware styles */
+.btn-primary-outline {
+  border: 2px solid var(--color-secondary);
+  color: var(--color-secondary);
+  background-color: transparent;
+}
+
+.btn-primary-outline:hover {
+  border-color: var(--color-primary-hover);
+  color: var(--color-primary-hover);
+}
+
+.btn-primary-outline:active {
+  border-color: var(--color-secondary);
+  color: var(--color-secondary);
+  background-color: var(--color-surface);
+}
+
+.btn-primary-outline:focus {
+  background-color: var(--color-surface);
+  border-color: var(--color-secondary);
+  color: var(--color-secondary);
+}
+
+.btn-secondary-outline {
+  border: 2px solid var(--color-border);
+  color: var(--color-text);
+  background-color: transparent;
+}
+
+.btn-secondary-outline:hover {
+  border-color: var(--color-border-light);
+  background-color: var(--color-surface-hover);
+  color: var(--color-text);
+}
+
+.btn-secondary-outline:active {
+  border-color: var(--color-border-light);
+  color: var(--color-text);
+  background-color: transparent;
+}
+
+.btn-secondary-outline:focus {
+  background-color: var(--color-surface);
+  color: var(--color-text);
+  border-color: transparent;
+}
+
+.btn-negative-outline {
+  border: 2px solid var(--color-error);
+  color: var(--color-error);
+  background-color: transparent;
+}
+
+.btn-negative-outline:hover {
+  border-color: var(--color-error);
+  background-color: var(--color-surface-hover);
+  color: var(--color-error);
+}
+
+.btn-negative-outline:active {
+  border-color: var(--color-error);
+  background-color: var(--color-surface-active);
+  color: var(--color-error);
+}
+
+.btn-negative-outline:focus {
+  background-color: var(--color-surface);
+  color: var(--color-error);
+  border-color: transparent;
+}
+
+/* Glassmorphism highlight effects for chat panel */
+.chat-glass::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.8),
+    transparent
+  );
+}
+
+.chat-glass::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 1px;
+  height: 100%;
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.8),
+    transparent,
+    rgba(255, 255, 255, 0.3)
+  );
 }
 
 /* GT America Variable Font Family */
@@ -98,6 +336,11 @@ body {
   font-weight: 600;
   font-style: normal;
   font-display: swap;
+}
+
+/* Financier utility class */
+.font-financier {
+  font-family: "Financier", serif;
 }
 
 /* Panel Slide Animations - Chat Panel */

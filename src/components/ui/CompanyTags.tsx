@@ -45,9 +45,7 @@ const CompanyTags: React.FC<CompanyTagsProps> = ({
     const iconSizeClass = iconSize === "sm" ? "w-3 h-3" : "w-4 h-4";
 
     return IconComponent ? (
-      <IconComponent
-        className={`${iconSizeClass} text-gray-700 flex-shrink-0`}
-      />
+      <IconComponent className={`${iconSizeClass} text-muted flex-shrink-0`} />
     ) : null;
   };
 
@@ -65,16 +63,16 @@ const CompanyTags: React.FC<CompanyTagsProps> = ({
       {displayTags.map((tag, index) => (
         <div key={index} className={`flex items-center gap-1 ${tagClassName}`}>
           {getIconComponent(tag.icon)}
-          <span className="text-gray-600 text-[14px] font-medium">
+          <span className="text-muted text-[14px] font-medium">
             {tag.label} -
           </span>
-          <span className="text-gray-900 text-[14px]">{tag.value}</span>
+          <span className="text-description text-[14px]">{tag.value}</span>
         </div>
       ))}
 
       {/* Show "+X more" if tags are limited */}
       {remainingCount > 0 && showMore && (
-        <div className="text-gray-500 text-[14px] font-medium">
+        <div className="text-muted text-[14px] font-medium">
           +{remainingCount} more
         </div>
       )}

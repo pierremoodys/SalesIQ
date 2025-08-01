@@ -70,18 +70,33 @@ const CompanyGridItem: React.FC<CompanyGridItemProps> = ({
   return (
     <>
       <div
-        className={`
-          flex flex-col p-6 bg-white border border-gray-200 rounded-lg cursor-pointer
-          transition-all duration-200 hover:shadow-md hover:border-gray-300
-        `}
-        onMouseEnter={() => setIsHovered(true)}
-        onMouseLeave={() => setIsHovered(false)}
+        className="flex flex-col p-6 rounded-lg cursor-pointer transition-all duration-200 hover:shadow-md border"
+        style={{
+          backgroundColor: "var(--color-surface)",
+          borderColor: "var(--color-border)",
+        }}
+        onMouseEnter={(e) => {
+          setIsHovered(true);
+          e.currentTarget.style.borderColor = "var(--color-border-strong)";
+          e.currentTarget.style.backgroundColor = "var(--color-surface-hover)";
+        }}
+        onMouseLeave={(e) => {
+          setIsHovered(false);
+          e.currentTarget.style.borderColor = "var(--color-border)";
+          e.currentTarget.style.backgroundColor = "var(--color-surface)";
+        }}
         onClick={handleClick}
       >
         {/* Header with Logo and Actions */}
         <div className="flex justify-between items-start mb-4">
           {/* Company Logo */}
-          <div className="flex justify-center items-center w-12 h-12 rounded-full border border-gray-200 bg-gray-100">
+          <div
+            className="flex justify-center items-center w-12 h-12 rounded-full border"
+            style={{
+              borderColor: "var(--color-border)",
+              backgroundColor: "var(--color-background-secondary)",
+            }}
+          >
             {company.logoUrl ? (
               <Image
                 src={company.logoUrl}
@@ -91,7 +106,7 @@ const CompanyGridItem: React.FC<CompanyGridItemProps> = ({
                 className="w-8 h-8 rounded-full object-cover"
               />
             ) : (
-              <BuildingOffice2Icon className="w-6 h-6 text-gray-600" />
+              <BuildingOffice2Icon className="w-6 h-6 text-muted" />
             )}
           </div>
 
@@ -129,7 +144,10 @@ const CompanyGridItem: React.FC<CompanyGridItemProps> = ({
               {isTracked ? (
                 <RssIcon className="w-5 h-5 text-green-600" />
               ) : (
-                <div className="w-5 h-5 rounded-full border-2 border-gray-300 hover:border-green-600 transition-colors duration-150" />
+                <div
+                  className="w-5 h-5 rounded-full border-2 hover:border-green-600 transition-colors duration-150"
+                  style={{ borderColor: "var(--color-border)" }}
+                />
               )}
             </button>
           </div>
@@ -137,14 +155,14 @@ const CompanyGridItem: React.FC<CompanyGridItemProps> = ({
 
         {/* Company Name & Arrow */}
         <div className="flex items-center gap-2 mb-3">
-          <h3 className="text-lg font-medium leading-6 text-black">
+          <h3 className="text-lg font-medium leading-6 text-primary">
             {company.name}
           </h3>
-          <ArrowRightIcon className="w-5 h-5 text-gray-600" />
+          <ArrowRightIcon className="w-5 h-5 text-muted" />
         </div>
 
         {/* Description */}
-        <p className="text-gray-900 leading-6 mb-4 flex-1">
+        <p className="text-description leading-6 mb-4 flex-1">
           {company.description}
         </p>
 

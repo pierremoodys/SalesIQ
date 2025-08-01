@@ -40,22 +40,40 @@ export default function ChatPanel({
       {/* 16px top margin */}
       <div className="h-4 flex-shrink-0" />
 
-      {/* Chat Container - Takes remaining space with side margins and drop shadow */}
+      {/* Chat Container - Takes remaining space with side margins and glassmorphism */}
       <div
-        className="flex-1 mx-4 flex flex-col rounded-lg border border-[#d7d8d7] bg-white overflow-hidden min-h-0"
+        className="flex-1 mx-4 flex flex-col overflow-hidden min-h-0 relative rounded-md border"
         style={{
-          boxShadow: "2px 2px 4px 0px rgba(0, 0, 0, 0.1)",
+          background: "rgba(255, 255, 255, 0.02)",
+          backdropFilter: "blur(5px)",
+          WebkitBackdropFilter: "blur(5px)",
+          borderColor: "var(--color-border)",
         }}
       >
         {/* Header */}
-        <div className="flex flex-shrink-0 justify-between items-center gap-2 py-2 px-4 h-8 border-b border-b-[#d7d8d7] bg-[#deebff]/40">
+        <div
+          className="flex flex-shrink-0 justify-between items-center gap-2 py-2 px-4 h-8 border-b"
+          style={{
+            borderColor: "var(--color-border)",
+            backgroundColor: "var(--color-background-secondary)",
+          }}
+        >
           <div className="flex items-center gap-2">
-            <HeaderIcon className="w-4 h-4 text-[#646669]" />
-            <div className="text-[#3c3d3f] text-xs">{headerTitle}</div>
+            <HeaderIcon className="w-4 h-4 text-muted" />
+            <div className="text-xs" style={{ color: "var(--color-text)" }}>
+              {headerTitle}
+            </div>
           </div>
           <button
             onClick={onClose}
-            className="text-[#a6a9aa] hover:text-[#646669] transition-colors"
+            className="transition-colors"
+            style={{ color: "var(--color-text-muted)" }}
+            onMouseEnter={(e) =>
+              (e.currentTarget.style.color = "var(--color-text)")
+            }
+            onMouseLeave={(e) =>
+              (e.currentTarget.style.color = "var(--color-text-muted)")
+            }
           >
             <XMarkIcon className="w-4 h-4" />
           </button>
@@ -64,7 +82,10 @@ export default function ChatPanel({
         {/* Content - Takes remaining space */}
         <div className="flex flex-col p-4 flex-1 min-h-0">
           <div className="flex justify-center items-center gap-2.5 flex-shrink-0">
-            <div className="font-[420] text-md text-gray-600">
+            <div
+              className="font-[420] text-md"
+              style={{ color: "var(--color-text)" }}
+            >
               {description}
             </div>
           </div>
@@ -79,22 +100,45 @@ export default function ChatPanel({
           )}
 
           {/* Input Area - Pinned to bottom of content area */}
-          <div className="flex justify-between items-center py-2 px-3 h-14 rounded border border-[#2475ff] mt-4 flex-shrink-0">
+          <div
+            className="flex justify-between items-center py-2 px-3 h-14 rounded border mt-4 flex-shrink-0"
+            style={{ borderColor: "var(--color-secondary)" }}
+          >
             <input
               type="text"
               value={message}
               onChange={(e) => setMessage(e.target.value)}
               placeholder={placeholder}
-              className="flex-1 text-[#585a5c] leading-6 bg-transparent border-none outline-none placeholder:text-[#585a5c]"
+              className="flex-1 leading-6 bg-transparent border-none outline-none chat-input"
+              style={{
+                color: "var(--color-text)",
+              }}
               onKeyPress={(e) => e.key === "Enter" && handleSendMessage()}
             />
             <div className="flex items-center gap-4 h-10">
-              <MicrophoneIcon className="w-6 h-6 text-[#646669]" />
+              <MicrophoneIcon
+                className="w-6 h-6"
+                style={{ color: "var(--color-text-muted)" }}
+              />
               <button
                 onClick={handleSendMessage}
-                className="flex justify-center items-center w-8 h-8 rounded bg-[#e7e7f0] hover:bg-[#d1d1db] transition-colors"
+                className="flex justify-center items-center w-8 h-8 rounded transition-colors"
+                style={{
+                  backgroundColor: "var(--color-background-secondary)",
+                }}
+                onMouseEnter={(e) =>
+                  (e.currentTarget.style.backgroundColor =
+                    "var(--color-background-tertiary)")
+                }
+                onMouseLeave={(e) =>
+                  (e.currentTarget.style.backgroundColor =
+                    "var(--color-background-secondary)")
+                }
               >
-                <ArrowRightIcon className="w-6 h-6 text-[#646669]" />
+                <ArrowRightIcon
+                  className="w-6 h-6"
+                  style={{ color: "var(--color-text-muted)" }}
+                />
               </button>
             </div>
           </div>

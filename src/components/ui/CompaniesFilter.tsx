@@ -52,26 +52,30 @@ const CompaniesFilter: React.FC<CompaniesFilterProps> = ({
       {/* Search Input - Left Side */}
       <div className="relative flex-1 max-w-md">
         <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-          <MagnifyingGlassIcon className="h-5 w-5 text-gray-400" />
+          <MagnifyingGlassIcon
+            className="h-5 w-5"
+            style={{ color: "var(--color-text-muted)" }}
+          />
         </div>
         <input
           type="text"
           value={searchQuery}
           onChange={(e) => onSearchChange(e.target.value)}
           placeholder="Search companies..."
-          className="
-            block w-full pl-10 pr-3 py-2 
-            border-b border-gray-300 
-             text-sm
-            placeholder-gray-500 
-            focus:outline-none focus:ring-2-b focus:ring-bright-blue-700 focus:border-bright-blue-700
-            transition-colors duration-200
-          "
+          className="block w-full pl-10 pr-3 py-2 border-b text-sm focus:outline-none transition-colors duration-200"
+          style={{
+            borderColor: "var(--color-border)",
+            backgroundColor: "transparent",
+            color: "var(--color-text)",
+          }}
         />
       </div>
 
       {/* View Switcher - Right Side */}
-      <div className="ml-6 border border-gray-300 rounded-lg overflow-hidden">
+      <div
+        className="ml-6 border rounded-lg overflow-hidden"
+        style={{ borderColor: "var(--color-border)" }}
+      >
         <RadioGroup
           value={viewType}
           onChange={onViewTypeChange}
@@ -81,26 +85,30 @@ const CompaniesFilter: React.FC<CompaniesFilterProps> = ({
             <RadioGroupOption
               key={option.value}
               value={option.value}
-              className={({ checked }) =>
-                cn(
-                  "relative flex items-center justify-center px-3 py-2 cursor-pointer transition-all duration-200",
-                  "focus:outline-none focus:ring-2 focus:ring-bright-blue-700 focus:ring-offset-2",
-                  checked
-                    ? "bg-bright-blue-700 text-white"
-                    : "bg-white text-gray-700 hover:bg-gray-50"
-                )
-              }
+              className="relative flex items-center justify-center px-3 py-2 cursor-pointer transition-all duration-200 focus:outline-none"
             >
               {({ checked }) => (
-                <>
+                <div
+                  style={{
+                    backgroundColor: checked
+                      ? "var(--color-secondary)"
+                      : "var(--color-surface)",
+                    color: checked
+                      ? "var(--color-text-inverse)"
+                      : "var(--color-text)",
+                  }}
+                  className="w-full h-full flex items-center justify-center"
+                >
                   <option.icon
-                    className={cn(
-                      "w-5 h-5",
-                      checked ? "text-white" : "text-gray-600"
-                    )}
+                    className="w-5 h-5"
+                    style={{
+                      color: checked
+                        ? "var(--color-text-inverse)"
+                        : "var(--color-text-muted)",
+                    }}
                   />
                   <span className="sr-only">{option.label}</span>
-                </>
+                </div>
               )}
             </RadioGroupOption>
           ))}

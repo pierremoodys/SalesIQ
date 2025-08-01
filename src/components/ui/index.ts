@@ -3,6 +3,8 @@ export { default as CompaniesFilter } from "./CompaniesFilter";
 export { default as CompanyTags } from "./CompanyTags";
 export { default as ConfirmationModal } from "./ConfirmationModal";
 export { default as MoodysAIButton } from "./MoodysAIButton";
+export { default as ThemeToggle } from "./ThemeToggle";
+export { default as ThemeToggleWrapper } from "./ThemeToggleWrapper";
 export { default as UploadTable } from "./UploadTable";
 export { default as UploadComponent } from "./UploadComponent";
 
