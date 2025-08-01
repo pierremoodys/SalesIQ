@@ -4,8 +4,6 @@ import React, { useState, useEffect } from "react";
 import { Panel, PanelGroup, PanelResizeHandle } from "react-resizable-panels";
 import ChatPanel from "@/components/layout/ChatPanel";
 import { DocumentArrowUpIcon } from "@heroicons/react/24/outline";
-import { updateChatPanelSize } from "@/lib/chat-server-actions";
-import { usePathname } from "next/navigation";
 
 interface UploadContentClientProps {
   children: React.ReactNode;

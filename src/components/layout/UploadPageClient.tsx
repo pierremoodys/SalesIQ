@@ -26,7 +26,7 @@ export default function UploadPageClient(props: UploadPageClientProps) {
       newProp: initialChatOpen,
     });
     setIsChatOpen(initialChatOpen);
-  }, [initialChatOpen]);
+  }, [initialChatOpen, isChatOpen]);
 
   console.log("🔵 Current state:", {
     isChatOpen,
@@ -37,16 +37,10 @@ export default function UploadPageClient(props: UploadPageClientProps) {
   // Initial scroll effect based on server-provided chat state
   useEffect(() => {
     console.log("🟡 Initial scroll useEffect triggered:", {
-      hasInitialScrolled: hasInitialScrolled.current,
       initialChatOpen,
       containerExists: !!containerRef.current,
       uploadsExists: !!previousUploadsRef.current,
     });
-
-    if (hasInitialScrolled.current) {
-      console.log("🔴 Skipping initial scroll - already done");
-      return;
-    }
 
     const container = containerRef.current;
     const previousUploads = previousUploadsRef.current;
@@ -76,8 +70,11 @@ export default function UploadPageClient(props: UploadPageClientProps) {
     }
 
     hasInitialScrolled.current = true;
-    console.log("🟢 Initial scroll completed, hasInitialScrolled set to true");
-  }, []); // Run only once on mount
+    console.log(
+      "🟢 Initial scroll completed for initialChatOpen:",
+      initialChatOpen
+    );
+  }, [initialChatOpen]); // Run when initialChatOpen changes
 
   // Smooth scroll effect when user toggles chat state
   useEffect(() => {
