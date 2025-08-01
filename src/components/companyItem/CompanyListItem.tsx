@@ -69,32 +69,29 @@ const CompanyListItem: React.FC<CompanyListItemProps> = ({
     if (isTracked && isHovered) {
       return "text-blue-600";
     }
-    return "text-black";
+    return "text-primary";
   };
 
   const getArrowIconClass = () => {
-    if (isTracked && isHovered) {
-      return `text-blue-600 transform translate-x-2 ${HOVER_TRANSITIONS.transform}`;
-    }
-    return `text-gray-600 transform translate-x-0 ${HOVER_TRANSITIONS.transform}`;
+    const slideClass = isHovered ? "translate-x-2" : "translate-x-0";
+    const colorClass = isTracked && isHovered ? "text-blue-600" : "text-muted";
+    return `${colorClass} transform ${slideClass}`;
   };
 
   const getHoverClass = () => {
-    if (isTracked && isHovered) {
-      return "bg-blue-50 border-blue-200";
-    }
-    return "hover:bg-gray-50";
+    return "hover:bg-surface-hover";
   };
 
   return (
     <>
       <div
         className={`
-          flex justify-between items-start px-4 py-8 w-full border-b border-gray-200 
+          flex justify-between items-start px-4 py-8 w-full border-b 
           cursor-pointer ${HOVER_TRANSITIONS.slow}
           ${getHoverClass()}
           ${className}
         `}
+        style={{ borderColor: "var(--color-border)" }}
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
         onClick={handleCompanyClick}
@@ -102,7 +99,13 @@ const CompanyListItem: React.FC<CompanyListItemProps> = ({
         {/* Left Content */}
         <div className="flex items-start gap-4 flex-1">
           {/* Company Logo */}
-          <div className="flex justify-center items-center w-12 h-12 rounded-full border border-gray-200 bg-gray-100">
+          <div
+            className="flex justify-center items-center w-12 h-12 rounded-full border"
+            style={{
+              borderColor: "var(--color-border)",
+              backgroundColor: "var(--color-background-secondary)",
+            }}
+          >
             {company.logoUrl ? (
               <Image
                 src={company.logoUrl}
@@ -112,7 +115,7 @@ const CompanyListItem: React.FC<CompanyListItemProps> = ({
                 className="w-8 h-8 rounded-full object-cover"
               />
             ) : (
-              <BuildingOffice2Icon className="w-6 h-6 text-gray-600" />
+              <BuildingOffice2Icon className="w-6 h-6 text-muted" />
             )}
           </div>
 
@@ -121,21 +124,17 @@ const CompanyListItem: React.FC<CompanyListItemProps> = ({
             {/* Company Name & Arrow */}
             <div className="flex items-start gap-2">
               <h3
-                className={`text-xl font-[700] leading-6 ${
-                  HOVER_TRANSITIONS.colors
-                } ${getCompanyNameClass()}`}
+                className={`text-xl font-[700] leading-6 transition-colors duration-200 ease-in-out ${getCompanyNameClass()}`}
               >
                 {company.name}
               </h3>
               <ArrowRightIcon
-                className={`w-6 h-6 ${
-                  HOVER_TRANSITIONS.colors
-                } ${getArrowIconClass()}`}
+                className={`w-6 h-6 transition-colors duration-200 ease-in-out ${getArrowIconClass()}`}
               />
             </div>
 
             {/* Description */}
-            <p className="text-gray-600 font-[450] text-xl">
+            <p className="text-description font-[450] text-xl">
               {company.description}
             </p>
 
@@ -181,7 +180,8 @@ const CompanyListItem: React.FC<CompanyListItemProps> = ({
               <RssIcon className="w-5 h-5 text-green-600" />
             ) : (
               <div
-                className={`w-5 h-5 rounded-full border-2 border-gray-300 hover:border-green-600 ${HOVER_TRANSITIONS.colors}`}
+                className={`w-5 h-5 rounded-full border-2 hover:border-green-600 ${HOVER_TRANSITIONS.colors}`}
+                style={{ borderColor: "var(--color-border)" }}
               />
             )}
           </button>

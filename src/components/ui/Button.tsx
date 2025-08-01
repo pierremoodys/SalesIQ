@@ -37,45 +37,39 @@ const buttonVariants = cva(
         palette: "primary",
         variant: "outline",
         disabled: false,
-        className:
-          "border-2 border-brand-moody-bright-blue text-brand-moody-bright-blue bg-transparent hover:border-bright-blue-500 hover:text-bright-blue-500 active:border-bright-blue-900 active:text-bright-blue-900 active:bg-white focus:bg-white focus:border-brand-moody-bright-blue focus:text-brand-moody-bright-blue focus:ring-bright-blue-700",
+        className: "btn-primary-outline",
       },
       {
         palette: "primary",
         variant: "outline",
         disabled: true,
-        className:
-          "border-2 border-gray-300 text-gray-300 bg-transparent cursor-not-allowed",
+        className: "cursor-not-allowed opacity-50",
       },
       // Secondary Outline variants
       {
         palette: "secondary",
         variant: "outline",
         disabled: false,
-        className:
-          "border-2 border-gray-300 text-gray-800 bg-transparent hover:border-gray-100 hover:bg-gray-100 hover:text-gray-800 active:border-gray-100 active:text-gray-800 active:bg-transparent focus:bg-white focus:text-gray-800 focus:border-transparent focus:ring-gray-500",
+        className: "btn-secondary-outline",
       },
       {
         palette: "secondary",
         variant: "outline",
         disabled: true,
-        className:
-          "border-2 border-gray-300 text-gray-300 bg-transparent cursor-not-allowed",
+        className: "cursor-not-allowed opacity-50",
       },
       // Negative Outline variants
       {
         palette: "negative",
         variant: "outline",
         disabled: false,
-        className:
-          "border-2 border-brand-moody-red text-brand-moody-red bg-transparent hover:border-brand-moody-red hover:bg-red-100 hover:text-brand-moody-red active:border-brand-moody-red active:bg-red-300 active:text-brand-moody-red focus:bg-white focus:text-brand-moody-red focus:border-transparent focus:ring-red-500",
+        className: "btn-negative-outline",
       },
       {
         palette: "negative",
         variant: "outline",
         disabled: true,
-        className:
-          "border-2 border-gray-300 text-gray-300 bg-transparent cursor-not-allowed",
+        className: "cursor-not-allowed opacity-50",
       },
     ],
     defaultVariants: {

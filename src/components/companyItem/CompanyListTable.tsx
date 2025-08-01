@@ -74,7 +74,7 @@ const CompanyTableRow: React.FC<CompanyTableRowProps> = ({
 
   return (
     <tr
-      className="hover:bg-gray-50 cursor-pointer transition-colors duration-200"
+      className="hover:bg-surface-hover cursor-pointer transition-colors duration-200"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
       onClick={handleClick}

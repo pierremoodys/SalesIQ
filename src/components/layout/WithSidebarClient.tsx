@@ -33,7 +33,11 @@ export default function WithSidebarClient({
         <PanelResizeHandle />
 
         {/* Main Content Area */}
-        <Panel id="main-content" className="min-w-0 bg-white">
+        <Panel
+          id="main-content"
+          className="min-w-0"
+          style={{ backgroundColor: "var(--color-surface)" }}
+        >
           <div className="h-full">{children}</div>
         </Panel>
       </PanelGroup>

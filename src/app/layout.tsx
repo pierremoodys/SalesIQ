@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import ReactQueryProvider from "@/providers/ReactQueryProvider";
+import { ThemeProvider } from "@/contexts/ThemeContext";
 
 export const metadata: Metadata = {
   title: "SalesIQ - Moody's Analytics",
@@ -24,7 +25,9 @@ export default function RootLayout({
         />
       </head>
       <body className="antialiased">
-        <ReactQueryProvider>{children}</ReactQueryProvider>
+        <ThemeProvider>
+          <ReactQueryProvider>{children}</ReactQueryProvider>
+        </ThemeProvider>
       </body>
     </html>
   );

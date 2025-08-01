@@ -65,7 +65,7 @@ export default function CompaniesPage() {
   if (isLoading) {
     return (
       <div className="text-center py-12">
-        <p className="text-gray-500">Loading companies...</p>
+        <p style={{ color: "var(--color-text-muted)" }}>Loading companies...</p>
       </div>
     );
   }
@@ -73,7 +73,7 @@ export default function CompaniesPage() {
   if (error) {
     return (
       <div className="text-center py-12">
-        <p className="text-red-500">Error loading companies</p>
+        <p style={{ color: "var(--color-error)" }}>Error loading companies</p>
       </div>
     );
   }
@@ -134,10 +134,13 @@ export default function CompaniesPage() {
         </>
       ) : searchQuery ? (
         <div className="text-center py-12">
-          <p className="text-gray-500">
+          <p style={{ color: "var(--color-text-muted)" }}>
             No companies found matching &ldquo;{searchQuery}&rdquo;.
           </p>
-          <p className="text-gray-400 text-sm mt-2">
+          <p
+            style={{ color: "var(--color-text-muted)" }}
+            className="text-sm mt-2"
+          >
             Try adjusting your search or add more companies to your tracking
             list.
           </p>

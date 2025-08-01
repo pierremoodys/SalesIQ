@@ -158,7 +158,9 @@ const PageHeader: React.FC<PageHeaderProps> = (props) => {
             size="m"
             icon={
               <SparklesIcon
-                className={isChatOpen ? "text-blue-600" : "text-white"}
+                style={{
+                  color: isChatOpen ? "var(--color-secondary)" : "white",
+                }}
               />
             }
             iconPosition="left"
@@ -179,11 +181,27 @@ const PageHeader: React.FC<PageHeaderProps> = (props) => {
 
     return (
       <Menu as="div" className="relative">
-        <MenuButton className="flex justify-center items-center p-2 hover:bg-gray-200 rounded transition-colors duration-300 ease-in-out cursor-pointer">
-          <EllipsisVerticalIcon className="w-6 h-6 text-black" />
+        <MenuButton
+          className="flex justify-center items-center p-2 rounded transition-colors duration-300 ease-in-out cursor-pointer"
+          style={{ color: "var(--color-text)" }}
+          onMouseEnter={(e) =>
+            (e.currentTarget.style.backgroundColor =
+              "var(--color-surface-hover)")
+          }
+          onMouseLeave={(e) =>
+            (e.currentTarget.style.backgroundColor = "transparent")
+          }
+        >
+          <EllipsisVerticalIcon className="w-6 h-6" />
         </MenuButton>
 
-        <MenuItems className="absolute right-0 top-8 z-20 w-48 bg-white border border-gray-200 rounded-md shadow-lg py-1 focus:outline-none">
+        <MenuItems
+          className="absolute right-0 top-8 z-20 w-48 border rounded-md shadow-lg py-1 focus:outline-none"
+          style={{
+            backgroundColor: "var(--color-surface)",
+            borderColor: "var(--color-border)",
+          }}
+        >
           {menuItems.map((item) => (
             <MenuItem key={item.id} disabled={item.disabled}>
               {({ focus, disabled }) => (
@@ -194,13 +212,17 @@ const PageHeader: React.FC<PageHeaderProps> = (props) => {
                       router.push(item.url);
                     }
                   }}
-                  className={`w-full px-4 py-2 text-left text-sm flex items-center gap-2 transition-colors ${
-                    disabled
-                      ? "text-gray-400 cursor-not-allowed"
-                      : focus
-                      ? "bg-gray-50 text-gray-900"
-                      : "text-gray-900"
-                  }`}
+                  className="w-full px-4 py-2 text-left text-sm flex items-center gap-2 transition-colors"
+                  style={{
+                    color: disabled
+                      ? "var(--color-text-muted)"
+                      : "var(--color-text)",
+                    backgroundColor:
+                      focus && !disabled
+                        ? "var(--color-surface-hover)"
+                        : "transparent",
+                    cursor: disabled ? "not-allowed" : "pointer",
+                  }}
                 >
                   {item.icon &&
                     React.createElement(ICON_MAP[item.icon], {
@@ -231,10 +253,20 @@ const PageHeader: React.FC<PageHeaderProps> = (props) => {
     return (
       <Link
         href={backButton.url}
-        className="flex items-center gap-2 text-gray-600 hover:text-gray-900 transition-colors duration-150"
+        className="flex items-center gap-2 transition-colors duration-150"
+        style={{ color: "var(--color-text-muted)" }}
+        onMouseEnter={(e) =>
+          (e.currentTarget.style.color = "var(--color-text)")
+        }
+        onMouseLeave={(e) =>
+          (e.currentTarget.style.color = "var(--color-text-muted)")
+        }
       >
         <ArrowLeftIcon className="w-4 h-4" />
-        <span className="text-sm font-medium">
+        <span
+          className="text-sm font-medium"
+          style={{ color: "var(--color-text-muted)" }}
+        >
           {backButton.label || "Back"}
         </span>
       </Link>
@@ -248,13 +280,17 @@ const PageHeader: React.FC<PageHeaderProps> = (props) => {
 
     return (
       <div
-        className={`flex flex-col items-start gap-3 py-4 px-8 w-full border-b border-gray-300 ${className}`}
+        className={`flex flex-col items-start gap-3 py-4 px-8 w-full border-b ${className}`}
+        style={{ borderColor: "var(--color-border)" }}
       >
         <div className="flex justify-between items-center w-full">
           {/* Page Title Section */}
           <div className="flex items-center gap-2">
-            <Icon className="w-[18px] h-[18px] text-gray-900" />
-            <h1 className="text-black text-lg font-medium leading-6">
+            <Icon
+              className="w-[18px] h-[18px]"
+              style={{ color: "var(--color-secondary)" }}
+            />
+            <h1 className="text-primary text-lg font-medium leading-6">
               {title}
             </h1>
           </div>
@@ -272,7 +308,8 @@ const PageHeader: React.FC<PageHeaderProps> = (props) => {
 
     return (
       <div
-        className={`flex flex-col items-start gap-4 py-4 px-8 w-full border-b border-gray-300 ${className}`}
+        className={`flex flex-col items-start gap-4 py-4 px-8 w-full border-b ${className}`}
+        style={{ borderColor: "var(--color-border)" }}
       >
         {/* Top Row: Back Button + Actions */}
         <div className="flex justify-between items-center w-full">
@@ -282,7 +319,9 @@ const PageHeader: React.FC<PageHeaderProps> = (props) => {
 
         {/* Page Title */}
         <div className="w-full">
-          <h1 className="text-3xl font-[650] leading-9 text-black">{title}</h1>
+          <h1 className="text-3xl font-[650] leading-9 text-primary">
+            {title}
+          </h1>
         </div>
       </div>
     );
@@ -294,7 +333,8 @@ const PageHeader: React.FC<PageHeaderProps> = (props) => {
 
     return (
       <div
-        className={`flex flex-col items-start gap-4 py-4 px-8 w-full border-b border-gray-300 ${className}`}
+        className={`flex flex-col items-start gap-4 py-4 px-8 w-full border-b ${className}`}
+        style={{ borderColor: "var(--color-border)" }}
       >
         {/* Top Row: Back Button + Actions */}
         <div className="flex justify-between items-center w-full">
@@ -305,7 +345,13 @@ const PageHeader: React.FC<PageHeaderProps> = (props) => {
         {/* Company Information Row */}
         <div className="flex items-start gap-4 w-full">
           {/* Company Logo */}
-          <div className="flex justify-center items-center w-12 h-12 rounded-full border border-gray-200 bg-gray-100">
+          <div
+            className="flex justify-center items-center w-12 h-12 rounded-full border"
+            style={{
+              borderColor: "var(--color-border)",
+              backgroundColor: "var(--color-background-secondary)",
+            }}
+          >
             {companyInfo.logoUrl ? (
               <Image
                 src={companyInfo.logoUrl}
@@ -315,19 +361,28 @@ const PageHeader: React.FC<PageHeaderProps> = (props) => {
                 className="w-8 h-8 rounded-full object-cover"
               />
             ) : (
-              <BuildingOffice2Icon className="w-6 h-6 text-gray-600" />
+              <BuildingOffice2Icon
+                className="w-6 h-6"
+                style={{ color: "var(--color-text-muted)" }}
+              />
             )}
           </div>
 
           {/* Company Content */}
           <div className="flex flex-col justify-center items-start gap-2 flex-1">
             {/* Company Name */}
-            <h1 className="text-xl font-[700] leading-6 text-black">
+            <h1
+              className="text-xl font-[700] leading-6"
+              style={{ color: "var(--color-text)" }}
+            >
               {companyInfo.name}
             </h1>
 
             {/* Description */}
-            <p className="text-gray-600 font-[450] text-xl">
+            <p
+              className="font-[450] text-xl"
+              style={{ color: "var(--color-text-secondary)" }}
+            >
               {companyInfo.description}
             </p>
 

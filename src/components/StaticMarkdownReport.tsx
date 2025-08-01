@@ -14,7 +14,8 @@ const components = {
   // Main title (h1)
   h1: ({ children, ...props }: React.ComponentProps<"h1">) => (
     <h1
-      className="text-[64px] font-semibold mb-8 font-financier text-blue-1000"
+      className="text-[64px] font-semibold mb-8 font-financier"
+      style={{ color: "var(--color-text)" }}
       {...props}
     >
       {children}
@@ -23,8 +24,15 @@ const components = {
 
   // Section headers (h2)
   h2: ({ children, ...props }: React.ComponentProps<"h2">) => (
-    <div className="space-y-6 pt-6 border-t border-gray-200 first:pt-0 first:border-t-0">
-      <h2 className="text-2xl font-semibold text-blue-900 mb-6" {...props}>
+    <div
+      className="space-y-6 pt-6 border-t first:pt-0 first:border-t-0"
+      style={{ borderColor: "var(--color-border)" }}
+    >
+      <h2
+        className="text-2xl font-semibold mb-6"
+        style={{ color: "var(--color-text)" }}
+        {...props}
+      >
         {children}
       </h2>
     </div>
@@ -33,7 +41,11 @@ const components = {
   // Subsection headers (h3)
   h3: ({ children, ...props }: React.ComponentProps<"h3">) => (
     <div className="space-y-4">
-      <h3 className="text-lg font-semibold text-gray-900" {...props}>
+      <h3
+        className="text-lg font-semibold"
+        style={{ color: "var(--color-text)" }}
+        {...props}
+      >
         {children}
       </h3>
     </div>
@@ -41,28 +53,44 @@ const components = {
 
   // Paragraphs
   p: ({ children, ...props }: React.ComponentProps<"p">) => (
-    <p className="text-gray-700 leading-relaxed" {...props}>
+    <p
+      className="leading-relaxed"
+      style={{ color: "var(--color-text-secondary)" }}
+      {...props}
+    >
       {children}
     </p>
   ),
 
   // Bold text
   strong: ({ children, ...props }: React.ComponentProps<"strong">) => (
-    <span className="font-semibold text-gray-900" {...props}>
+    <span
+      className="font-semibold"
+      style={{ color: "var(--color-text)" }}
+      {...props}
+    >
       {children}
     </span>
   ),
 
   // Italic text
   em: ({ children, ...props }: React.ComponentProps<"em">) => (
-    <span className="text-gray-700 italic" {...props}>
+    <span
+      className="italic"
+      style={{ color: "var(--color-text-secondary)" }}
+      {...props}
+    >
       {children}
     </span>
   ),
 
   // Unordered lists
   ul: ({ children, ...props }: React.ComponentProps<"ul">) => (
-    <ul className="space-y-2 text-gray-700" {...props}>
+    <ul
+      className="space-y-2"
+      style={{ color: "var(--color-text-secondary)" }}
+      {...props}
+    >
       {children}
     </ul>
   ),
@@ -77,7 +105,11 @@ const components = {
 
   // Ordered lists
   ol: ({ children, ...props }: React.ComponentProps<"ol">) => (
-    <ol className="space-y-1 text-gray-700 ml-4" {...props}>
+    <ol
+      className="space-y-1 ml-4"
+      style={{ color: "var(--color-text-secondary)" }}
+      {...props}
+    >
       {children}
     </ol>
   ),
@@ -86,7 +118,8 @@ const components = {
   table: ({ children, ...props }: React.ComponentProps<"table">) => (
     <div className="overflow-x-auto">
       <table
-        className="min-w-full border-collapse border border-gray-300"
+        className="min-w-full border-collapse border"
+        style={{ borderColor: "var(--color-border)" }}
         {...props}
       >
         {children}
@@ -97,7 +130,12 @@ const components = {
   // Table headers
   th: ({ children, ...props }: React.ComponentProps<"th">) => (
     <th
-      className="border border-gray-300 px-4 py-2 bg-gray-100 font-semibold text-left"
+      className="border px-4 py-2 font-semibold text-left"
+      style={{
+        borderColor: "var(--color-border)",
+        backgroundColor: "var(--color-background-secondary)",
+        color: "var(--color-text)",
+      }}
       {...props}
     >
       {children}
@@ -106,7 +144,14 @@ const components = {
 
   // Table cells
   td: ({ children, ...props }: React.ComponentProps<"td">) => (
-    <td className="border border-gray-300 px-4 py-2" {...props}>
+    <td
+      className="border px-4 py-2"
+      style={{
+        borderColor: "var(--color-border)",
+        color: "var(--color-text-secondary)",
+      }}
+      {...props}
+    >
       {children}
     </td>
   ),
@@ -114,7 +159,11 @@ const components = {
   // Code blocks
   code: ({ children, ...props }: React.ComponentProps<"code">) => (
     <code
-      className="bg-gray-100 px-2 py-1 rounded text-sm font-mono"
+      className="px-2 py-1 rounded text-sm font-mono"
+      style={{
+        backgroundColor: "var(--color-background-secondary)",
+        color: "var(--color-text)",
+      }}
       {...props}
     >
       {children}
@@ -124,7 +173,11 @@ const components = {
   // Blockquotes
   blockquote: ({ children, ...props }: React.ComponentProps<"blockquote">) => (
     <blockquote
-      className="border-l-4 border-blue-500 pl-4 italic text-gray-600"
+      className="border-l-4 pl-4 italic"
+      style={{
+        borderColor: "var(--color-secondary)",
+        color: "var(--color-text-muted)",
+      }}
       {...props}
     >
       {children}
@@ -136,7 +189,11 @@ const StaticMarkdownReport: React.FC<StaticMarkdownReportProps> = ({
   content,
 }) => {
   return (
-    <div className="bg-white px-8 max-w-none mb-32" data-toc-container>
+    <div
+      className="px-8 max-w-none mb-32"
+      style={{ backgroundColor: "var(--color-surface)" }}
+      data-toc-container
+    >
       <div className="space-y-8">
         <ReactMarkdown
           components={components}

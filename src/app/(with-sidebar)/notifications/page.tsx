@@ -3,7 +3,6 @@
 import React, { useState } from "react";
 import { Tab, TabGroup, TabList } from "@headlessui/react";
 import { BellIcon } from "@heroicons/react/24/outline";
-import { cn } from "@/lib/utils";
 import { useRouter, useSearchParams } from "next/navigation";
 import { NotificationList } from "@/components/ui";
 import { useNotifications } from "@/hooks/useNotifications";
@@ -87,34 +86,49 @@ export default function NotificationsPage() {
   return (
     <div className="h-full flex flex-col">
       {/* Tab Navigation */}
-      <div className="flex-shrink-0 px-6 py-4 bg-white">
+      <div
+        className="flex-shrink-0 px-6 py-4"
+        style={{ backgroundColor: "var(--color-surface)" }}
+      >
         <TabGroup
           selectedIndex={selectedTabIndex}
           onChange={handleTabIndexChange}
         >
-          <TabList className="inline-flex items-start gap-1 p-1 rounded bg-[#f0f0f1]">
+          <TabList
+            className="inline-flex items-start gap-1 p-1 rounded"
+            style={{ backgroundColor: "var(--color-background-secondary)" }}
+          >
             {notificationTabs.map((tab) => (
               <Tab
                 key={tab.id}
-                className={({ selected }) =>
-                  cn(
-                    "flex justify-center items-center gap-2 py-2 px-4 rounded text-sm font-[420] leading-[1.125rem] transition-all duration-150 focus:outline-none cursor-pointer",
-                    selected
-                      ? "bg-white text-[#005eff]"
-                      : "text-[#3c3d3f] hover:bg-white/50"
-                  )
-                }
+                className="text-sm font-[420] leading-[1.125rem] transition-all duration-150 focus:outline-none cursor-pointer"
               >
                 {({ selected }) => (
-                  <>
-                    <BellIcon
-                      className={cn(
-                        "w-[18px] h-[18px]",
-                        selected ? "text-[#005eff]" : "text-[#3c3d3f]"
-                      )}
-                    />
+                  <div
+                    className="flex justify-center items-center gap-2 py-2 px-4 rounded"
+                    style={{
+                      backgroundColor: selected
+                        ? "var(--color-surface)"
+                        : "transparent",
+                      color: selected
+                        ? "var(--color-secondary)"
+                        : "var(--color-text)",
+                    }}
+                    onMouseEnter={(e) => {
+                      if (!selected) {
+                        e.currentTarget.style.backgroundColor =
+                          "var(--color-surface-hover)";
+                      }
+                    }}
+                    onMouseLeave={(e) => {
+                      if (!selected) {
+                        e.currentTarget.style.backgroundColor = "transparent";
+                      }
+                    }}
+                  >
+                    <BellIcon className="w-[18px] h-[18px]" />
                     <span>{tab.label}</span>
-                  </>
+                  </div>
                 )}
               </Tab>
             ))}
@@ -126,7 +140,9 @@ export default function NotificationsPage() {
       <div className="flex-1 min-h-0 overflow-y-auto">
         {isLoading ? (
           <div className="text-center py-12">
-            <p className="text-gray-500">Loading notifications...</p>
+            <p style={{ color: "var(--color-text-muted)" }}>
+              Loading notifications...
+            </p>
           </div>
         ) : error ? (
           <div className="text-center py-12">
@@ -142,10 +158,13 @@ export default function NotificationsPage() {
           </div>
         ) : (
           <div className="text-center py-12">
-            <p className="text-gray-500">
+            <p style={{ color: "var(--color-text-muted)" }}>
               No {activeTab === "all" ? "" : activeTab} notifications available.
             </p>
-            <p className="text-gray-400 text-sm mt-2">
+            <p
+              className="text-sm mt-2"
+              style={{ color: "var(--color-text-muted)" }}
+            >
               New notifications will appear here when they are generated.
             </p>
           </div>
