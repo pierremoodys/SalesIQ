@@ -154,8 +154,8 @@
       "source": "Customer Success Platform",
       "sourceType": "internal",
       "date": "2024-01-10T12:15:00Z",
-      "isNew": true,
-      "isRead": false,
+      "isNew": false,
+      "isRead": true,
       "affectedCompanies": [
         {
           "uuid": "c-550e8400-e29b-41d4-a716-446655440001",
@@ -228,7 +228,7 @@
   ],
   "metadata": {
     "totalCount": 8,
-    "unreadCount": 5,
+    "unreadCount": 4,
     "categories": [
       "Market News",
       "Security Alert",
@@ -247,6 +247,6 @@
       "update",
       "highlight"
     ],
-    "lastUpdated": "2025-07-29T13:28:36.523Z"
+    "lastUpdated": "2025-08-01T01:40:42.978Z"
   }
 }
