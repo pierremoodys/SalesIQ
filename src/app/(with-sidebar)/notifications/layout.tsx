@@ -1,9 +1,5 @@
 import { getChatState, toggleChatAction } from "@/lib/chat-server-actions";
-import {
-  PageHeader,
-  DropdownMenuItem,
-  ChatConfig,
-} from "@/components/pageHeader";
+import { PageHeader, DropdownMenuItem } from "@/components/pageHeader";
 import { ROUTES } from "@/config/routes";
 import NotificationsContentClient from "@/components/layout/NotificationsContentClient";
 

@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import { Panel, PanelGroup, PanelResizeHandle } from "react-resizable-panels";
 // Remove direct import of server actions
-import { usePathname } from "next/navigation";
+
 import ChatPanel from "@/components/layout/ChatPanel";
 import {
   CompaniesContext,
@@ -21,8 +21,6 @@ export default function CompaniesContentClient({
   initialChatOpen,
   initialChatSize,
 }: CompaniesContentClientProps) {
-  const pathname = usePathname();
-
   // Local state for companies-specific functionality
   const [searchQuery, setSearchQuery] = useState("");
   const [viewType, setViewType] = useState<"list" | "grid" | "table">("list");

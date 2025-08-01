@@ -6,13 +6,7 @@ import {
   DropdownMenuItem,
   ChatConfig,
 } from "@/components/pageHeader";
-import {
-  BuildingOffice2Icon,
-  PencilIcon,
-  TrashIcon,
-  ShareIcon,
-  EyeIcon,
-} from "@heroicons/react/24/outline";
+// Icons are referenced in menuItems for the PageHeader component
 import { useChatStore } from "@/stores/chatStore";
 import type { Company } from "@/lib/serverData";
 import { ROUTES } from "@/config/routes";

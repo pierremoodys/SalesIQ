@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
@@ -135,7 +135,6 @@ const PageHeader: React.FC<PageHeaderProps> = (props) => {
     onToggleChat,
     toggleChatAction,
     isChatOpen = false,
-    chatConfig,
     menuItems,
   } = props;
 

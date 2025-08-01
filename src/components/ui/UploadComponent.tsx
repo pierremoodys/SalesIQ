@@ -6,16 +6,13 @@ import { CloudArrowUpIcon } from "@heroicons/react/24/outline";
 interface UploadComponentProps {
   size?: "medium" | "small";
   className?: string;
-  onFileSelect?: (files: FileList) => void;
 }
 
 const UploadComponent: React.FC<UploadComponentProps> = ({
   size = "medium",
   className = "",
-  onFileSelect,
 }) => {
   const isMedium = size === "medium";
-  const isSmall = size === "small";
 
   return (
     <div className={`bg-white rounded-lg border border-gray-200 ${className}`}>

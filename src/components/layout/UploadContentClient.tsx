@@ -97,9 +97,12 @@ export default function UploadContentClient({
                 "shouldRenderChat:",
                 shouldRenderChat
               );
-              return React.cloneElement(children as React.ReactElement<any>, {
-                isChatOpen: initialChatOpen, // Use initialChatOpen for immediate state changes
-              });
+              return React.cloneElement(
+                children as React.ReactElement<{ isChatOpen?: boolean }>,
+                {
+                  isChatOpen: initialChatOpen, // Use initialChatOpen for immediate state changes
+                }
+              );
             })()}
           </div>
         </Panel>

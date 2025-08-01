@@ -7,6 +7,11 @@ import {
   getPaginationRowModel,
   flexRender,
   ColumnDef,
+  CellContext,
+  HeaderGroup,
+  Row,
+  Cell,
+  PaginationState,
 } from "@tanstack/react-table";
 import {
   TrashIcon,
@@ -152,7 +157,7 @@ const UploadTable: React.FC<UploadTableProps> = ({ data = sampleData }) => {
     {
       accessorKey: "fileName",
       header: "File name",
-      cell: ({ getValue }: any) => (
+      cell: ({ getValue }: CellContext<UploadFile, unknown>) => (
         <span className="text-sm text-gray-900 font-medium">
           {getValue() as string}
         </span>
@@ -161,7 +166,7 @@ const UploadTable: React.FC<UploadTableProps> = ({ data = sampleData }) => {
     {
       accessorKey: "status",
       header: "Status",
-      cell: ({ getValue }: any) => {
+      cell: ({ getValue }: CellContext<UploadFile, unknown>) => {
         const status = getValue() as string;
         return (
           <span className="inline-flex items-center px-2.5 py-0.5 rounded-md text-xs font-medium bg-gray-100 text-gray-800">
@@ -173,7 +178,7 @@ const UploadTable: React.FC<UploadTableProps> = ({ data = sampleData }) => {
     {
       id: "action",
       header: "Action",
-      cell: ({ row }: any) => (
+      cell: ({ row }: CellContext<UploadFile, unknown>) => (
         <button
           onClick={() => handleDelete(row.original.id)}
           className="p-1 text-gray-400 hover:text-red-500 transition-colors duration-150"
@@ -196,7 +201,9 @@ const UploadTable: React.FC<UploadTableProps> = ({ data = sampleData }) => {
         pageSize,
       },
     },
-    onPaginationChange: (updater: any) => {
+    onPaginationChange: (
+      updater: PaginationState | ((old: PaginationState) => PaginationState)
+    ) => {
       if (typeof updater === "function") {
         const newState = updater({ pageIndex, pageSize });
         setPageIndex(newState.pageIndex);
@@ -215,35 +222,42 @@ const UploadTable: React.FC<UploadTableProps> = ({ data = sampleData }) => {
       <div className="overflow-hidden">
         <table className="min-w-full">
           <thead>
-            {table.getHeaderGroups().map((headerGroup: any) => (
-              <tr
-                key={headerGroup.id}
-                className="border-b border-gray-200 bg-gray-50"
-              >
-                {headerGroup.headers.map((header: any) => (
-                  <th
-                    key={header.id}
-                    className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                  >
-                    {header.isPlaceholder
-                      ? null
-                      : flexRender(
-                          header.column.columnDef.header,
-                          header.getContext()
-                        )}
-                  </th>
-                ))}
-              </tr>
-            ))}
+            {table
+              .getHeaderGroups()
+              .map((headerGroup: HeaderGroup<UploadFile>) => (
+                <tr
+                  key={headerGroup.id}
+                  className="border-b border-gray-200 bg-gray-50"
+                >
+                  {headerGroup.headers.map((header) => (
+                    <th
+                      key={header.id}
+                      className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                    >
+                      {header.isPlaceholder
+                        ? null
+                        : flexRender(
+                            header.column.columnDef.header,
+                            header.getContext()
+                          )}
+                    </th>
+                  ))}
+                </tr>
+              ))}
           </thead>
           <tbody className="divide-y divide-gray-200">
-            {table.getRowModel().rows.map((row: any) => (
+            {table.getRowModel().rows.map((row: Row<UploadFile>) => (
               <tr key={row.id} className="hover:bg-gray-50">
-                {row.getVisibleCells().map((cell: any) => (
-                  <td key={cell.id} className="px-6 py-4 whitespace-nowrap">
-                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                  </td>
-                ))}
+                {row
+                  .getVisibleCells()
+                  .map((cell: Cell<UploadFile, unknown>) => (
+                    <td key={cell.id} className="px-6 py-4 whitespace-nowrap">
+                      {flexRender(
+                        cell.column.columnDef.cell,
+                        cell.getContext()
+                      )}
+                    </td>
+                  ))}
               </tr>
             ))}
           </tbody>

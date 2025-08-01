@@ -1,13 +1,5 @@
-import {
-  getChatState,
-  toggleChatAction,
-  updateChatPanelSize,
-} from "@/lib/chat-server-actions";
-import {
-  PageHeader,
-  DropdownMenuItem,
-  ChatConfig,
-} from "@/components/pageHeader";
+import { getChatState, toggleChatAction } from "@/lib/chat-server-actions";
+import { PageHeader, DropdownMenuItem } from "@/components/pageHeader";
 // Icons are now handled via string identifiers
 import CompaniesContentClient from "@/components/layout/CompaniesContentClient";
 import { ROUTES } from "@/config/routes";
@@ -27,8 +19,6 @@ export default async function CompaniesLayout({
     null,
     ROUTES.COMPANIES.LIST
   );
-  const boundUpdateChatPanelSizeAction = (size: number) =>
-    updateChatPanelSize(size, ROUTES.COMPANIES.LIST);
 
   const menuItems: DropdownMenuItem[] = [
     {
