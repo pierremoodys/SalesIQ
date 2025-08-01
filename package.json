@@ -7,7 +7,10 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "type-check": "tsc --noEmit"
+    "type-check": "tsc --noEmit",
+    "push": "npm run build && git push",
+    "push:upload": "npm run build && git push origin upload",
+    "push:main": "npm run build && git push origin main"
   },
   "dependencies": {
     "@headlessui/react": "^2.2.6",
