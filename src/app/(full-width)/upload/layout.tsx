@@ -1,3 +1,4 @@
+import React from "react";
 import { getChatState, toggleChatAction } from "@/lib/chat-server-actions";
 import {
   PageHeader,
@@ -14,6 +15,8 @@ interface UploadLayoutProps {
 export default async function UploadLayout({ children }: UploadLayoutProps) {
   // Get chat state from server
   const { isChatOpen, chatPanelSize } = await getChatState();
+
+  console.log("🏗️ UploadLayout: isChatOpen =", isChatOpen);
 
   // Create bound server action
   const boundToggleChatAction = toggleChatAction.bind(null, ROUTES.UPLOAD);
