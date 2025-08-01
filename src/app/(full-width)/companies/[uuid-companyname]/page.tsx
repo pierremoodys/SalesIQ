@@ -7,6 +7,9 @@ import {
 } from "@/lib/serverData";
 import CompanyContentClient from "@/components/CompanyContentClient";
 
+// Force dynamic rendering to avoid searchParams static generation warnings
+export const dynamic = "force-dynamic";
+
 interface CompanyPageProps {
   params: Promise<{
     "uuid-companyname": string;
