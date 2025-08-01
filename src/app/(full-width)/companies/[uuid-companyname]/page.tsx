@@ -6,7 +6,6 @@ import {
   getAllCompanyParams,
 } from "@/lib/serverData";
 import CompanyContentClient from "@/components/CompanyContentClient";
-import CompanyHeaderClient from "@/components/CompanyHeaderClient";
 
 interface CompanyPageProps {
   params: Promise<{
@@ -101,12 +100,7 @@ export default async function CompanyPage({
       ]);
 
     return (
-      <div className="h-full flex flex-col">
-        {/* Company Header - Client-rendered for chat integration */}
-        <div className="flex-shrink-0">
-          <CompanyHeaderClient company={company} backUrl="/companies" />
-        </div>
-
+      <div className="h-full">
         {/* Interactive Content - Client-rendered */}
         <CompanyContentClient
           reportContent={reportContent}

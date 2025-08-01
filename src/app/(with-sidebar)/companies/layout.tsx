@@ -1,149 +1,68 @@
-"use client";
-
-import { useState, useEffect } from "react";
-import { Panel, PanelGroup, PanelResizeHandle } from "react-resizable-panels";
-import { CompaniesPageHeader } from "@/components/pageHeader";
-import { CompaniesFilter } from "@/components/ui";
-import ChatPanel from "@/components/layout/ChatPanel";
-import { useChatStore } from "@/stores/chatStore";
-import {
-  CompaniesContext,
-  CompaniesContextType,
-} from "@/contexts/CompaniesContext";
+import { getChatState, toggleChatAction } from "@/lib/chat-server-actions";
+import { PageHeader, DropdownMenuItem } from "@/components/pageHeader";
+// Icons are now handled via string identifiers
+import CompaniesContentClient from "@/components/layout/CompaniesContentClient";
+import { ROUTES } from "@/config/routes";
 
 interface CompaniesLayoutProps {
   children: React.ReactNode;
 }
 
-export default function CompaniesLayout({ children }: CompaniesLayoutProps) {
-  // Use Zustand store for persistent chat state
-  const { isChatOpen, chatPanelSize, toggleChat, closeChat, setChatPanelSize } =
-    useChatStore();
+export default async function CompaniesLayout({
+  children,
+}: CompaniesLayoutProps) {
+  // Get chat state from server
+  const { isChatOpen, chatPanelSize } = await getChatState();
 
-  // Local state for companies-specific functionality
-  const [searchQuery, setSearchQuery] = useState("");
-  const [viewType, setViewType] = useState<"list" | "grid" | "table">("list");
+  // Create bound server actions
+  const boundToggleChatAction = toggleChatAction.bind(
+    null,
+    ROUTES.COMPANIES.LIST
+  );
 
-  // Animation state management
-  const [isAnimating, setIsAnimating] = useState(false);
-  const [shouldRenderChat, setShouldRenderChat] = useState(false);
-  const [animationClass, setAnimationClass] = useState("");
-  const [isInitialized, setIsInitialized] = useState(false);
-
-  const contextValue: CompaniesContextType = {
-    searchQuery,
-    setSearchQuery,
-    viewType,
-    setViewType,
-  };
-
-  // Initialize shouldRenderChat based on persisted state
-  useEffect(() => {
-    if (!isInitialized) {
-      setShouldRenderChat(isChatOpen);
-      setIsInitialized(true);
-    }
-  }, [isChatOpen, isInitialized]);
-
-  // Handle chat open/close animations
-  useEffect(() => {
-    if (!isInitialized) return; // Don't animate on initial load
-
-    if (isChatOpen && !shouldRenderChat) {
-      // Opening: show panel immediately and start slide-in animation
-      setShouldRenderChat(true);
-      setIsAnimating(true);
-      setAnimationClass("slide-in-right");
-
-      // Clear animation class after animation completes
-      const timer = setTimeout(() => {
-        setIsAnimating(false);
-        setAnimationClass("");
-      }, 300);
-
-      return () => clearTimeout(timer);
-    } else if (!isChatOpen && shouldRenderChat) {
-      // Closing: start slide-out animation, then hide panel
-      setIsAnimating(true);
-      setAnimationClass("slide-out-right");
-
-      // Hide panel after animation completes
-      const timer = setTimeout(() => {
-        setShouldRenderChat(false);
-        setIsAnimating(false);
-        setAnimationClass("");
-      }, 300);
-
-      return () => clearTimeout(timer);
-    }
-  }, [isChatOpen, shouldRenderChat, isInitialized]);
-
-  const handlePanelResize = (sizes: number[]) => {
-    // Only update size if not animating and chat is actually open
-    if (!isAnimating && isChatOpen && sizes[1]) {
-      setChatPanelSize(sizes[1]);
-    }
-  };
+  const menuItems: DropdownMenuItem[] = [
+    {
+      id: "upload",
+      label: "Upload",
+      icon: "document-arrow-up",
+      url: ROUTES.UPLOAD,
+    },
+    {
+      id: "connect",
+      label: "Connect",
+      icon: "link",
+      url: ROUTES.CONNECT,
+    },
+  ];
 
   return (
-    <CompaniesContext.Provider value={contextValue}>
-      <div className="h-full flex flex-col">
-        {/* Page Header - Static */}
-        <div className="flex-shrink-0">
-          <CompaniesPageHeader
-            variant="companies-list"
-            onToggleChat={toggleChat}
-            isChatOpen={isChatOpen}
-          />
-        </div>
-
-        {/* Filters - Static */}
-        <div className="flex-shrink-0 border-b border-gray-200">
-          <CompaniesFilter
-            searchQuery={searchQuery}
-            onSearchChange={setSearchQuery}
-            viewType={viewType}
-            onViewTypeChange={setViewType}
-          />
-        </div>
-
-        {/* Resizable Content Area - Takes remaining height */}
-        <div className="flex-1 min-h-0">
-          <PanelGroup
-            direction="horizontal"
-            onLayout={handlePanelResize}
-            className="h-full"
-          >
-            {/* Company Items Panel - NO TRANSITION for instant resize */}
-            <Panel
-              id="companies-content"
-              defaultSize={shouldRenderChat ? 100 - chatPanelSize : 100}
-              className="min-w-0"
-            >
-              <div className="h-full overflow-auto">{children}</div>
-            </Panel>
-
-            {/* Chat Panel (conditionally rendered with animation) */}
-            {shouldRenderChat && (
-              <>
-                {/* Resize Handle for Chat */}
-                <PanelResizeHandle />
-
-                {/* Chat Panel with Slide Animation ONLY */}
-                <Panel
-                  id="companies-chat"
-                  defaultSize={chatPanelSize}
-                  minSize={20}
-                  maxSize={50}
-                  className={`min-w-0 ${animationClass}`}
-                >
-                  <ChatPanel onClose={closeChat} />
-                </Panel>
-              </>
-            )}
-          </PanelGroup>
-        </div>
+    <div className="h-full flex flex-col">
+      {/* Server-rendered header */}
+      <div className="flex-shrink-0">
+        <PageHeader
+          variant="simple"
+          icon="building-office-2"
+          title="Your companies"
+          isChatOpen={isChatOpen}
+          toggleChatAction={boundToggleChatAction}
+          chatConfig={{
+            title: "Add or edit companies",
+            description:
+              "Tell me about the size, industry, location of the companies you want to start tracking.",
+            placeholder: "Search for companies",
+            icon: "plus",
+          }}
+          menuItems={menuItems}
+        />
       </div>
-    </CompaniesContext.Provider>
+
+      {/* Client-side interactive content */}
+      <CompaniesContentClient
+        initialChatOpen={isChatOpen}
+        initialChatSize={chatPanelSize}
+      >
+        {children}
+      </CompaniesContentClient>
+    </div>
   );
 }

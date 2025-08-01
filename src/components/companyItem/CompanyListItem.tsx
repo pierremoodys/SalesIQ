@@ -74,9 +74,9 @@ const CompanyListItem: React.FC<CompanyListItemProps> = ({
 
   const getArrowIconClass = () => {
     if (isTracked && isHovered) {
-      return "text-blue-600";
+      return `text-blue-600 transform translate-x-2 ${HOVER_TRANSITIONS.transform}`;
     }
-    return "text-gray-600";
+    return `text-gray-600 transform translate-x-0 ${HOVER_TRANSITIONS.transform}`;
   };
 
   const getHoverClass = () => {

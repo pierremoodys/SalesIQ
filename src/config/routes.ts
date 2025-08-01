@@ -11,6 +11,7 @@ export const ROUTES = {
   },
   NOTIFICATIONS: '/notifications',
   UPLOAD: '/upload',
+  CONNECT: '/connect',
 } as const;
 
 // Type for route parameters

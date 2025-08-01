@@ -7,6 +7,7 @@ import {
   MicrophoneIcon,
   ArrowRightIcon,
 } from "@heroicons/react/24/outline";
+import { UploadComponent } from "@/components/ui";
 
 interface ChatPanelProps {
   onClose: () => void;
@@ -14,6 +15,7 @@ interface ChatPanelProps {
   description?: string;
   placeholder?: string;
   headerIcon?: React.ComponentType<{ className?: string }>;
+  showUploadComponent?: boolean; // Add prop to conditionally show upload component
 }
 
 export default function ChatPanel({
@@ -22,6 +24,7 @@ export default function ChatPanel({
   description = "Tell me about the size, industry, location of the companies you want to start tracking.",
   placeholder = "Search for companies",
   headerIcon: HeaderIcon = PlusIcon,
+  showUploadComponent = false,
 }: ChatPanelProps) {
   const [message, setMessage] = useState("");
 
@@ -59,15 +62,24 @@ export default function ChatPanel({
         </div>
 
         {/* Content - Takes remaining space */}
-        <div className="flex flex-col justify-between p-4 flex-1 min-h-0">
-          <div className="flex justify-center items-center gap-2.5">
+        <div className="flex flex-col p-4 flex-1 min-h-0">
+          <div className="flex justify-center items-center gap-2.5 flex-shrink-0">
             <div className="font-[420] text-md text-gray-600">
               {description}
             </div>
           </div>
 
+          {/* Upload Component - Takes full available height when shown */}
+          {showUploadComponent ? (
+            <div className="flex-1 mt-4 mb-4 min-h-0">
+              <UploadComponent size="small" className="h-full" />
+            </div>
+          ) : (
+            <div className="flex-1"></div>
+          )}
+
           {/* Input Area - Pinned to bottom of content area */}
-          <div className="flex justify-between items-center py-2 px-3 h-14 rounded border border-[#2475ff] mt-4">
+          <div className="flex justify-between items-center py-2 px-3 h-14 rounded border border-[#2475ff] mt-4 flex-shrink-0">
             <input
               type="text"
               value={message}

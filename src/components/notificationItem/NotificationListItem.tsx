@@ -34,7 +34,7 @@ interface NotificationListItemProps {
 }
 
 // Priority icon component
-const PriorityIcon = ({ type }: { type: string }) => {
+const PriorityIcon = () => {
   return (
     <div className="flex justify-center items-center pr-[0.1875rem] py-px pl-0 w-3.5 h-3.5">
       <div className="flex items-end">
@@ -76,7 +76,7 @@ const SourceBadge = ({
 const ImpactBadge = ({ type }: { type: string }) => {
   return (
     <div className="flex justify-center items-center py-1 px-2 rounded-full">
-      <PriorityIcon type={type} />
+      <PriorityIcon />
       <div className="text-[10px] ml-1">{type.replace("-", " ")}</div>
     </div>
   );
