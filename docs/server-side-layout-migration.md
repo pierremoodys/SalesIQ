@@ -13,7 +13,7 @@ This guide explains how to migrate the `/companies` layout from a client-side co
 "use client"; // ← Everything renders client-side
 
 export default function CompaniesLayout({ children }) {
-  const { isChatOpen, toggleChat } = useChatStore(); // Client-side state
+  const [isChatOpen, setIsChatOpen] = useState(initialChatOpen); // Client-side state
   const [searchQuery, setSearchQuery] = useState(""); // Local state
   const [isAnimating, setIsAnimating] = useState(false); // Animation state
 

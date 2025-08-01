@@ -39,7 +39,7 @@ export default async function CompanyDetailLayout({
 
   // Fetch company data for header
   const company = await getCompanyByUuid(uuid);
-  
+
   if (!company) {
     notFound();
   }

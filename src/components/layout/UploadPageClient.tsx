@@ -1,25 +1,28 @@
 "use client";
 
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { UploadTable, UploadComponent } from "@/components/ui";
-import { useChatStore } from "@/stores/chatStore";
 
-export default function UploadPageClient() {
-  const { isChatOpen, setChatAvailable } = useChatStore();
+interface UploadPageClientProps {
+  isChatOpen?: boolean;
+}
+
+export default function UploadPageClient({
+  isChatOpen: initialChatOpen = false,
+}: UploadPageClientProps) {
+  const [isChatOpen, setIsChatOpen] = useState(initialChatOpen);
   const previousUploadsRef = useRef<HTMLDivElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
+  const isInitialMount = useRef(true);
 
-  // Set chat availability for upload page
+  // Smooth scroll effect when chat state changes (but not on initial mount)
   useEffect(() => {
-    setChatAvailable(true, {
-      page: "upload",
-    });
+    // Skip scroll effect on initial mount to prevent unwanted scrolling on page reload
+    if (isInitialMount.current) {
+      isInitialMount.current = false;
+      return;
+    }
 
-    return () => setChatAvailable(false);
-  }, [setChatAvailable]);
-
-  // Smooth scroll effect when chat state changes
-  useEffect(() => {
     const container = containerRef.current;
     const previousUploads = previousUploadsRef.current;
 
