@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 import { ROUTES } from "@/config/routes";
 
 export default function TopNav() {
@@ -46,23 +47,12 @@ export default function TopNav() {
         <div className="flex flex-1 justify-center items-center gap-3 max-w-[600px] mx-4">
           <div className="search_box-1 flex justify-center items-center gap-2 h-10 w-full rounded-full border border-[#ffffff]/[.22] bg-white/[.9]">
             <div className="flex items-center pl-3">
-              <svg
-                width={25}
-                height={24}
-                viewBox="0 0 25 24"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M16.2742 14H15.4842L15.2042 13.73C16.1842 12.59 16.7742 11.11 16.7742 9.5C16.7742 5.91 13.8642 3 10.2742 3C6.68417 3 3.77417 5.91 3.77417 9.5C3.77417 13.09 6.68417 16 10.2742 16C11.8842 16 13.3642 15.41 14.5042 14.43L14.7742 14.71V15.5L19.7742 20.49L21.2642 19L16.2742 14V14ZM10.2742 14C7.78417 14 5.77417 11.99 5.77417 9.5C5.77417 7.01 7.78417 5 10.2742 5C12.7642 5 14.7742 7.01 14.7742 9.5C14.7742 11.99 12.7642 14 10.2742 14Z"
-                  fill="white"
-                />
-              </svg>
+              <MagnifyingGlassIcon className="w-6 h-6 text-blue" />
             </div>
             <input
               type="text"
               placeholder="Search ratings, research, analysts, and more..."
-              className="flex-1 bg-transparent text-white placeholder-white/90 focus:outline-none pr-3"
+              className="flex-1 bg-transparent text-blue placeholder-moodys-blue/90 focus:outline-none pr-3"
             />
           </div>
         </div>
