@@ -136,13 +136,14 @@ const sampleData: UploadFile[] = [
 
 interface UploadTableProps {
   data?: UploadFile[];
-  onDelete?: (id: string) => void;
 }
 
-const UploadTable: React.FC<UploadTableProps> = ({
-  data = sampleData,
-  onDelete,
-}) => {
+const UploadTable: React.FC<UploadTableProps> = ({ data = sampleData }) => {
+  // Handle delete internally
+  const handleDelete = (id: string) => {
+    console.log("Delete file with id:", id);
+    // TODO: Implement delete functionality
+  };
   const [pageIndex, setPageIndex] = useState(0);
   const pageSize = 10;
 
@@ -174,7 +175,7 @@ const UploadTable: React.FC<UploadTableProps> = ({
       header: "Action",
       cell: ({ row }: any) => (
         <button
-          onClick={() => onDelete?.(row.original.id)}
+          onClick={() => handleDelete(row.original.id)}
           className="p-1 text-gray-400 hover:text-red-500 transition-colors duration-150"
           aria-label={`Delete ${row.original.fileName}`}
         >

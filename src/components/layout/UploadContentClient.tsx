@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { Panel, PanelGroup, PanelResizeHandle } from "react-resizable-panels";
 import ChatPanel from "@/components/layout/ChatPanel";
 import { DocumentArrowUpIcon } from "@heroicons/react/24/outline";
@@ -16,6 +16,8 @@ export default function UploadContentClient({
   initialChatOpen,
   initialChatSize,
 }: UploadContentClientProps) {
+  console.log("🎯 UploadContentClient: initialChatOpen =", initialChatOpen);
+
   // Chat panel state
   const [chatPanelSize, setChatPanelSize] = useState(initialChatSize);
   const [shouldRenderChat, setShouldRenderChat] = useState(initialChatOpen);
@@ -87,7 +89,19 @@ export default function UploadContentClient({
           defaultSize={shouldRenderChat ? 100 - chatPanelSize : 100}
           className="min-w-0"
         >
-          <div className="h-full overflow-auto">{children}</div>
+          <div className="h-full overflow-hidden">
+            {(() => {
+              console.log(
+                "🔗 Cloning children with isChatOpen (initialChatOpen):",
+                initialChatOpen,
+                "shouldRenderChat:",
+                shouldRenderChat
+              );
+              return React.cloneElement(children as React.ReactElement<any>, {
+                isChatOpen: initialChatOpen, // Use initialChatOpen for immediate state changes
+              });
+            })()}
+          </div>
         </Panel>
 
         {/* Chat Panel (conditionally rendered with animation) */}
@@ -113,6 +127,7 @@ export default function UploadContentClient({
                 description="I can help you with file uploads, processing, or troubleshooting upload issues."
                 placeholder="Ask about uploading files"
                 headerIcon={DocumentArrowUpIcon}
+                showUploadComponent={true}
               />
             </Panel>
           </>

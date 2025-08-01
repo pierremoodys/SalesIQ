@@ -4,6 +4,7 @@ export { default as CompanyTags } from "./CompanyTags";
 export { default as ConfirmationModal } from "./ConfirmationModal";
 export { default as MoodysAIButton } from "./MoodysAIButton";
 export { default as UploadTable } from "./UploadTable";
+export { default as UploadComponent } from "./UploadComponent";
 
 // Company Item Components
 export { default as CompanyListItem } from "../companyItem/CompanyListItem";

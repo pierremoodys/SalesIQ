@@ -31,6 +31,14 @@ export default async function UploadLayout({ children }: UploadLayoutProps) {
     },
   ];
 
+  const chatConfig: ChatConfig = {
+    title: "Upload assistant",
+    description:
+      "I can help you with file uploads, processing, or troubleshooting upload issues.",
+    placeholder: "Ask about uploading files",
+    icon: "document-arrow-up",
+  };
+
   return (
     <div className="h-full flex flex-col">
       {/* Server-rendered header */}
@@ -40,17 +48,11 @@ export default async function UploadLayout({ children }: UploadLayoutProps) {
           title="Upload file"
           backButton={{
             url: ROUTES.HOME,
-            label: "Back to dashboard",
+            label: "Back",
           }}
           isChatOpen={isChatOpen}
           toggleChatAction={boundToggleChatAction}
-          chatConfig={{
-            title: "Upload assistant",
-            description:
-              "I can help you with file uploads, processing, or troubleshooting upload issues.",
-            placeholder: "Ask about uploading files",
-            icon: "document-arrow-up",
-          }}
+          chatConfig={chatConfig}
           menuItems={menuItems}
         />
       </div>
